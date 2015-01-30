@@ -9,7 +9,8 @@
   <meta name="author" content="Bill Chen">
 
   
-  <meta name="description" content=" Blog Archive Recent Posts ">
+  <meta name="description" content=" Blog Archive 2015 Java文件变更监控的两种实现
+Jan 30 2015 posted in java语言 Recent Posts Java文件变更监控的两种实现 GitHub Repos Status updating... @cwind001 on GitHub ">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -68,6 +69,23 @@
   
   <div id="blog-archives">
 
+
+
+  
+  <h2>2015</h2>
+
+<article>
+  
+<h1><a href="/blog/2015/01/30/java-file-monitor/">Java文件变更监控的两种实现</a></h1>
+<time datetime="2015-01-30T14:25:04+08:00" pubdate><span class='month'>Jan</span> <span class='day'>30</span> <span class='year'>2015</span></time>
+
+<footer>
+  <span class="categories">posted in <a class='category' href='/blog/categories/javayu-yan/'>java语言</a></span>
+</footer>
+
+
+</article>
+
 </div>
 
   
@@ -81,7 +99,40 @@
   <h1>Recent Posts</h1>
   <ul id="recent_posts">
     
+      <li class="post">
+        <a href="/blog/2015/01/30/java-file-monitor/">Java文件变更监控的两种实现</a>
+      </li>
+    
   </ul>
+</section>
+
+<section>
+  <h1>GitHub Repos</h1>
+  <ul id="gh_repos">
+    <li class="loading">Status updating&#8230;</li>
+  </ul>
+  
+  <a href="https://github.com/cwind001">@cwind001</a> on GitHub
+  
+  <script type="text/javascript">
+    $(document).ready(function(){
+        if (!window.jXHR){
+            var jxhr = document.createElement('script');
+            jxhr.type = 'text/javascript';
+            jxhr.src = '/javascripts/libs/jXHR.js';
+            var s = document.getElementsByTagName('script')[0];
+            s.parentNode.insertBefore(jxhr, s);
+        }
+
+        github.showRepos({
+            user: 'cwind001',
+            count: 0,
+            skip_forks: true,
+            target: '#gh_repos'
+        });
+    });
+  </script>
+  <script src="/javascripts/github.js" type="text/javascript"> </script>
 </section>
 
 

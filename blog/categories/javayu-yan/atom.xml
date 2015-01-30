@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <feed xmlns="http://www.w3.org/2005/Atom">
 
-  <title><![CDATA[Cwind's Note Book]]></title>
-  <link href="http://cwind001.github.io/atom.xml" rel="self"/>
+  <title><![CDATA[Category: Java语言 | Cwind's Note Book]]></title>
+  <link href="http://cwind001.github.io/blog/categories/javayu-yan/atom.xml" rel="self"/>
   <link href="http://cwind001.github.io/"/>
   <updated>2015-01-30T16:07:27+08:00</updated>
   <id>http://cwind001.github.io/</id>
