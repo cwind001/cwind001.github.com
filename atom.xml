@@ -4,7 +4,7 @@
   <title><![CDATA[Cwind's Note Book]]></title>
   <link href="http://cwind001.github.io/atom.xml" rel="self"/>
   <link href="http://cwind001.github.io/"/>
-  <updated>2015-01-30T17:59:53+08:00</updated>
+  <updated>2015-02-03T18:58:12+08:00</updated>
   <id>http://cwind001.github.io/</id>
   <author>
     <name><![CDATA[Bill Chen]]></name>
@@ -18,9 +18,340 @@
     <link href="http://cwind001.github.io/blog/2015/01/30/java-file-monitor/"/>
     <updated>2015-01-30T14:25:04+08:00</updated>
     <id>http://cwind001.github.io/blog/2015/01/30/java-file-monitor</id>
-    <content type="html"><![CDATA[<h1>Java文件变更监控的两种实现</h1>
+    <content type="html"><![CDATA[<h3>Java文件变更监控的两种实现</h3>
 
-<h2>测试文字</h2>
+<p><strong>对文件及文件夹进行修改变更监测有很广泛的应用，例如：</strong></p>
+
+<ul>
+<li>通知配置文件的改变</li>
+<li>跟踪某些关键的系统文件的变化</li>
+<li>监控某个分区磁盘的整体使用情况</li>
+<li>系统崩溃时进行自动清理</li>
+<li>自动触发备份进程</li>
+<li>向服务器上传文件结束时发出通知  <br/>
+下面给出Java的两种实现，源码可以在GitHub上找到 <a href="https://github.com/cwind001/CwindJavaLab/tree/master/FileMonitor">FileMonitor</a></li>
+</ul>
+
+
+<p><strong>JDK1.6及之前版本: 基于Timer实现</strong><br/>
+<strong>两个关键类：</strong></p>
+
+<ul>
+<li>java.util.Timer</li>
+<li>java.util.TimerTask</li>
+</ul>
+
+
+<p>Timertask是由Timer执行的实际任务，实现了Rannable接口。通过重写run()方法来指定具体任务细节。<br/>
+Picture111&mdash;&mdash;&mdash;</p>
+
+<p><strong>Timer工作原理：</strong><br/>
+Timer是用于调度一次性执行或重复执行的工具类。通过TaskQueue保存需要调度的TimerTask，当某个Task被废弃时（一次性任务结束或TimerTask.cancel()），将其从该队列中移除。<br/>
+Timer类维护一个后台线程（守护线程或用户线程，取决于如何创建Timer对象），该线程通常称为Timer任务执行线程。在TimerThread的mainLoop()中依据各个TimerTask的状态和调度时间设定，决定执行或移除TimerTask。<br/>
+<strong>TimerTask应设计为执行不占用太长时间</strong>，否则同一个Timer队列中其他的TimerTask的执行将会延迟。<br/>
+更多可参见：<a href="http://javarevisited.blogspot.com/2013/02/what-is-timer-and-timertask-in-java-example-tutorial.html">What is Timer and TimerTask in Java</a></p>
+
+<p><strong>基于Timer的FileMonitor的实现：</strong><br/>
+Picture222&mdash;&mdash;&mdash;</p>
+
+<p>通过实现FileChangeObserver接口，该FileMonitor允许对任意文件添加任意多个Observer。<br/>
+<a href="https://github.com/cwind001/CwindJavaLab/blob/master/FileMonitor/src/main/java/com/cwind/file/FileChangeMonitor.java">FileChangeMonitor及FileChangeTask源码</a><br/>
+FileChangeMonitor本身是一个单例。fileObservers由Collections.synchronizedMap()初始化，保证在该map上的每一个原子操作都将被同步。在其addObserver方法中为每一个fileChangeObserver创建一个FileChangeTask，将其加入fileObservers中。FileChangeTask扩展了TimerTask，由Timer调度执行。</p>
+
+<figure class='code'><figcaption><span>FileChangeMonitor.addObserver()</span><a href='https://github.com/cwind001/CwindJavaLab/blob/master/FileMonitor/src/main/java/com/cwind/file/FileChangeMonitor.java'>link</a></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+</pre></td><td class='code'><pre><code class='java'><span class='line'><span class="kd">public</span> <span class="kt">void</span> <span class="nf">addObserver</span><span class="o">(</span><span class="n">FileChangeObserver</span> <span class="n">observer</span><span class="o">,</span> <span class="n">String</span> <span class="n">filename</span><span class="o">,</span> <span class="kt">long</span> <span class="n">delay</span><span class="o">)</span> <span class="kd">throws</span> <span class="n">FileNotFoundException</span> <span class="o">{</span>
+</span><span class='line'>  <span class="n">TimerTask</span> <span class="n">task</span> <span class="o">=</span> <span class="k">new</span> <span class="nf">FileChangeTask</span><span class="o">(</span><span class="n">observer</span> <span class="o">,</span> <span class="n">filename</span> <span class="o">);</span>
+</span><span class='line'>  <span class="n">List</span><span class="o">&lt;</span><span class="n">TimerTask</span><span class="o">&gt;</span> <span class="n">tasks</span> <span class="o">=</span> <span class="n">fileObservers</span><span class="o">.</span><span class="na">get</span><span class="o">(</span><span class="n">filename</span> <span class="o">);</span>
+</span><span class='line'>  <span class="k">if</span><span class="o">(</span><span class="n">tasks</span> <span class="o">==</span><span class="kc">null</span><span class="o">){</span>
+</span><span class='line'>      <span class="n">tasks</span> <span class="o">=</span> <span class="k">new</span> <span class="n">ArrayList</span><span class="o">&lt;</span><span class="n">TimerTask</span><span class="o">&gt;();</span>
+</span><span class='line'>          <span class="o">}</span>
+</span><span class='line'>  <span class="n">tasks</span><span class="o">.</span><span class="na">add</span><span class="o">(</span> <span class="n">task</span><span class="o">);</span>
+</span><span class='line'>  <span class="n">fileObservers</span><span class="o">.</span><span class="na">put</span><span class="o">(</span><span class="n">filename</span> <span class="o">,</span> <span class="n">tasks</span> <span class="o">);</span>
+</span><span class='line'>  <span class="n">timer</span><span class="o">.</span><span class="na">schedule</span><span class="o">(</span> <span class="n">task</span><span class="o">,</span> <span class="n">delay</span><span class="o">,</span> <span class="n">delay</span><span class="o">);</span>
+</span><span class='line'><span class="o">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>在FileChangeTask的run()函数中，通过比对时间戳来判断文件是否修改，若发生改动，则通知其Observer进行相应处理。</p>
+
+<figure class='code'><figcaption><span>FileChangeTask.run()</span><a href='https://github.com/cwind001/CwindJavaLab/blob/master/FileMonitor/src/main/java/com/cwind/file/FileChangeMonitor.java'>link</a></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+</pre></td><td class='code'><pre><code class='java'><span class='line'><span class="kd">public</span> <span class="kt">void</span> <span class="nf">run</span><span class="o">()</span> <span class="o">{</span>
+</span><span class='line'>  <span class="k">try</span>  <span class="o">{</span>
+</span><span class='line'>      <span class="kt">long</span> <span class="n">newLastModified</span> <span class="o">=</span> <span class="n">file</span><span class="o">.</span><span class="na">lastModified</span><span class="o">();</span>
+</span><span class='line'>      <span class="k">if</span> <span class="o">(</span><span class="n">newLastModified</span> <span class="o">&gt;</span> <span class="n">lastModified</span><span class="o">)</span> <span class="o">{</span>
+</span><span class='line'>          <span class="n">lastModified</span> <span class="o">=</span> <span class="n">newLastModified</span><span class="o">;</span>
+</span><span class='line'>          <span class="n">observer</span><span class="o">.</span><span class="na">fileChanged</span><span class="o">(</span><span class="n">file</span><span class="o">.</span><span class="na">getPath</span><span class="o">());</span>
+</span><span class='line'>      <span class="o">}</span>
+</span><span class='line'>  <span class="o">}</span>
+</span><span class='line'>  <span class="k">catch</span> <span class="o">(</span><span class="n">Exception</span> <span class="n">e</span><span class="o">)</span>  <span class="o">{</span>
+</span><span class='line'>      <span class="n">System</span><span class="o">.</span><span class="na">err</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="n">e</span><span class="o">.</span><span class="na">getMessage</span><span class="o">());</span>
+</span><span class='line'>  <span class="o">}</span>
+</span><span class='line'><span class="o">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>测试用例<a href="https://github.com/cwind001/CwindJavaLab/blob/163448ce07ecca1738b306bed9bf1b39464d345c/FileMonitor/src/test/java/com/cwind/file/FileMonitorTest.java">FileMonitorTest</a>中为sample1.txt添加了consoleObserver和emailObserver，为sample2.txt添加了consoleObserver。然后对这两个文件分别进行修改。</p>
+
+<figure class='code'><figcaption><span>FileMonitorTest</span><a href='https://github.com/cwind001/CwindJavaLab/blob/163448ce07ecca1738b306bed9bf1b39464d345c/FileMonitor/src/test/java/com/cwind/file/FileMonitorTest.java'>link</a></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+<span class='line-number'>25</span>
+<span class='line-number'>26</span>
+<span class='line-number'>27</span>
+<span class='line-number'>28</span>
+<span class='line-number'>29</span>
+<span class='line-number'>30</span>
+<span class='line-number'>31</span>
+<span class='line-number'>32</span>
+<span class='line-number'>33</span>
+<span class='line-number'>34</span>
+<span class='line-number'>35</span>
+<span class='line-number'>36</span>
+<span class='line-number'>37</span>
+<span class='line-number'>38</span>
+<span class='line-number'>39</span>
+<span class='line-number'>40</span>
+<span class='line-number'>41</span>
+<span class='line-number'>42</span>
+<span class='line-number'>43</span>
+<span class='line-number'>44</span>
+<span class='line-number'>45</span>
+<span class='line-number'>46</span>
+<span class='line-number'>47</span>
+<span class='line-number'>48</span>
+</pre></td><td class='code'><pre><code class='java'><span class='line'><span class="kn">package</span> <span class="n">com</span><span class="o">.</span><span class="na">cwind</span><span class="o">.</span><span class="na">file</span><span class="o">;</span>
+</span><span class='line'>
+</span><span class='line'><span class="kn">import</span> <span class="nn">java.io.File</span><span class="o">;</span>
+</span><span class='line'><span class="kn">import</span> <span class="nn">java.io.FileOutputStream</span><span class="o">;</span>
+</span><span class='line'><span class="kn">import</span> <span class="nn">java.io.IOException</span><span class="o">;</span>
+</span><span class='line'>
+</span><span class='line'><span class="kn">import</span> <span class="nn">org.junit.After</span><span class="o">;</span>
+</span><span class='line'><span class="kn">import</span> <span class="nn">org.junit.Before</span><span class="o">;</span>
+</span><span class='line'><span class="kn">import</span> <span class="nn">org.junit.Test</span><span class="o">;</span>
+</span><span class='line'>
+</span><span class='line'><span class="kd">public</span> <span class="kd">class</span> <span class="nc">FileMonitorTest</span> <span class="o">{</span>
+</span><span class='line'>  
+</span><span class='line'>  <span class="n">File</span> <span class="n">sampleFile1</span><span class="o">,</span> <span class="n">sampleFile2</span><span class="o">;</span>
+</span><span class='line'>  <span class="n">FileChangeMonitor</span> <span class="n">monitor</span><span class="o">;</span>
+</span><span class='line'>  <span class="n">ConsoleFileChangeObserver</span> <span class="n">consoleObserver</span><span class="o">;</span>
+</span><span class='line'>  <span class="n">EmailFileChangeObserver</span> <span class="n">emailObserver</span><span class="o">;</span>
+</span><span class='line'>  
+</span><span class='line'>  <span class="nd">@Before</span>
+</span><span class='line'>  <span class="kd">public</span> <span class="kt">void</span> <span class="nf">setUp</span><span class="o">()</span> <span class="kd">throws</span> <span class="n">Exception</span> <span class="o">{</span>
+</span><span class='line'>      <span class="n">sampleFile1</span> <span class="o">=</span> <span class="k">new</span> <span class="nf">File</span><span class="o">(</span><span class="s">&quot;sample1.txt&quot;</span><span class="o">);</span>
+</span><span class='line'>      <span class="n">sampleFile2</span> <span class="o">=</span> <span class="k">new</span> <span class="nf">File</span><span class="o">(</span><span class="s">&quot;sample2.txt&quot;</span><span class="o">);</span>
+</span><span class='line'>      <span class="n">monitor</span> <span class="o">=</span> <span class="n">FileChangeMonitor</span><span class="o">.</span><span class="na">getInstance</span><span class="o">();</span>
+</span><span class='line'>      <span class="n">consoleObserver</span> <span class="o">=</span> <span class="k">new</span> <span class="nf">ConsoleFileChangeObserver</span><span class="o">();</span>
+</span><span class='line'>      <span class="n">emailObserver</span> <span class="o">=</span> <span class="k">new</span> <span class="nf">EmailFileChangeObserver</span><span class="o">(</span><span class="s">&quot;billchen01@163.com&quot;</span><span class="o">);</span>
+</span><span class='line'>  <span class="o">}</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="nd">@After</span>
+</span><span class='line'>  <span class="kd">public</span> <span class="kt">void</span> <span class="nf">tearDown</span><span class="o">()</span> <span class="kd">throws</span> <span class="n">Exception</span>   <span class="o">{</span>
+</span><span class='line'>      
+</span><span class='line'>  <span class="o">}</span>
+</span><span class='line'>  
+</span><span class='line'>  <span class="nd">@Test</span>
+</span><span class='line'>  <span class="kd">public</span> <span class="kt">void</span> <span class="nf">testMonitorSampleFile</span><span class="o">()</span> <span class="kd">throws</span> <span class="n">InterruptedException</span><span class="o">,</span> <span class="n">IOException</span><span class="o">{</span>
+</span><span class='line'>      <span class="n">monitor</span><span class="o">.</span><span class="na">addObserver</span><span class="o">(</span><span class="n">consoleObserver</span><span class="o">,</span> <span class="n">sampleFile1</span><span class="o">.</span><span class="na">getPath</span><span class="o">(),</span> <span class="n">FileChangeMonitor</span><span class="o">.</span><span class="na">DELAY_TIME</span><span class="o">);</span>
+</span><span class='line'>      <span class="n">monitor</span><span class="o">.</span><span class="na">addObserver</span><span class="o">(</span><span class="n">emailObserver</span><span class="o">,</span> <span class="n">sampleFile1</span><span class="o">.</span><span class="na">getPath</span><span class="o">(),</span> <span class="n">FileChangeMonitor</span><span class="o">.</span><span class="na">DELAY_TIME</span><span class="o">);</span>
+</span><span class='line'>      <span class="n">monitor</span><span class="o">.</span><span class="na">addObserver</span><span class="o">(</span><span class="n">consoleObserver</span><span class="o">,</span> <span class="n">sampleFile2</span><span class="o">.</span><span class="na">getPath</span><span class="o">(),</span> <span class="n">FileChangeMonitor</span><span class="o">.</span><span class="na">DELAY_TIME</span><span class="o">);</span>
+</span><span class='line'>      
+</span><span class='line'>      <span class="n">FileOutputStream</span> <span class="n">fos1</span> <span class="o">=</span> <span class="k">new</span> <span class="nf">FileOutputStream</span><span class="o">(</span><span class="n">sampleFile1</span><span class="o">);</span>
+</span><span class='line'>      <span class="n">FileOutputStream</span> <span class="n">fos2</span> <span class="o">=</span> <span class="k">new</span> <span class="nf">FileOutputStream</span><span class="o">(</span><span class="n">sampleFile2</span><span class="o">);</span>
+</span><span class='line'>      <span class="n">fos1</span><span class="o">.</span><span class="na">write</span><span class="o">(</span><span class="mi">0</span><span class="o">);</span>
+</span><span class='line'>      <span class="n">fos2</span><span class="o">.</span><span class="na">write</span><span class="o">(</span><span class="mi">0</span><span class="o">);</span>
+</span><span class='line'>      <span class="n">fos1</span><span class="o">.</span><span class="na">flush</span><span class="o">();</span>
+</span><span class='line'>      <span class="n">fos2</span><span class="o">.</span><span class="na">flush</span><span class="o">();</span>
+</span><span class='line'>      <span class="n">fos1</span><span class="o">.</span><span class="na">close</span><span class="o">();</span>
+</span><span class='line'>      <span class="n">fos2</span><span class="o">.</span><span class="na">close</span><span class="o">();</span>
+</span><span class='line'>      <span class="n">Thread</span><span class="o">.</span><span class="na">sleep</span><span class="o">(</span><span class="mi">3000</span><span class="o">);</span>
+</span><span class='line'>  <span class="o">}</span>
+</span><span class='line'><span class="o">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>输出结果如下：<br/>
+<code>Console: File sample1.txt is changed, will print warning message to console.</code><br/>
+<code>File sample1.txt is changed, will send email to billchen01@163.com.</code><br/>
+<code>Console: File sample2.txt is changed, will print warning message to console.</code></p>
+
+<p><strong>JDK 1.7 及之后版本：基于WatchService实现</strong><br/>
+Java 7 的新IO - NIO.2提供了一组新的类和方法，主要存在于java.nio包内。它完全取代了java.io.File与文件系统的交互，并提供了新的异步处理类，无需手动配置线程池和其他底层并发控制，便可在后台线程中执行文件和网络IO操作。<br/>
+其中Path是新文件IO的基石。为与之前版本兼容，java.io.File类中新增了toPath()方法，Path类中提供了toFile()方法。
+Watch Service API可用于将指定目录注册到监视服务上。注册时须指定事件类型，如文件创建、修改、删除等。相关类图如下：<br/>
+PIC3</p>
+
+<p>WatchService是监视服务接口，在不同系统上有不同的实现类。实现了Watchable接口的对象方可注册监视服务，java.nio.file.Path实现了此接口。WatchKey表示Watchable对象和WatchService的关联关系，在注册时被创建。注册完成后，WatchKey将被置为&#8217;ready&#8217;状态，直到下列三种情况之一发生：</p>
+
+<ol>
+<li>WatchKey.cancel()被调用</li>
+<li>被监控的目录不存在或不可访问</li>
+<li>WatchService对象被关闭</li>
+</ol>
+
+
+<p>当文件改动发生时，WatchKey的状态将会被置为&#8221;signaled&#8221;然后被放入待处理队列中。WatchService提供了<strong>三种从队列中获取WatchKeys的方式：</strong></p>
+
+<ol>
+<li>poll - 返回队列中的一个key。如果没有可用的key，将立即返回null。</li>
+<li>poll(long, TimeUnit) - 如果队列中存在可用的key则将之返回，否则在参数预置的时间内等待可用的key。TimeUnit用来指定前一个参数表示的时间是纳秒、毫秒或是其他的时间单位。
+例子：final WatchKey watchKey = watchService.poll(1, TimeUnit.MINUTES);将会等待1分钟</li>
+<li>take - 方法将会等待直到可用的key被返回。</li>
+</ol>
+
+
+<p><strong>获取WatchKey后进行处理：</strong></p>
+
+<ol>
+<li>通过WatchKey.pollEvents()函数得到WatchEvents列表。</li>
+<li>对于每一个WatchEvent，可以通过kind()函数获得其改动类型。</li>
+<li>通过WatchEvent.context()函数得到发生该事件的文件名</li>
+<li>当该key的所有事件处理完成后，需要调用WatchKey.reset()方法把该key重置为ready状态。若不重置，该key将无法接收后续的改动。若reset返回false，表示该WatchKey不再合法，主循环可以退出。</li>
+</ol>
+
+
+<figure class='code'><figcaption><span>WatchServiceTest</span><a href='https://github.com/cwind001/CwindJavaLab/blob/163448ce07ecca1738b306bed9bf1b39464d345c/FileMonitor/src/test/java/com/cwind/file/WatchServerTest.java'>link</a></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+<span class='line-number'>25</span>
+<span class='line-number'>26</span>
+<span class='line-number'>27</span>
+<span class='line-number'>28</span>
+<span class='line-number'>29</span>
+<span class='line-number'>30</span>
+<span class='line-number'>31</span>
+<span class='line-number'>32</span>
+<span class='line-number'>33</span>
+<span class='line-number'>34</span>
+<span class='line-number'>35</span>
+<span class='line-number'>36</span>
+<span class='line-number'>37</span>
+<span class='line-number'>38</span>
+</pre></td><td class='code'><pre><code class='java'><span class='line'><span class="kn">package</span> <span class="n">com</span><span class="o">.</span><span class="na">cwind</span><span class="o">.</span><span class="na">file</span><span class="o">;</span>
+</span><span class='line'>
+</span><span class='line'><span class="kn">import</span> <span class="nn">java.io.IOException</span><span class="o">;</span>
+</span><span class='line'><span class="kn">import</span> <span class="nn">java.nio.file.FileSystems</span><span class="o">;</span>
+</span><span class='line'><span class="kn">import</span> <span class="nn">java.nio.file.Path</span><span class="o">;</span>
+</span><span class='line'><span class="kn">import</span> <span class="nn">java.nio.file.Paths</span><span class="o">;</span>
+</span><span class='line'><span class="kn">import</span> <span class="nn">java.nio.file.StandardWatchEventKinds</span><span class="o">;</span>
+</span><span class='line'><span class="kn">import</span> <span class="nn">java.nio.file.WatchEvent</span><span class="o">;</span>
+</span><span class='line'><span class="kn">import</span> <span class="nn">java.nio.file.WatchKey</span><span class="o">;</span>
+</span><span class='line'><span class="kn">import</span> <span class="nn">java.nio.file.WatchService</span><span class="o">;</span>
+</span><span class='line'>
+</span><span class='line'><span class="kd">public</span> <span class="kd">class</span> <span class="nc">WatchServerTest</span> <span class="o">{</span>
+</span><span class='line'>  <span class="kd">public</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">main</span><span class="o">(</span><span class="n">String</span><span class="o">[]</span> <span class="n">args</span><span class="o">)</span> <span class="kd">throws</span> <span class="n">InterruptedException</span><span class="o">,</span> <span class="n">IOException</span> <span class="o">{</span>
+</span><span class='line'>      <span class="n">WatchService</span> <span class="n">watchService</span> <span class="o">=</span> <span class="n">FileSystems</span><span class="o">.</span><span class="na">getDefault</span><span class="o">().</span><span class="na">newWatchService</span><span class="o">();</span>
+</span><span class='line'>      <span class="kd">final</span> <span class="n">Path</span> <span class="n">path</span> <span class="o">=</span> <span class="n">Paths</span><span class="o">.</span><span class="na">get</span><span class="o">(</span><span class="s">&quot;.&quot;</span><span class="o">);</span>
+</span><span class='line'>      <span class="kd">final</span> <span class="n">WatchKey</span> <span class="n">watchKey</span> <span class="o">=</span> <span class="n">path</span><span class="o">.</span><span class="na">register</span><span class="o">(</span><span class="n">watchService</span><span class="o">,</span> <span class="n">StandardWatchEventKinds</span><span class="o">.</span><span class="na">ENTRY_MODIFY</span><span class="o">,</span>
+</span><span class='line'>              <span class="n">StandardWatchEventKinds</span><span class="o">.</span><span class="na">ENTRY_CREATE</span><span class="o">,</span> <span class="n">StandardWatchEventKinds</span><span class="o">.</span><span class="na">ENTRY_DELETE</span><span class="o">);</span>
+</span><span class='line'>      <span class="kt">boolean</span> <span class="n">fileNotChanged</span> <span class="o">=</span> <span class="kc">true</span><span class="o">;</span>
+</span><span class='line'>      <span class="kt">int</span> <span class="n">count</span> <span class="o">=</span> <span class="mi">0</span><span class="o">;</span>
+</span><span class='line'>      <span class="k">while</span> <span class="o">(</span><span class="n">fileNotChanged</span><span class="o">)</span> <span class="o">{</span>
+</span><span class='line'>          <span class="kd">final</span> <span class="n">WatchKey</span> <span class="n">wk</span> <span class="o">=</span> <span class="n">watchService</span><span class="o">.</span><span class="na">take</span><span class="o">();</span>
+</span><span class='line'>          <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">&quot;Loop count: &quot;</span> <span class="o">+</span> <span class="n">count</span><span class="o">);</span>
+</span><span class='line'>          <span class="k">for</span> <span class="o">(</span><span class="n">WatchEvent</span><span class="o">&lt;?&gt;</span> <span class="n">event</span> <span class="o">:</span> <span class="n">wk</span><span class="o">.</span><span class="na">pollEvents</span><span class="o">())</span> <span class="o">{</span>
+</span><span class='line'>              <span class="kd">final</span> <span class="n">Path</span> <span class="n">changed</span> <span class="o">=</span> <span class="o">(</span><span class="n">Path</span><span class="o">)</span> <span class="n">event</span><span class="o">.</span><span class="na">context</span><span class="o">();</span>
+</span><span class='line'>              <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="n">changed</span> <span class="o">+</span> <span class="s">&quot;, &quot;</span> <span class="o">+</span> <span class="n">event</span><span class="o">.</span><span class="na">kind</span><span class="o">());</span>
+</span><span class='line'>              <span class="k">if</span> <span class="o">(</span><span class="n">changed</span><span class="o">.</span><span class="na">endsWith</span><span class="o">(</span><span class="s">&quot;sample1.txt&quot;</span><span class="o">))</span> <span class="o">{</span>
+</span><span class='line'>                  <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">&quot;Sample file has changed&quot;</span><span class="o">);</span>
+</span><span class='line'>              <span class="o">}</span>
+</span><span class='line'>          <span class="o">}</span>
+</span><span class='line'>          <span class="c1">// reset the key</span>
+</span><span class='line'>          <span class="kt">boolean</span> <span class="n">valid</span> <span class="o">=</span> <span class="n">wk</span><span class="o">.</span><span class="na">reset</span><span class="o">();</span>
+</span><span class='line'>          <span class="k">if</span> <span class="o">(!</span><span class="n">valid</span><span class="o">)</span> <span class="o">{</span>
+</span><span class='line'>              <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">&quot;Key has been unregisterede&quot;</span><span class="o">);</span>
+</span><span class='line'>          <span class="o">}</span>
+</span><span class='line'>          <span class="n">count</span><span class="o">++;</span>
+</span><span class='line'>      <span class="o">}</span>
+</span><span class='line'>  <span class="o">}</span>
+</span><span class='line'><span class="o">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>
+总结，使用WatchService步骤如下：</p>
+
+<ol>
+<li>创建WatchService</li>
+<li>得到待检测目录的Path</li>
+<li>将目录登记到变化监测名单中</li>
+<li>执行WatchService的take()方法，直到WatchKey到来。</li>
+<li>得到WatchKey后遍历WatchEvent进行检测</li>
+<li>重置key准备下一个事件，继续等待</li>
+</ol>
+
+
+<p>大多数文件系统实现包含了文件更改通知的本地支持，Watch Service API正是利用了文件系统的这种机制。若文件系统并不支持变更通知机制，Watch Service仍然会轮询文件系统，等待事件产生。</p>
+
+<p><strong>References:</strong></p>
+
+<ol>
+<li><a href="http://docs.oracle.com/javase/tutorial/essential/io/notification.html">Watching a Directory for Changes</a></li>
+<li><a href="http://java.dzone.com/articles/using-java-7s-watchservice">Using Java 7&rsquo;s WatchService to Monitor Directories</a></li>
+</ol>
+
 ]]></content>
   </entry>
   
