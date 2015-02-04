@@ -9,12 +9,12 @@
   <meta name="author" content="Bill Chen">
 
   
-  <meta name="description" content="Java文件变更监控的两种实现 对文件及文件夹进行修改变更监测有很广泛的应用，例如： 通知配置文件的改变
+  <meta name="description" content="对文件及文件夹进行修改变更监测有很广泛的应用，例如： 通知配置文件的改变
 跟踪某些关键的系统文件的变化
 监控某个分区磁盘的整体使用情况
 系统崩溃时进行自动清理
 自动触发备份进程
-向服务器上传文件结束时发出通知 下面给出Java的两种实现，源码可以在GitHub上找到 &hellip;">
+向服务器上传文件结束时发出通知 下面给出Java的两种实现，源码可以在GitHub上找到 FileMonitor &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -30,7 +30,7 @@
   <script src="/javascripts/ender.js"></script>
   <script src="/javascripts/octopress.js" type="text/javascript"></script>
   <link href="/atom.xml" rel="alternate" title="Cwind's Note Book" type="application/atom+xml">
-  <link href='http://fonts.googleapis.com/css?family=Lato:400,700,400italic,700italic' rel='stylesheet' type='text/css'>
+  <link href='http://fonts.useso.com/css?family=Lato:400,700,400italic,700italic' rel='stylesheet' type='text/css'>
   <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
 <link href="http://fonts.useso.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
 <link href="http://fonts.useso.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
@@ -108,9 +108,7 @@
   </header>
 
 
-  <div class="entry-content"><h3>Java文件变更监控的两种实现</h3>
-
-<p><strong>对文件及文件夹进行修改变更监测有很广泛的应用，例如：</strong></p>
+  <div class="entry-content"><p><strong>对文件及文件夹进行修改变更监测有很广泛的应用，例如：</strong></p>
 
 <ul>
 <li>通知配置文件的改变</li>
@@ -133,7 +131,7 @@
 
 
 <p>Timertask是由Timer执行的实际任务，实现了Rannable接口。通过重写run()方法来指定具体任务细节。<br/>
-Picture111&mdash;&mdash;&mdash;</p>
+<img src="http://dl2.iteye.com/upload/attachment/0105/5397/ddf9a7c5-f08a-3fd3-b1f8-6859e1054bd8.jpg"></p>
 
 <p><strong>Timer工作原理：</strong><br/>
 Timer是用于调度一次性执行或重复执行的工具类。通过TaskQueue保存需要调度的TimerTask，当某个Task被废弃时（一次性任务结束或TimerTask.cancel()），将其从该队列中移除。<br/>
@@ -142,7 +140,7 @@ Timer类维护一个后台线程（守护线程或用户线程，取决于如何
 更多可参见：<a href="http://javarevisited.blogspot.com/2013/02/what-is-timer-and-timertask-in-java-example-tutorial.html">What is Timer and TimerTask in Java</a></p>
 
 <p><strong>基于Timer的FileMonitor的实现：</strong><br/>
-Picture222&mdash;&mdash;&mdash;</p>
+<img src="http://dl2.iteye.com/upload/attachment/0105/5399/4b7c54fa-cac9-3d7b-85c7-6e655ff8bbcb.jpg"></p>
 
 <p>通过实现FileChangeObserver接口，该FileMonitor允许对任意文件添加任意多个Observer。<br/>
 <a href="https://github.com/cwind001/CwindJavaLab/blob/master/FileMonitor/src/main/java/com/cwind/file/FileChangeMonitor.java">FileChangeMonitor及FileChangeTask源码</a><br/>
@@ -310,7 +308,7 @@ FileChangeMonitor本身是一个单例。fileObservers由Collections.synchronize
 Java 7 的新IO - NIO.2提供了一组新的类和方法，主要存在于java.nio包内。它完全取代了java.io.File与文件系统的交互，并提供了新的异步处理类，无需手动配置线程池和其他底层并发控制，便可在后台线程中执行文件和网络IO操作。<br/>
 其中Path是新文件IO的基石。为与之前版本兼容，java.io.File类中新增了toPath()方法，Path类中提供了toFile()方法。
 Watch Service API可用于将指定目录注册到监视服务上。注册时须指定事件类型，如文件创建、修改、删除等。相关类图如下：<br/>
-PIC3</p>
+<img src="http://dl2.iteye.com/upload/attachment/0105/5403/f20e959b-2ded-3a35-b984-61f5010f7efb.jpg"></p>
 
 <p>WatchService是监视服务接口，在不同系统上有不同的实现类。实现了Watchable接口的对象方可注册监视服务，java.nio.file.Path实现了此接口。WatchKey表示Watchable对象和WatchService的关联关系，在注册时被创建。注册完成后，WatchKey将被置为&#8217;ready&#8217;状态，直到下列三种情况之一发生：</p>
 
