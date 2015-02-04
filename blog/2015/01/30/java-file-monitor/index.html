@@ -15,7 +15,7 @@
 系统崩溃时进行自动清理
 自动触发备份进程
 向服务器上传文件结束时发出通知 下面给出Java的两种实现，源码可以在GitHub上找到 FileMonitor &hellip;">
-  
+  <meta name="keywords" content="Java监控文件修改, Timer, TimerTask, WatchService">
 
   <!-- http://t.co/dKP3o1e -->
   <meta name="HandheldFriendly" content="True">
@@ -118,8 +118,12 @@
 </ul>
 
 
-<p><strong>JDK1.6及之前版本: 基于Timer实现</strong><br/>
-<strong>两个关键类：</strong></p>
+<p><strong>JDK1.6及之前版本: 基于Timer实现</strong></p>
+
+<!--more-->
+
+
+<p><strong>两个关键类：</strong></p>
 
 <ul>
 <li>java.util.Timer</li>
