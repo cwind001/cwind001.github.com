@@ -3,7 +3,9 @@ layout: post
 title: "Java文件变更监控的两种实现"
 date: 2015-01-30 14:25:04 +0800
 comments: true
-categories: Java语言
+categories: Java
+tags: [Java]
+keywords: Java监控文件修改, Timer, TimerTask, WatchService
 ---
 **对文件及文件夹进行修改变更监测有很广泛的应用，例如：**  
 
@@ -16,6 +18,7 @@ categories: Java语言
 下面给出Java的两种实现，源码可以在GitHub上找到 [FileMonitor](https://github.com/cwind001/CwindJavaLab/tree/master/FileMonitor)
 
 **JDK1.6及之前版本: 基于Timer实现**  
+<!--more-->
 **两个关键类：**  
 
 - java.util.Timer  
