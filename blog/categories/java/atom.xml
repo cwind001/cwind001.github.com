@@ -4,7 +4,7 @@
   <title><![CDATA[Category: Java | Cwind's Note Book]]></title>
   <link href="http://cwind001.github.io/blog/categories/java/atom.xml" rel="self"/>
   <link href="http://cwind001.github.io/"/>
-  <updated>2015-02-04T23:04:33+08:00</updated>
+  <updated>2015-02-05T09:05:28+08:00</updated>
   <id>http://cwind001.github.io/</id>
   <author>
     <name><![CDATA[Bill Chen]]></name>
@@ -26,17 +26,17 @@
 <li>监控某个分区磁盘的整体使用情况</li>
 <li>系统崩溃时进行自动清理</li>
 <li>自动触发备份进程</li>
-<li>向服务器上传文件结束时发出通知  <br/>
-下面给出Java的两种实现，源码可以在GitHub上找到 <a href="https://github.com/cwind001/CwindJavaLab/tree/master/FileMonitor">FileMonitor</a></li>
+<li>向服务器上传文件结束时发出通知</li>
 </ul>
 
-
-<p><strong>JDK1.6及之前版本: 基于Timer实现</strong></p>
 
 <!--more-->
 
 
-<p><strong>两个关键类：</strong></p>
+<p>下面给出Java的两种实现，源码可以在GitHub上找到 <a href="https://github.com/cwind001/CwindJavaLab/tree/master/FileMonitor">FileMonitor</a></p>
+
+<p><strong>JDK1.6及之前版本: 基于Timer实现</strong><br/>
+<strong>两个关键类：</strong></p>
 
 <ul>
 <li>java.util.Timer</li>
