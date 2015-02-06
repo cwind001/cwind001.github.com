@@ -5,9 +5,9 @@
 url: http://cwind001.github.io
 title: Cwind's Note Book
 subtitle: Knowledge and action should go hand in hand.
-author: Bill Chen
+author: 辰风君
 simple_search: http://www.bing.com
-description:
+description: 辰风君的笔记本，记录工作学习中的各种偶得
 
 # Default date format is "ordinal" (resulting in "July 22nd 2007")
 # You can customize the format as defined in
@@ -19,7 +19,7 @@ date_format: "ordinal"
 subscribe_rss: /atom.xml
 subscribe_email:
 # RSS feeds can list your email address if you like
-email:
+email: billchen01@163.com
 
 # ----------------------- #
 #    Jekyll & Plugins     #
