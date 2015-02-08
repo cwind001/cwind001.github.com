@@ -82,5 +82,6 @@ disqus_short_name:
 disqus_show_comment_count: false
 
 # Duoshuo Comments
+duoshuo_comments: true
 duoshuo_show_comment_count: true
-duoshuo_short_name: Cwind
+duoshuo_short_name: cwind
