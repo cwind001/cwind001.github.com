@@ -41,8 +41,9 @@ Timer类维护一个后台线程（守护线程或用户线程，取决于如何
 [FileChangeMonitor及FileChangeTask源码](https://github.com/cwind001/CwindJavaLab/blob/master/FileMonitor/src/main/java/com/cwind/file/FileChangeMonitor.java)  
 FileChangeMonitor本身是一个单例。fileObservers由Collections.synchronizedMap()初始化，保证在该map上的每一个原子操作都将被同步。在其addObserver方法中为每一个fileChangeObserver创建一个FileChangeTask，将其加入fileObservers中。FileChangeTask扩展了TimerTask，由Timer调度执行。
 
-``` java FileChangeMonitor.addObserver() https://github.com/cwind001/CwindJavaLab/blob/master/FileMonitor/src/main/java/com/cwind/file/FileChangeMonitor.java
-	public void addObserver(FileChangeObserver observer, String filename, long delay) throws FileNotFoundException {  
+{% coderay lang:java linenos:true FileChangeMonitor.addObserver() https://github.com/cwind001/CwindJavaLab/blob/master/FileMonitor/src/main/java/com/cwind/file/FileChangeMonitor.java %}
+	public void addObserver(FileChangeObserver observer, 
+	  String filename, long delay) throws FileNotFoundException {  
     	TimerTask task = new FileChangeTask(observer , filename );  
     	List<TimerTask> tasks = fileObservers.get(filename );  
     	if(tasks ==null){  
@@ -52,10 +53,11 @@ FileChangeMonitor本身是一个单例。fileObservers由Collections.synchronize
     	fileObservers.put(filename , tasks );  
     	timer.schedule( task, delay, delay);  
 	}  
-```
-在FileChangeTask的run()函数中，通过比对时间戳来判断文件是否修改，若发生改动，则通知其Observer进行相应处理。  
-``` java FileChangeTask.run() https://github.com/cwind001/CwindJavaLab/blob/master/FileMonitor/src/main/java/com/cwind/file/FileChangeMonitor.java
-	public void run() {
+{% endcoderay %}  
+在FileChangeTask的run()函数中，通过比对时间戳来判断文件是否修改，若发生改动，则通知其Observer进行相应处理。 
+
+{% coderay lang:java linenos:true FileChangeTask.run() https://github.com/cwind001/CwindJavaLab/blob/master/FileMonitor/src/main/java/com/cwind/file/FileChangeMonitor.java %}  
+public void run() {
 		try	{
 			long newLastModified = file.lastModified();
 			if (newLastModified > lastModified) {
@@ -67,10 +69,11 @@ FileChangeMonitor本身是一个单例。fileObservers由Collections.synchronize
 			System.err.println(e.getMessage());
 		}
 	} 
-```
+{% endcoderay %} 
 
-测试用例[FileMonitorTest](https://github.com/cwind001/CwindJavaLab/blob/163448ce07ecca1738b306bed9bf1b39464d345c/FileMonitor/src/test/java/com/cwind/file/FileMonitorTest.java)中为sample1.txt添加了consoleObserver和emailObserver，为sample2.txt添加了consoleObserver。然后对这两个文件分别进行修改。  
-``` java FileMonitorTest https://github.com/cwind001/CwindJavaLab/blob/163448ce07ecca1738b306bed9bf1b39464d345c/FileMonitor/src/test/java/com/cwind/file/FileMonitorTest.java
+测试用例[FileMonitorTest](https://github.com/cwind001/CwindJavaLab/blob/163448ce07ecca1738b306bed9bf1b39464d345c/FileMonitor/src/test/java/com/cwind/file/FileMonitorTest.java)中为sample1.txt添加了consoleObserver和emailObserver，为sample2.txt添加了consoleObserver。然后对这两个文件分别进行修改。
+  
+{% coderay lang:java linenos:true FileMonitorTest https://github.com/cwind001/CwindJavaLab/blob/163448ce07ecca1738b306bed9bf1b39464d345c/FileMonitor/src/test/java/com/cwind/file/FileMonitorTest.java %}
 package com.cwind.file;
 
 import java.io.File;
@@ -103,10 +106,14 @@ public class FileMonitorTest {
 	}
 	
 	@Test
-	public void testMonitorSampleFile() throws InterruptedException, IOException{
-		monitor.addObserver(consoleObserver, sampleFile1.getPath(), FileChangeMonitor.DELAY_TIME);
-		monitor.addObserver(emailObserver, sampleFile1.getPath(), FileChangeMonitor.DELAY_TIME);
-		monitor.addObserver(consoleObserver, sampleFile2.getPath(), FileChangeMonitor.DELAY_TIME);
+	public void testMonitorSampleFile() throws InterruptedException, 
+		IOException{
+		monitor.addObserver(consoleObserver, sampleFile1.getPath(), 
+			FileChangeMonitor.DELAY_TIME);
+		monitor.addObserver(emailObserver, sampleFile1.getPath(), 
+			FileChangeMonitor.DELAY_TIME);
+		monitor.addObserver(consoleObserver, sampleFile2.getPath(), 
+			FileChangeMonitor.DELAY_TIME);
 		
 		FileOutputStream fos1 = new FileOutputStream(sampleFile1);
 		FileOutputStream fos2 = new FileOutputStream(sampleFile2);
@@ -119,7 +126,7 @@ public class FileMonitorTest {
 		Thread.sleep(3000);
 	}
 }
-```
+{% endcoderay %} 
 
 输出结果如下：  
 `Console: File sample1.txt is changed, will print warning message to console.`  
@@ -152,7 +159,7 @@ WatchService是监视服务接口，在不同系统上有不同的实现类。�
 3. 通过WatchEvent.context()函数得到发生该事件的文件名
 4. 当该key的所有事件处理完成后，需要调用WatchKey.reset()方法把该key重置为ready状态。若不重置，该key将无法接收后续的改动。若reset返回false，表示该WatchKey不再合法，主循环可以退出。
 
-``` java WatchServiceTest https://github.com/cwind001/CwindJavaLab/blob/163448ce07ecca1738b306bed9bf1b39464d345c/FileMonitor/src/test/java/com/cwind/file/WatchServerTest.java
+{% coderay lang:java linenos:true WatchServiceTest https://github.com/cwind001/CwindJavaLab/blob/163448ce07ecca1738b306bed9bf1b39464d345c/FileMonitor/src/test/java/com/cwind/file/WatchServerTest.java %}
 package com.cwind.file;
 
 import java.io.IOException;
@@ -165,11 +172,15 @@ import java.nio.file.WatchKey;
 import java.nio.file.WatchService;
 
 public class WatchServerTest {
-	public static void main(String[] args) throws InterruptedException, IOException {
-		WatchService watchService = FileSystems.getDefault().newWatchService();
+	public static void main(String[] args) throws InterruptedException, 
+		IOException {
+		WatchService watchService 
+			= FileSystems.getDefault().newWatchService();
 		final Path path = Paths.get(".");
-		final WatchKey watchKey = path.register(watchService, StandardWatchEventKinds.ENTRY_MODIFY, 
-				StandardWatchEventKinds.ENTRY_CREATE, StandardWatchEventKinds.ENTRY_DELETE);
+		final WatchKey watchKey = path.register(watchService, 
+			StandardWatchEventKinds.ENTRY_MODIFY,
+			StandardWatchEventKinds.ENTRY_CREATE,
+			StandardWatchEventKinds.ENTRY_DELETE);
 		boolean fileNotChanged = true;
 		int count = 0;
 		while (fileNotChanged) {
@@ -191,7 +202,7 @@ public class WatchServerTest {
 		}
 	}
 }
-```  
+{% endcoderay %}  
 总结，使用WatchService步骤如下：  
 
 1. 创建WatchService
