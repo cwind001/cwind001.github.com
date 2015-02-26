@@ -168,13 +168,13 @@ body>div>div {
 }
 
 .heading, body>header h1, h1, h2, h3, h4, h5, h6 {
-	font-family: "Microsoft YaHei", "Lato", sans-serif
+	font-family: "Lato", sans-serif
 }
 
 .sans, body>header h2, article header p.meta, article>footer, #content .blog-index footer,
 	html .gist .gist-file .gist-meta, #blog-archives a.category,
 	#blog-archives time, aside.sidebar section, body>footer {
-	font-family: "Microsoft YaHei", "Lato", sans-serif
+	font-family: "Lato", sans-serif
 }
 
 .serif, body, #content .blog-index a[rel=full-article] {
@@ -195,7 +195,7 @@ body>header h1 {
 }
 
 body>header h2 {
-	font-family: "Microsoft YaHei", "Lato", sans-serif
+	font-family: "Lato", sans-serif
 }
 
 body {
