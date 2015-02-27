@@ -4,7 +4,7 @@
   <title><![CDATA[Category: Java | Cwind's Note Book]]></title>
   <link href="http://cwind001.github.io/blog/categories/java/atom.xml" rel="self"/>
   <link href="http://cwind001.github.io/"/>
-  <updated>2015-02-26T21:30:34+08:00</updated>
+  <updated>2015-02-27T09:23:43+08:00</updated>
   <id>http://cwind001.github.io/</id>
   <author>
     <name><![CDATA[辰风君]]></name>
@@ -12,6 +12,165 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[Java读写Excel：Apache POI, JXL与OpenCSV]]></title>
+    <link href="http://cwind001.github.io/blog/2015/02/27/apachepoi/"/>
+    <updated>2015-02-27T07:53:53+08:00</updated>
+    <id>http://cwind001.github.io/blog/2015/02/27/apachepoi</id>
+    <content type="html"><![CDATA[<p>前些日子把JXL替换为ApachePOI，原因很简单，JXL在2009年10月已经停止更新，并且不支持Excel 2007 OOXML （.xlsx）格式的文件。事实上把JXL与POI进行比较并不公平，因为JXL只能够操作OLE2格式的Excel（即.xls），而POI则是能够读写xls(x)、doc(x)、ppt(x)的一整套解决方案。<br />
+<!--more--></p>
+
+<p>不同版本Excel的行列数限制：  </p>
+
+<p><figure class='code'> <div class="CodeRay">
+  <div class="code"><pre> &lt;br /&gt;
++<span class="error">—</span><span class="error">—</span><span class="error">—</span><span class="error">—</span><span class="error">—</span><span class="error">–</span>+<span class="error">—</span><span class="error">—</span><span class="error">—</span><span class="error">–</span>+<span class="error">—</span><span class="error">—</span><span class="error">—</span><span class="error">—</span><span class="error">–</span>+<span class="error">—</span><span class="error">—</span><span class="error">—</span><span class="error">—</span><span class="error">—</span><span class="error">—</span><span class="error">—</span>+
+|                 | Max. Rows | Max. Columns | Max. Cols by letter |
++<span class="error">—</span><span class="error">—</span><span class="error">—</span><span class="error">—</span><span class="error">—</span><span class="error">–</span>+<span class="error">—</span><span class="error">—</span><span class="error">—</span><span class="error">–</span>+<span class="error">—</span><span class="error">—</span><span class="error">—</span><span class="error">—</span><span class="error">–</span>+<span class="error">—</span><span class="error">—</span><span class="error">—</span><span class="error">—</span><span class="error">—</span><span class="error">—</span><span class="error">—</span>+
+| Excel <span class="integer">365</span>*      | <span class="integer">1</span>,<span class="integer">048</span>,<span class="integer">576</span> | <span class="integer">16</span>,<span class="integer">384</span>       | XFD                 |
+| Excel <span class="integer">2013</span>      | <span class="integer">1</span>,<span class="integer">048</span>,<span class="integer">576</span> | <span class="integer">16</span>,<span class="integer">384</span>       | XFD                 |
+| Excel <span class="integer">2010</span>      | <span class="integer">1</span>,<span class="integer">048</span>,<span class="integer">576</span> | <span class="integer">16</span>,<span class="integer">384</span>       | XFD                 |
+| Excel <span class="integer">2007</span>      | <span class="integer">1</span>,<span class="integer">048</span>,<span class="integer">576</span> | <span class="integer">16</span>,<span class="integer">384</span>       | XFD                 |
+| Excel <span class="integer">2003</span>      | <span class="integer">65</span>,<span class="integer">536</span>    | <span class="integer">256</span>          | IV                  |
+| Excel <span class="integer">2002</span> (XP) | <span class="integer">65</span>,<span class="integer">536</span>    | <span class="integer">256</span>          | IV                  |
+| Excel <span class="integer">2000</span>      | <span class="integer">65</span>,<span class="integer">536</span>    | <span class="integer">256</span>          | IV                  |
+| Excel <span class="integer">97</span>        | <span class="integer">65</span>,<span class="integer">536</span>    | <span class="integer">256</span>          | IV                  |
+| Excel <span class="integer">95</span>        | <span class="integer">16</span>,<span class="integer">384</span>    | <span class="integer">256</span>          | IV                  |
+| Excel <span class="integer">5</span>         | <span class="integer">16</span>,<span class="integer">384</span>    | <span class="integer">256</span>          | IV                  |
++<span class="error">—</span><span class="error">—</span><span class="error">—</span><span class="error">—</span><span class="error">—</span><span class="error">–</span>+<span class="error">—</span><span class="error">—</span><span class="error">—</span><span class="error">–</span>+<span class="error">—</span><span class="error">—</span><span class="error">—</span><span class="error">—</span><span class="error">–</span>+<span class="error">—</span><span class="error">—</span><span class="error">—</span><span class="error">—</span><span class="error">—</span><span class="error">—</span><span class="error">—</span>+&lt;br /&gt;
+</pre></div>
+</div>
+ </figure> </p>
+
+<p><em>*Excel 365 unverified.</em></p>
+
+<p><strong>JXL - JExcelApi</strong><br />
+<a href="http://mvnrepository.com/artifact/net.sourceforge.jexcelapi/jxl/2.6.12">Maven Repo</a><br />
+<a href="http://www.andykhan.com/jexcelapi/index.html">官方网站</a><br />
+最后更新：Oct 24，2009</p>
+
+<p><figure class='code'> <div class="CodeRay">
+  <div class="code"><pre>   &lt;/p&gt;
+&lt;dependency&gt;
+ &lt;groupid&gt;net.sourceforge.jexcelapi&lt;/groupid&gt;
+ &lt;artifactid&gt;jxl&lt;/artifactid&gt;
+ &lt;version&gt;<span class="float">2.6</span><span class="float">.12</span>&lt;/version&gt;
+&lt;/dependency&gt;
+&lt;p&gt;</pre></div>
+</div>
+ </figure>   </p>
+
+<p>JXL是一个日本人写的简单类库。<a href="http://www.jexcelapi.org/">作者主页</a>。<a href="http://blog.csdn.net/jarvis_java/article/details/4924099">POI和jxl.jar性能比较</a>一贴中提到其性能较poi更高，内存消耗更少。当且仅当目标文档是行数接近但不超过65536的xls格式时成立。  </p>
+
+<p>类图：<br />
+<img src="http://e.picphotos.baidu.com/album/s%3D1100%3Bq%3D90/sign=05d66631344e251fe6f7e0f997b6f266/b3fb43166d224f4a6446b7180df790529922d1da.jpg">  </p>
+
+<p><figure class='code'><figcaption class='code-header'><span>JXL Demo</span> &mdash; <a href='https://github.com/cwind001/CwindJavaLab/blob/master/POITest/src/main/java/com/cwind/jxl/JXLDataSheetWriter.java'>link</a></figcaption> <table class="CodeRay"><tr>
+  <td class="line-numbers"><pre><a href="#n1" name="n1">1</a>
+<a href="#n2" name="n2">2</a>
+<a href="#n3" name="n3">3</a>
+<a href="#n4" name="n4">4</a>
+<a href="#n5" name="n5">5</a>
+<a href="#n6" name="n6">6</a>
+<a href="#n7" name="n7">7</a>
+<a href="#n8" name="n8">8</a>
+<a href="#n9" name="n9">9</a>
+<strong><a href="#n10" name="n10">10</a></strong>
+<a href="#n11" name="n11">11</a>
+<a href="#n12" name="n12">12</a>
+<a href="#n13" name="n13">13</a>
+<a href="#n14" name="n14">14</a>
+<a href="#n15" name="n15">15</a>
+<a href="#n16" name="n16">16</a>
+</pre></td>
+  <td class="code"><pre> &lt;br /&gt;
+ <span class="directive">public</span> <span class="directive">static</span> <span class="type">void</span> main(<span class="predefined-type">String</span><span class="type">[]</span> args) {
+  <span class="keyword">try</span> {
+   <span class="comment">// create writable wookbook</span>
+   WritableWorkbook workbook 
+    = Workbook.createWorkbook(<span class="keyword">new</span> <span class="predefined-type">File</span>(<span class="error">“</span>jxlOutput.xls<span class="error">”</span>));&lt;/p&gt;
+
+&lt;p&gt;<span class="comment">// create writable sheet</span>
+   WritableSheet sheet = workbook.createSheet(<span class="error">“</span>First Sheet<span class="error">”</span>, <span class="integer">0</span>);
+   <span class="keyword">for</span>(<span class="type">int</span> i = <span class="integer">0</span>; i &amp;lt; data.length; i++) {
+    <span class="keyword">for</span>(<span class="type">int</span> j = <span class="integer">0</span>; j &amp;lt; data[i].length; j++){&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt; <span class="comment">// create a cell at position (i, j) and add to the sheet</span>
+ <span class="predefined-type">Label</span> label = <span class="keyword">new</span> <span class="predefined-type">Label</span>(i, j, data[i][j]);
+ sheet.addCell(label);
+}    }    workbook.write();    workbook.close();   } <span class="keyword">catch</span> (<span class="exception">IOException</span> | WriteException e) {    e.printStackTrace();   }  } </pre></td>
+</tr></table>
+ </figure> 
+</code></pre>
+
+<p><strong>Apache POI</strong><br />
+<a href="http://mvnrepository.com/artifact/org.apache.poi/poi">Maven Repo</a><br />
+<a href="http://poi.apache.org/">官方网站</a><br />
+最后更新：Dec 17，2014  </p>
+
+<p>类图：<br />
+<img src="http://e.picphotos.baidu.com/album/s%3D1100%3Bq%3D90/sign=5410813508f3d7ca08f63b77c22f8578/3ac79f3df8dcd10076933e2a768b4710b9122faa.jpg"> </p>
+
+<p><figure class='code'> <div class="CodeRay">
+  <div class="code"><pre>   &lt;/p&gt;
+&lt;dependency&gt; 
+  &lt;groupid&gt;org.apache.poi&lt;/groupid&gt;
+  &lt;artifactid&gt;poi&lt;/artifactid&gt;
+  &lt;version&gt;<span class="float">3.10</span><span class="float">.1</span>&lt;/version&gt;
+&lt;/dependency&gt;
+
+&lt;dependency&gt;
+     &lt;groupid&gt;org.apache.poi&lt;/groupid&gt;
+     &lt;artifactid&gt;poi-ooxml&lt;/artifactid&gt;
+     &lt;version&gt;<span class="float">3.9</span>&lt;/version&gt;
+ &lt;/dependency&gt;
+&lt;p&gt;</pre></div>
+</div>
+ </figure>   </p>
+
+<p><strong>Apache POI API的一些重点：</strong><br />
+1. Apache POI 包含 Excel 97(-2007)文件格式(.xls)的Java实现 – HSSF。（彩蛋：H指Horrible）<br />
+2. Apache POI 包含 Excel 2007 OOXML文件格式(.xlsx)的Java实现 – XSSF。<br />
+3. Apache POI的HSSF和XSSF API提供了读写和修改Excel电子表格的功能。<br />
+4. Apache POI也提供了 SXSSF API（流式SXSSF），它是XSSF的扩展，用于写入非常大的excel文件。SXSSF API需求较小的内存，适用于在堆内存受限时处理较大excel文件的情况。<br />
+5. 可以选择两种模型：Event Model和User Model。Event Model需求较小的内存，流式读取并处理每个单元；User Model更具备面向对象的特征，方便操作。<br />
+6. Apache POI提供了对excel附加功能的完美支持，如公式、单元格样式、颜色、字体、数据验证、图像和超链接等。  </p>
+
+<p>SpreadSheet API 功能摘要：<br />
+<img src="http://f.picphotos.baidu.com/album/s%3D1100%3Bq%3D90/sign=b698fc7df61fbe09185ec7155b503742/bba1cd11728b471074413ec7c7cec3fdfc03234b.jpg"> <br />
+以下是两个基于XSSF读写xlsx文件的例子：<br />
+<a href="https://github.com/cwind001/CwindJavaLab/blob/master/POITest/src/main/java/com/cwind/poi/SimpleDatasheetReader.java">读取xlsx文件</a><br />
+<a href="https://github.com/cwind001/CwindJavaLab/blob/master/POITest/src/main/java/com/cwind/poi/SimpleDatasheetWriter.java">写入xlsx文件</a>  </p>
+
+<p><strong>OpenCSV：</strong> <br />
+CSV文件以纯文本形式存储表格数据（数字和文本）。OpenCSV是一个用于读写CSV文件的简单Java类库。
+<a href="http://mvnrepository.com/artifact/net.sf.opencsv/opencsv/2.3">Maven Repo</a>
+<a href="http://opencsv.sf.net">官方网站</a>
+最近更新：Jul 28，2011</p>
+
+<p><figure class='code'> <div class="CodeRay">
+  <div class="code"><pre>  &lt;/p&gt;
+&lt;dependency&gt;
+ &lt;groupid&gt;net.sf.opencsv&lt;/groupid&gt;
+ &lt;artifactid&gt;opencsv&lt;/artifactid&gt;
+ &lt;version&gt;<span class="float">2.3</span>&lt;/version&gt;
+&lt;/dependency&gt;
+&lt;p&gt;</pre></div>
+</div>
+ </figure></p>
+
+<p>OpenCSV将CSV文件中的每一行读取为一个String数组。相应地，写文件时通过<code>csvWriter.writeNext(array)</code>把String数组内容作为一行写入CSV文件</p>
+
+<p>读写CSV文件的例子：<br />
+<a href="https://github.com/cwind001/CwindJavaLab/blob/master/POITest/src/main/java/com/cwind/opencsv/ReadCSVDemo.java">读取csv文件内容</a><br />
+<a href="https://github.com/cwind001/CwindJavaLab/blob/master/POITest/src/main/java/com/cwind/opencsv/OpenCSVDemo.java">将xlsx文件内容写入csv</a>  </p>
+
+<p><strong>References:</strong><br />
+1. <a href="http://poi.apache.org/spreadsheet/">POI-HSSF and POI-XSSF - Java API To Access Microsoft Excel Format Files</a><br />
+2. <a href="http://www.journaldev.com/2562/java-readwrite-excel-file-using-apache-poi-api">Java Read/Write Excel File using Apache POI API</a>  </p>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[Java文件变更监控的两种实现]]></title>

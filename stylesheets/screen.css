@@ -178,7 +178,7 @@ body>div>div {
 }
 
 .serif, body, #content .blog-index a[rel=full-article] {
-	font-family: "Microsoft YaHei", "Lato", sans-serif
+	font-family: "Lato", "Microsoft YaHei", sans-serif
 }
 
 .mono, pre, code, tt, p code, li code {
@@ -820,7 +820,7 @@ body>nav form {
 body>nav form .search {
 	padding: .1em .5em .2em .5em;
 	font-size: .85em;
-	font-family: "Microsoft YaHei", "Lato", sans-serif;
+	font-family: "Lato", "Microsoft YaHei", sans-serif;
 	line-height: 1em;
 	width: 95%;
 	-webkit-border-radius: 0.5em;
@@ -915,7 +915,7 @@ body>nav ul {
 	}
 	body>nav a {
 		color: #6b6b6b;
-		font-family: "Microsoft YaHei", "Lato", sans-serif;
+		font-family: "Lato", "Microsoft YaHei", sans-serif;
 		text-shadow: #ebebeb 0 1px;
 		float: left;
 		text-decoration: none;
@@ -1501,8 +1501,8 @@ p pre code, li pre code {
 
 .pre-code, html .gist .gist-file .gist-syntax .gist-highlight pre,
 	.highlight code {
-	font-family: "Microsoft YaHei", Menlo, Monaco, "Andale Mono", "lucida console",
-		"Courier New", monospace !important;
+	font-family: Menlo, Monaco, "Andale Mono", "lucida console",
+		"Courier New", "Microsoft YaHei", monospace !important;
 	overflow: scroll;
 	overflow-y: hidden;
 	display: block;
