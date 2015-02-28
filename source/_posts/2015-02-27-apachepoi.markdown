@@ -35,7 +35,7 @@ keywords: Java读写CSV, ApachePOI, JXL, OpenCSV
 **JXL - JExcelApi**  
 [Maven Repo](http://mvnrepository.com/artifact/net.sourceforge.jexcelapi/jxl/2.6.12)  
 [官方网站](http://www.andykhan.com/jexcelapi/index.html)  
-最后更新：Oct 24，2009
+最近更新：Oct 24，2009
 
 {% coderay lang:java linenos:false %}   
 <dependency>
@@ -78,7 +78,7 @@ JXL是一个日本人写的简单类库。[作者主页](http://www.jexcelapi.or
 **Apache POI**  
 [Maven Repo](http://mvnrepository.com/artifact/org.apache.poi/poi)  
 [官方网站](http://poi.apache.org/)  
-最后更新：Dec 17，2014  
+最近更新：Dec 17，2014  
 
 类图：  
 {% img http://dl.iteye.com/upload/picture/pic/132576/6230920a-edc2-3e7c-ac23-d4590f095048.jpg %} 
@@ -113,9 +113,9 @@ SpreadSheet API 功能摘要：
 [写入xlsx文件](https://github.com/cwind001/CwindJavaLab/blob/master/POITest/src/main/java/com/cwind/poi/SimpleDatasheetWriter.java)  
 
 **OpenCSV：**   
-CSV文件以纯文本形式存储表格数据（数字和文本）。OpenCSV是一个用于读写CSV文件的简单Java类库。
-[Maven Repo](http://mvnrepository.com/artifact/net.sf.opencsv/opencsv/2.3)
-[官方网站](http://opencsv.sf.net)
+CSV文件以纯文本形式存储表格数据（数字和文本）。OpenCSV是一个用于读写CSV文件的简单Java类库。  
+[Maven Repo](http://mvnrepository.com/artifact/net.sf.opencsv/opencsv/2.3)  
+[官方网站](http://opencsv.sf.net)  
 最近更新：Jul 28，2011
 
 {% coderay lang:java linenos:false %}  
