@@ -14,9 +14,10 @@ keywords: Java监控文件修改, Timer, TimerTask, WatchService
 - 跟踪某些关键的系统文件的变化  
 - 监控某个分区磁盘的整体使用情况  
 - 系统崩溃时进行自动清理  
+<!--more-->
 - 自动触发备份进程  
 - 向服务器上传文件结束时发出通知    
-<!--more-->
+
 下面给出Java的两种实现，源码可以在GitHub上找到 [FileMonitor](https://github.com/cwind001/CwindJavaLab/tree/master/FileMonitor)
 
 **JDK1.6及之前版本: 基于Timer实现**  
