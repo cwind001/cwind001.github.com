@@ -163,6 +163,43 @@
   <header>
     
       <!-- Now we're back to normal posts. Note the links used under href in both headers.-->
+        <h1 class="entry-title"><a href="/blog/2014/03/08/java-propertydescriptor/">Java PropertyDescriptor 应用及源码分析</a></h1>
+      
+    
+    
+      <p class="meta">
+        
+
+
+
+<time class='entry-date' datetime='2014-03-08T22:15:28+08:00'><span class='date'><span class='date-month'>Mar</span> <span class='date-day'>8</span><span class='date-suffix'>th</span>, <span class='date-year'>2014</span></span> <span class='time'>10:15 pm</span></time>
+		
+        
+          | <a href="/blog/2014/03/08/java-propertydescriptor/#comments">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>前文<a href="http://gocwind.com/blog/2014/01/20/java-introspector/">从Introspector谈Java内省机制</a>提到了通过Introspector.getBeanInfo()方法获取属性描述符数组，进而读取属性值的方式，但未对PropertyDescriptor的应用和实现作进一步阐释，在此作个补完。<br />
+</div>
+  
+  
+    <footer>
+      <a rel="full-article" href="/blog/2014/03/08/java-propertydescriptor/">Read on &rarr;</a>
+    </footer>
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <!-- Now we're back to normal posts. Note the links used under href in both headers.-->
         <h1 class="entry-title"><a href="/blog/2014/01/20/java-introspector/">从Introspector谈Java内省机制</a></h1>
       
     
@@ -184,345 +221,12 @@
 
   <div class="entry-content"><p><strong>内省</strong><br />
 内省是Java语言的一种重要特性。使用内省我们可以在运行时得到一个类的内部信息。这些信息包括方法、属性、构造函数及其他。内省的一个应用是开发使用插件的应用程序。应用程序可以在运行时获取并使用插件类的构造函数、方法和属性。内省也可以应用于创建Java Beans和Javadocs中。<br />
-<strong>Introspector类</strong><br />
-Introspector类为访问目标Jave Bean支持的属性、事件和方法提供了标准方法。该方法可用于工具类（如BeanUtils）中。<br />
-对于属性、事件和方法中的每一类信息，Introspector会分别分析目标bean以及其父类，寻找显式或隐式信息并用其构建一个能够全面描述目标bean的BeanInfo对象。<br />
-<img src="http://dl2.iteye.com/upload/attachment/0093/3705/b0194712-7259-3d67-9f84-da5282bee5cb.jpg" /><br />
-通过调用Introspector.getBeanInfo()方法来获得指定类的bean信息。Java Bean规范允许通过实现BeanInfo接口，定义一个对象来描述bean。为了将BeanInfo与bean关联起来，须遵守如下命名模式：bean信息类的名字必须是将”BeanInfo”添加到bean名字的后面构成。例如：  </p>
-
-<div class="bogus-wrapper"><notextile><figure class="code"> <table class="CodeRay"><tr>
-  <td class="line-numbers"><pre><a href="#n1" name="n1">1</a>
-<a href="#n2" name="n2">2</a>
-<a href="#n3" name="n3">3</a>
-<a href="#n4" name="n4">4</a>
-<a href="#n5" name="n5">5</a>
-<a href="#n6" name="n6">6</a>
-<a href="#n7" name="n7">7</a>
-<a href="#n8" name="n8">8</a>
-<a href="#n9" name="n9">9</a>
-<strong><a href="#n10" name="n10">10</a></strong>
-<a href="#n11" name="n11">11</a>
-<a href="#n12" name="n12">12</a>
-<a href="#n13" name="n13">13</a>
-<a href="#n14" name="n14">14</a>
-<a href="#n15" name="n15">15</a>
-<a href="#n16" name="n16">16</a>
-<a href="#n17" name="n17">17</a>
-<a href="#n18" name="n18">18</a>
-<a href="#n19" name="n19">19</a>
-</pre></td>
-  <td class="code"><pre> 
-<span class="keyword">package</span> <span class="namespace">com.cwind.introspector</span>;  
-  
-<span class="directive">public</span> <span class="type">class</span> <span class="class">Ultraman</span> <span class="directive">extends</span> Superhero {  
-        <span class="directive">public</span> <span class="predefined-type">String</span> avanta ;  
-  
-        <span class="directive">public</span> Ultraman(<span class="predefined-type">String</span> avanta) {  
-               <span class="local-variable">super</span> ();  
-               <span class="local-variable">this</span> .avanta = avanta;  
-       }  
-  
-        <span class="directive">public</span> <span class="predefined-type">String</span> getAvanta() {  
-               <span class="keyword">return</span> avanta ;  
-       }  
-  
-        <span class="directive">public</span> <span class="type">void</span> setAvanta(<span class="predefined-type">String</span> avanta) {  
-               <span class="local-variable">this</span> .avanta = avanta;  
-       }  
-}  
-</pre></td>
-</tr></table>
- </figure></notextile></div>
-<p>相关信息类：</p>
-
-<div class="bogus-wrapper"><notextile><figure class="code"> <table class="CodeRay"><tr>
-  <td class="line-numbers"><pre><a href="#n1" name="n1">1</a>
-<a href="#n2" name="n2">2</a>
-<a href="#n3" name="n3">3</a>
-<a href="#n4" name="n4">4</a>
-<a href="#n5" name="n5">5</a>
-<a href="#n6" name="n6">6</a>
-<a href="#n7" name="n7">7</a>
-<a href="#n8" name="n8">8</a>
-<a href="#n9" name="n9">9</a>
-<strong><a href="#n10" name="n10">10</a></strong>
-<a href="#n11" name="n11">11</a>
-<a href="#n12" name="n12">12</a>
-<a href="#n13" name="n13">13</a>
-<a href="#n14" name="n14">14</a>
-<a href="#n15" name="n15">15</a>
-<a href="#n16" name="n16">16</a>
-<a href="#n17" name="n17">17</a>
-<a href="#n18" name="n18">18</a>
-<a href="#n19" name="n19">19</a>
-<strong><a href="#n20" name="n20">20</a></strong>
-</pre></td>
-  <td class="code"><pre> 
-<span class="keyword">package</span> <span class="namespace">com.cwind.introspector</span>;  
-  
-<span class="keyword">import</span> <span class="include">java.beans.IntrospectionException</span>;  
-<span class="keyword">import</span> <span class="include">java.beans.PropertyDescriptor</span>;  
-<span class="keyword">import</span> <span class="include">java.beans.SimpleBeanInfo</span>;  
-  
-<span class="directive">public</span> <span class="type">class</span> <span class="class">UltramanBeanInfo</span> <span class="directive">extends</span> <span class="predefined-type">SimpleBeanInfo</span> {  
-        <span class="directive">public</span> <span class="predefined-type">PropertyDescriptor</span><span class="type">[]</span> getPropertyDescriptors() {  
-               <span class="keyword">try</span> {  
-                      <span class="keyword">return</span> <span class="keyword">new</span> <span class="predefined-type">PropertyDescriptor</span><span class="type">[]</span>{  
-                        <span class="keyword">new</span> <span class="predefined-type">PropertyDescriptor</span>(<span class="string"><span class="delimiter">&quot;</span><span class="content">avanta</span><span class="delimiter">&quot;</span></span> , Ultraman. class),  
-                        <span class="keyword">new</span> <span class="predefined-type">PropertyDescriptor</span>(<span class="string"><span class="delimiter">&quot;</span><span class="content">name</span><span class="delimiter">&quot;</span></span> , Ultraman. class)  
-                     };  
-              } <span class="keyword">catch</span> (<span class="exception">IntrospectionException</span> e) {  
-                     e.printStackTrace();  
-                      <span class="keyword">return</span> <span class="predefined-constant">null</span> ;  
-              }  
-       }  
-}  
-</pre></td>
-</tr></table>
- </figure></notextile></div>
-<p>信息类会先从Bean类所在的包内查找，如上例中搜索路径为com.cwind.introspector.UltramanBeanInfo。搜索路径也可以通过Introspector.setBeanInfoSearchPath()进行设置。使用BeanInfo类是为了获取对bean属性的控制权。只需提供属性名和所属的bean类，就可以为每个属性构建一个PropertyDescriptor。
-演示类Superhero及其另一子类Titan定义：  </p>
-
-<div class="bogus-wrapper"><notextile><figure class="code"> <table class="CodeRay"><tr>
-  <td class="line-numbers"><pre><a href="#n1" name="n1">1</a>
-<a href="#n2" name="n2">2</a>
-<a href="#n3" name="n3">3</a>
-<a href="#n4" name="n4">4</a>
-<a href="#n5" name="n5">5</a>
-<a href="#n6" name="n6">6</a>
-<a href="#n7" name="n7">7</a>
-<a href="#n8" name="n8">8</a>
-<a href="#n9" name="n9">9</a>
-<strong><a href="#n10" name="n10">10</a></strong>
-<a href="#n11" name="n11">11</a>
-<a href="#n12" name="n12">12</a>
-<a href="#n13" name="n13">13</a>
-<a href="#n14" name="n14">14</a>
-<a href="#n15" name="n15">15</a>
-<a href="#n16" name="n16">16</a>
-<a href="#n17" name="n17">17</a>
-<a href="#n18" name="n18">18</a>
-<a href="#n19" name="n19">19</a>
-<strong><a href="#n20" name="n20">20</a></strong>
-<a href="#n21" name="n21">21</a>
-<a href="#n22" name="n22">22</a>
-<a href="#n23" name="n23">23</a>
-<a href="#n24" name="n24">24</a>
-<a href="#n25" name="n25">25</a>
-<a href="#n26" name="n26">26</a>
-<a href="#n27" name="n27">27</a>
-<a href="#n28" name="n28">28</a>
-<a href="#n29" name="n29">29</a>
-<strong><a href="#n30" name="n30">30</a></strong>
-<a href="#n31" name="n31">31</a>
-<a href="#n32" name="n32">32</a>
-<a href="#n33" name="n33">33</a>
-<a href="#n34" name="n34">34</a>
-<a href="#n35" name="n35">35</a>
-<a href="#n36" name="n36">36</a>
-<a href="#n37" name="n37">37</a>
-<a href="#n38" name="n38">38</a>
-<a href="#n39" name="n39">39</a>
-<strong><a href="#n40" name="n40">40</a></strong>
-<a href="#n41" name="n41">41</a>
-<a href="#n42" name="n42">42</a>
-<a href="#n43" name="n43">43</a>
-<a href="#n44" name="n44">44</a>
-<a href="#n45" name="n45">45</a>
-<a href="#n46" name="n46">46</a>
-<a href="#n47" name="n47">47</a>
-<a href="#n48" name="n48">48</a>
-<a href="#n49" name="n49">49</a>
-<strong><a href="#n50" name="n50">50</a></strong>
-<a href="#n51" name="n51">51</a>
-<a href="#n52" name="n52">52</a>
-<a href="#n53" name="n53">53</a>
-<a href="#n54" name="n54">54</a>
-<a href="#n55" name="n55">55</a>
-<a href="#n56" name="n56">56</a>
-<a href="#n57" name="n57">57</a>
-<a href="#n58" name="n58">58</a>
-<a href="#n59" name="n59">59</a>
-<strong><a href="#n60" name="n60">60</a></strong>
-<a href="#n61" name="n61">61</a>
-<a href="#n62" name="n62">62</a>
-<a href="#n63" name="n63">63</a>
-<a href="#n64" name="n64">64</a>
-<a href="#n65" name="n65">65</a>
-<a href="#n66" name="n66">66</a>
-</pre></td>
-  <td class="code"><pre> 
-<span class="keyword">package</span> <span class="namespace">com.cwind.introspector</span>;  
-  
-<span class="directive">public</span> <span class="type">class</span> <span class="class">Superhero</span> {  
-     <span class="directive">private</span> <span class="predefined-type">String</span> name ;  
-     <span class="directive">private</span> <span class="predefined-type">String</span> superPower ;  
-     <span class="directive">private</span> <span class="type">int</span> age ;  
-         
-     <span class="directive">public</span> Superhero(){  
-          <span class="local-variable">this</span>.name = <span class="string"><span class="delimiter">&quot;</span><span class="content">defaultName</span><span class="delimiter">&quot;</span></span> ;  
-          <span class="local-variable">this</span>.superPower  = <span class="string"><span class="delimiter">&quot;</span><span class="content">defaultSuperPower</span><span class="delimiter">&quot;</span></span> ;  
-          <span class="local-variable">this</span>.age = <span class="integer">0</span>;  
-     }  
-         
-     <span class="directive">public</span> Superhero(<span class="predefined-type">String</span> name, <span class="predefined-type">String</span> superPower, <span class="type">int</span> age) {  
-          <span class="local-variable">super</span>();  
-          <span class="local-variable">this</span>.name = name;  
-          <span class="local-variable">this</span>.superPower = superPower;  
-          <span class="local-variable">this</span>.age = age;  
-     }  
-  
-     <span class="directive">public</span> <span class="predefined-type">String</span> getName() {  
-          <span class="keyword">return</span> name ;  
-     }  
-     <span class="directive">public</span> <span class="type">void</span> setName(<span class="predefined-type">String</span> name) {  
-          <span class="local-variable">this</span>.name = name;  
-     }  
-     <span class="directive">public</span> <span class="predefined-type">String</span> getSuperPower() {  
-          <span class="keyword">return</span> superPower ;  
-     }  
-     <span class="directive">public</span> <span class="type">void</span> setSuperPower(<span class="predefined-type">String</span> superPower) {  
-          <span class="local-variable">this</span>.superPower = superPower;  
-     }  
-     <span class="directive">public</span> <span class="type">int</span> getAge() {  
-          <span class="keyword">return</span> age ;  
-     }  
-     <span class="directive">public</span> <span class="type">void</span> setAge(<span class="type">int</span> age) {  
-          <span class="local-variable">this</span>.age = age;  
-     }  
-}  
-  
-<span class="keyword">package</span> <span class="namespace">com.cwind.introspector</span>;  
-  
-<span class="directive">public</span> <span class="type">class</span> <span class="class">Titan</span> <span class="directive">extends</span> Superhero {  
-     <span class="directive">private</span> <span class="type">double</span> height ;  
-     <span class="directive">private</span> <span class="type">double</span> weight ;  
-         
-     <span class="directive">public</span> Titan(<span class="type">double</span> height, <span class="type">double</span> weight) {  
-          <span class="local-variable">super</span>();  
-          <span class="local-variable">this</span>.height = height;  
-          <span class="local-variable">this</span>.weight = weight;  
-     }  
-         
-     <span class="directive">public</span> <span class="type">double</span> getHeight() {  
-          <span class="keyword">return</span> height ;  
-     }  
-     <span class="directive">public</span> <span class="type">void</span> setHeight(<span class="type">double</span> height) {  
-          <span class="local-variable">this</span>.height = height;  
-     }  
-     <span class="directive">public</span> <span class="type">double</span> getWeight() {  
-          <span class="keyword">return</span> weight ;  
-     }  
-     <span class="directive">public</span> <span class="type">void</span> setWeight(<span class="type">double</span> weight) {  
-          <span class="local-variable">this</span>.weight = weight;  
-     }    
-}  
-</pre></td>
-</tr></table>
- </figure></notextile></div>
-<p>可以看到，Ultraman类有一个显式的BeanInfo类，其中的属性描述符仅包括”avanta”和继承自父类的”name”。Titan没有显式的BeanInfo类。下面用一个测试类来打印Introspector获取的BeanInfo信息，分别打印两个Ultraman和Titan实例的属性名称及其对应的值，比较其异同。  </p>
-
-<div class="bogus-wrapper"><notextile><figure class="code"> <table class="CodeRay"><tr>
-  <td class="line-numbers"><pre><a href="#n1" name="n1">1</a>
-<a href="#n2" name="n2">2</a>
-<a href="#n3" name="n3">3</a>
-<a href="#n4" name="n4">4</a>
-<a href="#n5" name="n5">5</a>
-<a href="#n6" name="n6">6</a>
-<a href="#n7" name="n7">7</a>
-<a href="#n8" name="n8">8</a>
-<a href="#n9" name="n9">9</a>
-<strong><a href="#n10" name="n10">10</a></strong>
-<a href="#n11" name="n11">11</a>
-<a href="#n12" name="n12">12</a>
-<a href="#n13" name="n13">13</a>
-<a href="#n14" name="n14">14</a>
-<a href="#n15" name="n15">15</a>
-<a href="#n16" name="n16">16</a>
-<a href="#n17" name="n17">17</a>
-<a href="#n18" name="n18">18</a>
-<a href="#n19" name="n19">19</a>
-<strong><a href="#n20" name="n20">20</a></strong>
-<a href="#n21" name="n21">21</a>
-<a href="#n22" name="n22">22</a>
-<a href="#n23" name="n23">23</a>
-<a href="#n24" name="n24">24</a>
-<a href="#n25" name="n25">25</a>
-<a href="#n26" name="n26">26</a>
-<a href="#n27" name="n27">27</a>
-<a href="#n28" name="n28">28</a>
-<a href="#n29" name="n29">29</a>
-</pre></td>
-  <td class="code"><pre> 
-<span class="keyword">package</span> <span class="namespace">com.cwind.introspector</span>;  
-  
-<span class="keyword">import</span> <span class="include">java.beans.IntrospectionException</span>;  
-<span class="keyword">import</span> <span class="include">java.beans.Introspector</span>;  
-<span class="keyword">import</span> <span class="include">java.beans.PropertyDescriptor</span>;  
-<span class="keyword">import</span> <span class="include">java.lang.reflect.InvocationTargetException</span>;  
-  
-<span class="directive">public</span> <span class="type">class</span> <span class="class">IntrospectorTest</span> {  
-     <span class="directive">public</span> <span class="directive">static</span> <span class="type">void</span> main(<span class="predefined-type">String</span><span class="type">[]</span> args) 
-    <span class="directive">throws</span> <span class="exception">IntrospectionException</span>, <span class="exception">IllegalArgumentException</span>,
-     <span class="exception">IllegalAccessException</span>, <span class="exception">InvocationTargetException</span>{  
-          <span class="predefined-type">PropertyDescriptor</span><span class="type">[]</span> ultramanProps 
-    = <span class="predefined-type">Introspector</span>.getBeanInfo(Ultraman.class).getPropertyDescriptors();  
-          Ultraman sailor = <span class="keyword">new</span> Ultraman(<span class="string"><span class="delimiter">&quot;</span><span class="content">sailor</span><span class="delimiter">&quot;</span></span> );  
-          <span class="keyword">for</span>(<span class="predefined-type">PropertyDescriptor</span> prop : ultramanProps){
-               <span class="predefined-type">System</span>. out.println(<span class="string"><span class="delimiter">&quot;</span><span class="content">Property name: </span><span class="delimiter">&quot;</span></span> + prop.getName()
-        + <span class="string"><span class="delimiter">&quot;</span><span class="content">, value: </span><span class="delimiter">&quot;</span></span>+ prop.getReadMethod().invoke(sailor, <span class="predefined-constant">null</span>));  
-          }  
-          <span class="predefined-type">System</span>. out.println();  
-          <span class="predefined-type">PropertyDescriptor</span><span class="type">[]</span> titanProps 
-    = <span class="predefined-type">Introspector</span>.getBeanInfo(Titan.class).getPropertyDescriptors();  
-          Titan titan = <span class="keyword">new</span> Titan(<span class="integer">999</span>,<span class="integer">888</span>);  
-          <span class="keyword">for</span>(<span class="predefined-type">PropertyDescriptor</span> prop : titanProps){  
-               <span class="predefined-type">System</span>. out.println(<span class="string"><span class="delimiter">&quot;</span><span class="content">Property name: </span><span class="delimiter">&quot;</span></span> + prop.getName()
-        + <span class="string"><span class="delimiter">&quot;</span><span class="content">, value: </span><span class="delimiter">&quot;</span></span>+ prop.getReadMethod().invoke(titan, <span class="predefined-constant">null</span>));  
-          }  
-     }  
-}  
-</pre></td>
-</tr></table>
- </figure></notextile></div>
-<p>输出结果如下：</p>
-
-<div class="bogus-wrapper"><notextile><figure class="code"> <table class="CodeRay"><tr>
-  <td class="line-numbers"><pre><a href="#n1" name="n1">1</a>
-<a href="#n2" name="n2">2</a>
-<a href="#n3" name="n3">3</a>
-<a href="#n4" name="n4">4</a>
-<a href="#n5" name="n5">5</a>
-<a href="#n6" name="n6">6</a>
-<a href="#n7" name="n7">7</a>
-<a href="#n8" name="n8">8</a>
-<a href="#n9" name="n9">9</a>
-<strong><a href="#n10" name="n10">10</a></strong>
-</pre></td>
-  <td class="code"><pre> 
-Property name: avanta, value: sailor  
-Property name: name, value: defaultName  
-  
-Property name: age, value: <span class="integer">0</span>  
-Property name: <span class="type">class</span>, <span class="class">value</span>: <span class="type">class</span> <span class="class">com</span>.cwind.introspector.Titan  
-Property name: height, value: <span class="float">999.0</span>  
-Property name: name, value: defaultName  
-Property name: superPower, value: defaultSuperPower  
-Property name: weight, value: <span class="float">888.0</span>  
-</pre></td>
-</tr></table>
- </figure></notextile></div>
-<p>可以看到，对于前者，只打印出其显式BeanInfo类中返回的属性描述符所对应的属性；对于后者，使用低层次的反射来获取所有属性，并按照属性名称字母序将属性描述符数组返回。
-为了更好的性能，Introspector缓存BeanInfo；因此，若在使用多个类加载器的应用程序中使用Introspector须小心谨慎。可以调用Introspector.flushCaches或Introspector.flushFromCaches方法从缓存中清空内省的类。<br />
-<strong>Reference：</strong><br />
-1. <a href="http://docs.oracle.com/javase/6/docs/api/">Java API 1.6</a><br />
-2. <a href="http://my.oschina.net/zookeeper/blog/179269">Java反射总结</a><br />
-3. <a href="http://blog.csdn.net/hahalzb/article/details/5972421">Java内省机制</a><br />
-4. <a href="http://www.blogjava.net/wiflish/archive/2007/03/05/101964.html">Java语言的反射和内省</a><br />
-5. <a href="http://www.codeproject.com/Articles/235269/Using-Introspection-in-Java">Using Introspection in Java</a><br />
-6. Java2核心技术 卷II：高级特性，第8章：JavaBean构件；【美】Cay S. Horstmann, Gary Cornell 著；机械工业出版社</p>
 </div>
   
+  
+    <footer>
+      <a rel="full-article" href="/blog/2014/01/20/java-introspector/">Read on &rarr;</a>
+    </footer>
   
 
 
@@ -575,7 +279,7 @@ Property name: weight, value: <span class="float">888.0</span>
   
     <section>
   <h1>Categories</h1>
-    <ul id="category-list"><li><a href='/blog/categories/java/'>Java (4)</a></li></ul>
+    <ul id="category-list"><li><a href='/blog/categories/java/'>Java (5)</a></li></ul>
 </section>
 <section>
   <h1>Recent Posts</h1>
@@ -590,6 +294,10 @@ Property name: weight, value: <span class="float">888.0</span>
       </li>
     
       <li class="post">
+        <a href="/blog/2014/03/08/java-propertydescriptor/">Java PropertyDescriptor 应用及源码分析</a>
+      </li>
+    
+      <li class="post">
         <a href="/blog/2014/01/20/java-introspector/">从Introspector谈Java内省机制</a>
       </li>
     
@@ -601,7 +309,7 @@ Property name: weight, value: <span class="float">888.0</span>
 </section>
 <section>
   <h1>Tag Cloud</h1>
-    <span id="tag-cloud"><a href='/blog/categories/java' style='font-size: 160.0%'>Java(4)</a> </span>
+    <span id="tag-cloud"><a href='/blog/categories/java' style='font-size: 160.0%'>Java(5)</a> </span>
 </section>
 
 <section>
