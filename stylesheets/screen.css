@@ -2760,16 +2760,16 @@ ul, ol {
 }
 
 .CodeRay {
-	background-color: #efefef;
-	font-family: Monaco, "Courier New", "DejaVu Sans Mono",
+	background-color: #000;
+	font-family: "Microsoft YaHei", Monaco, "Courier New", "DejaVu Sans Mono",
 		"Bitstream Vera Sans Mono", monospace;
-	color: #000;
-	margin-bottom: 14px
+	font-size: 10px;
+	color: #F8F8F8;
+	padding: 1em 0px 1em 1em
 }
 
 .CodeRay pre {
-	margin: 0px;
-	padding: 1em
+	margin: 0px
 }
 
 span.CodeRay {
@@ -2856,8 +2856,7 @@ ol.CodeRay li {
 }
 
 .CodeRay .comment {
-	color: #998;
-	font-style: italic
+	color: #5F5A60
 }
 
 .CodeRay .char {
@@ -2873,7 +2872,7 @@ ol.CodeRay li {
 }
 
 .CodeRay .class {
-	color: #458;
+	color: #9B703F;
 	font-weight: bold
 }
 
@@ -2883,7 +2882,7 @@ ol.CodeRay li {
 }
 
 .CodeRay .constant {
-	color: teal
+	color: #9B5C2E
 }
 
 .CodeRay .color {
@@ -2891,7 +2890,7 @@ ol.CodeRay li {
 }
 
 .CodeRay .class-variable {
-	color: #369
+	color: #7587a6
 }
 
 .CodeRay .decorator {
@@ -2936,8 +2935,7 @@ ol.CodeRay li {
 }
 
 .CodeRay .error {
-	color: #F00;
-	background-color: #faa
+	color: #F00
 }
 
 .CodeRay .exception {
@@ -2950,12 +2948,11 @@ ol.CodeRay li {
 }
 
 .CodeRay .function {
-	color: #900;
-	font-weight: bold
+	color: #dacf85
 }
 
 .CodeRay .global-variable {
-	color: teal;
+	color: #9a859c;
 	font-weight: bold
 }
 
@@ -2965,7 +2962,7 @@ ol.CodeRay li {
 }
 
 .CodeRay .integer {
-	color: #099
+	color: #ddf2a3
 }
 
 .CodeRay .include {
@@ -2974,19 +2971,11 @@ ol.CodeRay li {
 }
 
 .CodeRay .inline {
-	color: #000
-}
-
-.CodeRay .inline .inline {
-	background: #ccc
-}
-
-.CodeRay .inline .inline .inline {
-	background: #bbb
+	color: #daefa3
 }
 
 .CodeRay .inline .inline-delimiter {
-	color: #D14
+	color: #DAEFA3
 }
 
 .CodeRay .inline-delimiter {
@@ -3003,7 +2992,7 @@ ol.CodeRay li {
 }
 
 .CodeRay .instance-variable {
-	color: teal
+	color: #7587a6
 }
 
 .CodeRay .label {
@@ -3044,7 +3033,7 @@ ol.CodeRay li {
 }
 
 .CodeRay .reserved, .keyword {
-	color: #000;
+	color: #CDA869;
 	font-weight: bold
 }
 
@@ -3062,10 +3051,6 @@ ol.CodeRay li {
 
 .CodeRay .value {
 	color: #088
-}
-
-.CodeRay .regexp {
-	background-color: #fff0ff
 }
 
 .CodeRay .regexp .content {
@@ -3086,23 +3071,19 @@ ol.CodeRay li {
 }
 
 .CodeRay .string {
-	color: #D20
-}
-
-.CodeRay .string .string .string {
-	background-color: #ffd0d0
+	color: #8F9D6A
 }
 
 .CodeRay .string .content {
-	color: #D14
+	color: #8F9D6A
 }
 
 .CodeRay .string .char {
-	color: #D14
+	color: #8F9D6A
 }
 
 .CodeRay .string .delimiter {
-	color: #D14
+	color: #8F9D6A
 }
 
 .CodeRay .shell {
@@ -3114,7 +3095,7 @@ ol.CodeRay li {
 }
 
 .CodeRay .symbol {
-	color: #990073
+	color: #cf6a4c
 }
 
 .CodeRay .symbol .content {
@@ -3179,32 +3160,60 @@ ol.CodeRay li {
 	color: #f4f
 }
 
-.CodeRay pre, p code, li code {
-	border: 1px solid #565656;
-	border-top-color: #cbcbcb;
-	border-left-color: #a5a5a5;
-	border-right-color: #a5a5a5;
-	background: none;
-	color: #000
+.CodeRay {
+	background-color: #141414;
+	font-size: 12px;
+	padding: 0px
 }
 
-.CodeRay pre::-webkit-scrollbar, p code::-webkit-scrollbar, li code::-webkit-scrollbar
-	{
-	height: .5em;
-	background: rgba(255, 255, 255, 0.15)
+.CodeRay pre {
+	padding: 5px 0px 5px 10px
 }
 
-.CodeRay pre::-webkit-scrollbar-thumb:horizontal, p code::-webkit-scrollbar-thumb:horizontal,
-	li code::-webkit-scrollbar-thumb:horizontal {
-	background: rgba(255, 255, 255, 0.2);
-	border: solid #C0C0C0;
-	-webkit-border-radius: 4px;
-	border-radius: 4px
+.CodeRay pre, .CodeRay .highlight, .CodeRay .gist-highlight {
+	background-color: #141414;
+	border: 0px;
+	color: #F8F8F8;
+	margin-bottom: 0px
 }
 
-.CodeRay span.insert, .CodeRay span.change, .CodeRay span.delete {
-	width: auto
-} /*
+table.CodeRay {
+	margin-bottom: 20px
+}
+
+table.CodeRay td {
+	padding: 0px
+}
+
+.CodeRay .line-numbers, .CodeRay .no {
+	background-color: #404040;
+	padding-right: 1em
+}
+
+.CodeRay .line-numbers pre, .CodeRay .no pre {
+	background-color: #404040;
+	border: 0px;
+	margin: 0px
+}
+
+.CodeRay .line {
+	background-color: #404040
+}
+
+.CodeRay span.line-numbers {
+	padding: 0px 10px 0px 0px
+}
+
+.CodeRay .constant {
+	color: #9B859D
+}
+
+.CodeRay .predefined-constant {
+	color: #7587A6;
+	font-weight: normal
+}
+
+ /*
  *  Font Awesome 4.0.3 by @davegandy - http://fontawesome.io - @fontawesome
  *  License - http://fontawesome.io/license (Font: SIL OFL 1.1, CSS: MIT License)
  */
