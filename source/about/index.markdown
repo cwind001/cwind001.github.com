@@ -1,8 +1,6 @@
 ---
 layout: page
-title: "about"
-date: 2015-02-28 22:56
-comments: true
+title: "关于我"
 sharing: true
 footer: true
 ---
