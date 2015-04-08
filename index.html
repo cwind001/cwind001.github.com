@@ -59,8 +59,9 @@
 </form>
   
 <ul class="main-navigation">
-  <li><a href="/">博客</a></li>
-  <li><a href="/blog/archives">存档</a></li>
+  <li><a href="/">首页</a></li>
+  <li><a href="/blog/archives">文章存档</a></li>
+  <li><a href="/blog/translation">外文翻译</a></li>
   <li><a href="/about">关于我</a></li>
 </ul>
 
@@ -69,6 +70,44 @@
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <!-- Now we're back to normal posts. Note the links used under href in both headers.-->
+        <h1 class="entry-title"><a href="/blog/2015/04/08/in-processes-vs-distributed-caching/">进程内缓存与分布式缓存的比较</a></h1>
+      
+    
+    
+      <p class="meta">
+        
+
+
+
+<time class='entry-date' datetime='2015-04-08T21:53:14+08:00'><span class='date'><span class='date-month'>Apr</span> <span class='date-day'>8</span><span class='date-suffix'>th</span>, <span class='date-year'>2015</span></span> <span class='time'>9:53 pm</span></time>
+		
+        
+          | <a href="/blog/2015/04/08/in-processes-vs-distributed-caching/#comments">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>在这篇文章里我们将比较当需要对缓存方案进行技术选型时，使用进程内缓存与分布式缓存的优劣。首先来看一下二者的定义。<br />
+顾名思义，进程内缓存是与应用程序在相同地址空间的缓存。Google Guava是一个提供了简单进程内缓存API的很好的例子。另一方面，分布式缓存是应用程序的外部扩展，通常部署在多个节点上，共同构成一个大的逻辑缓存。Memcached是一个流行的分布式缓存。Terracotta公司的Ehcache则是一个通过配置可以以任一种方式使用的缓存产品。<br />
+</div>
+  
+  
+    <footer>
+      <a rel="full-article" href="/blog/2015/04/08/in-processes-vs-distributed-caching/">Read on &rarr;</a>
+    </footer>
+  
+
+
+    </article>
   
   
     <article>
@@ -272,11 +311,15 @@
   
     <section>
   <h1>分类</h1>
-    <ul id="category-list"><li><a href='/blog/categories/java/'>Java (5)</a></li></ul>
+    <ul id="category-list"><li><a href='/blog/categories/ehcache/'>Ehcache (1)</a></li><li><a href='/blog/categories/java/'>Java (5)</a></li></ul>
 </section>
 <section>
   <h1>近期文章</h1>
   <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/blog/2015/04/08/in-processes-vs-distributed-caching/">进程内缓存与分布式缓存的比较</a>
+      </li>
     
       <li class="post">
         <a href="/blog/2015/02/27/apachepoi/">Java读写Excel：Apache POI, JXL与OpenCSV</a>
@@ -294,15 +337,11 @@
         <a href="/blog/2014/01/20/java-introspector/">从Introspector谈Java内省机制</a>
       </li>
     
-      <li class="post">
-        <a href="/blog/2013/07/17/java-timezone-convertion/">Java时区转换与时间格式</a>
-      </li>
-    
   </ul>
 </section>
 <section>
   <h1>标签云</h1>
-    <span id="tag-cloud"><a href='/blog/categories/java' style='font-size: 160.0%'>Java(5)</a> </span>
+    <span id="tag-cloud"><a href='/blog/categories/ehcache' style='font-size: 112.0%'>Ehcache(1)</a> <a href='/blog/categories/java' style='font-size: 160.0%'>Java(5)</a> </span>
 </section>
 
 <section>
