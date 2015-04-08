@@ -8,8 +8,8 @@ categories: Ehcache
 tags: [translation, caching, distributed caching, in process caching, Tips and Tricks, Performance]
 keywords: 分布式缓存, 进程内缓存, caching, 性能   
 ---
-在这篇文章里我们将比较当需要对缓存方案进行技术选型时，使用进程内缓存与分布式缓存的优劣。首先来看一下二者的定义。  
-顾名思义，进程内缓存是与应用程序在相同地址空间的缓存。Google Guava是一个提供了简单进程内缓存API的很好的例子。另一方面，分布式缓存是应用程序的外部扩展，通常部署在多个节点上，共同构成一个大的逻辑缓存。Memcached是一个流行的分布式缓存。Terracotta公司的Ehcache则是一个通过配置可以以任一种方式使用的缓存产品。  
+在这篇文章里我们将比较当需要对缓存方案进行技术选型时，使用进程内缓存与分布式缓存的优劣。  
+首先来看一下二者的定义。顾名思义，进程内缓存是与应用程序在相同地址空间的缓存。Google Guava是一个提供了简单进程内缓存API的很好的例子。另一方面，分布式缓存是应用程序的外部扩展，通常部署在多个节点上，共同构成一个大的逻辑缓存。Memcached是一个流行的分布式缓存。Terracotta公司的Ehcache则是一个通过配置可以以任一种方式使用的缓存产品。  
 <!--more-->
 
 ##一致性  
