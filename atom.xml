@@ -4,7 +4,7 @@
   <title><![CDATA[辰风君的笔记本]]></title>
   <link href="http://cwind001.github.io/atom.xml" rel="self"/>
   <link href="http://cwind001.github.io/"/>
-  <updated>2015-04-08T23:49:51+08:00</updated>
+  <updated>2015-04-08T23:57:43+08:00</updated>
   <id>http://cwind001.github.io/</id>
   <author>
     <name><![CDATA[辰风君]]></name>
@@ -18,8 +18,9 @@
     <link href="http://cwind001.github.io/blog/2015/04/08/in-processes-vs-distributed-caching/"/>
     <updated>2015-04-08T21:53:14+08:00</updated>
     <id>http://cwind001.github.io/blog/2015/04/08/in-processes-vs-distributed-caching</id>
-    <content type="html"><![CDATA[<p>在这篇文章里我们将比较当需要对缓存方案进行技术选型时，使用进程内缓存与分布式缓存的优劣。首先来看一下二者的定义。<br />
-顾名思义，进程内缓存是与应用程序在相同地址空间的缓存。Google Guava是一个提供了简单进程内缓存API的很好的例子。另一方面，分布式缓存是应用程序的外部扩展，通常部署在多个节点上，共同构成一个大的逻辑缓存。Memcached是一个流行的分布式缓存。Terracotta公司的Ehcache则是一个通过配置可以以任一种方式使用的缓存产品。<br />
+    <content type="html"><![CDATA[<p>在这篇文章里我们将比较当需要对缓存方案进行技术选型时，使用进程内缓存与分布式缓存的优劣。 </p>
+
+<p>首先来看一下二者的定义。顾名思义，进程内缓存是与应用程序在相同地址空间的缓存。Google Guava是一个提供了简单进程内缓存API的很好的例子。另一方面，分布式缓存是应用程序的外部扩展，通常部署在多个节点上，共同构成一个大的逻辑缓存。Memcached是一个流行的分布式缓存。Terracotta公司的Ehcache则是一个通过配置可以以任一种方式使用的缓存产品。<br />
 <!--more--></p>
 
 <h2 id="section">一致性</h2>
