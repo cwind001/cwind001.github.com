@@ -5,7 +5,7 @@ date: 2015-06-05 21:36:10 +0800
 updated: 2015-06-05 21:36:10 +0800
 comments: true
 categories: Nodejs
-tags: [MEAN, full stack, Nodejs, Angularjs, Express, MongoDB]
+tags: [translation, MEAN, full stack, Nodejs, Angularjs, Express, MongoDB]
 keywords: MEAN, 全栈开发, Nodejs, Angularjs, Express, MongoDB  
 ---  
 本系列教程的主要目的是尽可能清楚地阐释如何使AngularJS与Node.js、Express.js和MongoDB实现的后台服务连接 -- 这套技术栈也被称为MEAN stack（M=MongoDB, E = Express.js, A = AngularJS, N = Node.js）。让我们从AngularJS开始。  
@@ -155,7 +155,8 @@ angular.module('app', [])
 **AngularJS模板**  
 模板同时包含HTML与Angular元素（指令、标记、过滤器或表单控件）。它们可以被缓存或者被通过id引用。  
 
-这里有一个示例：
+这里有一个示例：  
+
 {% coderay lang:HTML lineno:true %}  
   <script type="text/ng-template" id="/todos.html">
     <ul>
@@ -179,7 +180,9 @@ ngRoutes模块使得我们能够更改我们在应用中看到的东西，基于
 `<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.25/angular-route.min.js"></script>`
 
 **新功能**：向todo任务中添加记录。让我们从路由开始。  
+
 {% coderay lang:JavaScript linenos:true Custom AngularJS directives %}  
+
 angular.module('app', ['ngRoute'])
   .config(['$routeProvider', function ($routeProvider) {
     $routeProvider
@@ -188,6 +191,7 @@ angular.module('app', ['ngRoute'])
         controller: 'TodoController'
       });
   }]);
+
 {% endcoderay %}  
 
 - 首先请注意我们将ng-controller="TodoController"从body标签移除了。现在控制器将通过路由被调用。
