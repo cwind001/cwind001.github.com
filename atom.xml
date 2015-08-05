@@ -4,7 +4,7 @@
   <title><![CDATA[辰风君的笔记本]]></title>
   <link href="http://cwind001.github.io/atom.xml" rel="self"/>
   <link href="http://cwind001.github.io/"/>
-  <updated>2015-08-06T00:02:00+08:00</updated>
+  <updated>2015-08-06T00:12:18+08:00</updated>
   <id>http://cwind001.github.io/</id>
   <author>
     <name><![CDATA[辰风君]]></name>
@@ -234,21 +234,22 @@ angular.module(<span class="string"><span class="delimiter">'</span><span class=
 <p><strong>AngularJS模板</strong><br />
 模板同时包含HTML与Angular元素（指令、标记、过滤器或表单控件）。它们可以被缓存或者被通过id引用。  </p>
 
-<p>这里有一个示例：
-&lt;div class=&#8217;bogus-wrapper&#8217;&gt;<notextile><figure class="code">&lt;figcaption class=&#8217;code-header&#8217;&gt;<span>lineno:true </span>&lt;/figcaption&gt;
- &lt;div class=&#8221;CodeRay&#8221;&gt;
-  &lt;div class=&#8221;code&#8221;&gt;&lt;pre&gt;  
+<p>这里有一个示例：  </p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption class="code-header"><span>lineno:true </span></figcaption>
+ <div class="CodeRay">
+  <div class="code"><pre>  
   <span class="tag">&lt;script</span> <span class="attribute-name">type</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">text/ng-template</span><span class="delimiter">&quot;</span></span> <span class="attribute-name">id</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">/todos.html</span><span class="delimiter">&quot;</span></span><span class="tag">&gt;</span>
 <span class="inline">    <span class="tag">&lt;ul&gt;</span>
       <span class="tag">&lt;li</span> <span class="attribute-name">ng-repeat</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">todo in todos</span><span class="delimiter">&quot;</span></span><span class="tag">&gt;</span>
-        <span class="tag">&lt;input</span> <span class="attribute-name">type</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">checkbox</span><span class="delimiter">&quot;</span></span> <span class="attribute-name">ng-model</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">todo.completed</span><span class="delimiter">&quot;</span></span><span class="tag">&gt;</span></span></figure></notextile></p>
-
-<pre><code>  &lt;span class="tag"&gt;&amp;lt;/li&amp;gt;&lt;/span&gt;
-&lt;span class="tag"&gt;&amp;lt;/ul&amp;gt;&lt;/span&gt;&lt;/span&gt;   &lt;span class="tag"&gt;&amp;lt;/script&amp;gt;&lt;/span&gt;
-</code></pre>
-<p>&lt;/pre&gt;&lt;/div&gt;
-&lt;/div&gt;
- &lt;/figure&gt;&lt;/notextile&gt;&lt;/div&gt; </p>
+        <span class="tag">&lt;input</span> <span class="attribute-name">type</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">checkbox</span><span class="delimiter">&quot;</span></span> <span class="attribute-name">ng-model</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">todo.completed</span><span class="delimiter">&quot;</span></span><span class="tag">&gt;</span>
+       
+      <span class="tag">&lt;/li&gt;</span>
+    <span class="tag">&lt;/ul&gt;</span></span>
+  <span class="tag">&lt;/script&gt;</span>
+</pre></div>
+</div>
+ </figure></notextile></div>
 
 <p>代码看起来眼熟吗？；）</p>
 
@@ -261,10 +262,11 @@ ngRoutes模块使得我们能够更改我们在应用中看到的东西，基于
 
 <p><code>&lt;script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.25/angular-route.min.js"&gt;&lt;/script&gt;</code></p>
 
-<p><strong>新功能</strong>：向todo任务中添加记录。让我们从路由开始。<br />
-&lt;div class=&#8217;bogus-wrapper&#8217;&gt;<notextile><figure class="code">&lt;figcaption class=&#8217;code-header&#8217;&gt;<span>Custom AngularJS directives </span>&lt;/figcaption&gt;
- &lt;table class=&#8221;CodeRay&#8221;&gt;&lt;tr&gt;
-  &lt;td class=&#8221;line-numbers&#8221;&gt;&lt;pre&gt;<a href="#n1" name="n1">1</a>
+<p><strong>新功能</strong>：向todo任务中添加记录。让我们从路由开始。  </p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption class="code-header"><span>Custom AngularJS directives </span></figcaption>
+ <table class="CodeRay"><tr>
+  <td class="line-numbers"><pre><a href="#n1" name="n1">1</a>
 <a href="#n2" name="n2">2</a>
 <a href="#n3" name="n3">3</a>
 <a href="#n4" name="n4">4</a>
@@ -273,19 +275,23 @@ ngRoutes模块使得我们能够更改我们在应用中看到的东西，基于
 <a href="#n7" name="n7">7</a>
 <a href="#n8" name="n8">8</a>
 <a href="#n9" name="n9">9</a>
-&lt;/pre&gt;&lt;/td&gt;
-  &lt;td class=&#8221;code&#8221;&gt;&lt;pre&gt;  
-angular.module(<span class="string"><span class="delimiter">&#8217;</span><span class="content">app</span><span class="delimiter">&#8217;</span></span>, [<span class="string"><span class="delimiter">&#8217;</span><span class="content">ngRoute</span><span class="delimiter">&#8217;</span></span>])
-  .config([<span class="string"><span class="delimiter">&#8217;</span><span class="content">$routeProvider</span><span class="delimiter">&#8217;</span></span>, <span class="keyword">function</span> (<span class="predefined">$routeProvider</span>) {
+<strong><a href="#n10" name="n10">10</a></strong>
+<a href="#n11" name="n11">11</a>
+</pre></td>
+  <td class="code"><pre>  
+
+angular.module(<span class="string"><span class="delimiter">'</span><span class="content">app</span><span class="delimiter">'</span></span>, [<span class="string"><span class="delimiter">'</span><span class="content">ngRoute</span><span class="delimiter">'</span></span>])
+  .config([<span class="string"><span class="delimiter">'</span><span class="content">$routeProvider</span><span class="delimiter">'</span></span>, <span class="keyword">function</span> (<span class="predefined">$routeProvider</span>) {
     <span class="predefined">$routeProvider</span>
-      .when(<span class="string"><span class="delimiter">&#8217;</span><span class="content">/</span><span class="delimiter">&#8217;</span></span>, {
-        <span class="key">templateUrl</span>: <span class="string"><span class="delimiter">&#8216;</span><span class="content">/todos.html</span><span class="delimiter">&#8217;</span></span>,
-        <span class="key">controller</span>: <span class="string"><span class="delimiter">&#8216;</span><span class="content">TodoController</span><span class="delimiter">&#8217;</span></span>
+      .when(<span class="string"><span class="delimiter">'</span><span class="content">/</span><span class="delimiter">'</span></span>, {
+        <span class="key">templateUrl</span>: <span class="string"><span class="delimiter">'</span><span class="content">/todos.html</span><span class="delimiter">'</span></span>,
+        <span class="key">controller</span>: <span class="string"><span class="delimiter">'</span><span class="content">TodoController</span><span class="delimiter">'</span></span>
       });
   }]);
-&lt;/pre&gt;&lt;/td&gt;
-&lt;/tr&gt;&lt;/table&gt;
- </figure></notextile>&lt;/div&gt;  </p>
+
+</pre></td>
+</tr></table>
+ </figure></notextile></div>
 
 <ul>
   <li>首先请注意我们将ng-controller=”TodoController”从body标签移除了。现在控制器将通过路由被调用。</li>

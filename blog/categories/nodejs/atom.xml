@@ -4,7 +4,7 @@
   <title><![CDATA[Category: Nodejs | 辰风君的笔记本]]></title>
   <link href="http://cwind001.github.io/blog/categories/nodejs/atom.xml" rel="self"/>
   <link href="http://cwind001.github.io/"/>
-  <updated>2015-08-06T00:02:00+08:00</updated>
+  <updated>2015-08-06T00:12:18+08:00</updated>
   <id>http://cwind001.github.io/</id>
   <author>
     <name><![CDATA[辰风君]]></name>
@@ -237,8 +237,9 @@ angular.module(<span class="error">‘</span>app<span class="error">’</span>, 
 <p><strong>AngularJS模板</strong><br />
 模板同时包含HTML与Angular元素（指令、标记、过滤器或表单控件）。它们可以被缓存或者被通过id引用。  </p>
 
-<p>这里有一个示例：
-<figure class='code'><figcaption class='code-header'><span>lineno:true </span></figcaption>
+<p>这里有一个示例：  </p>
+
+<p><figure class='code'><figcaption class='code-header'><span>lineno:true </span></figcaption>
  <div class="CodeRay">
   <div class="code"><pre><span class="tag">&lt;br</span> <span class="tag">/&gt;</span>
   <span class="tag">&lt;script</span> <span class="attribute-name">type</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">text/ng-template</span><span class="delimiter">&quot;</span></span> <span class="attribute-name">id</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">/todos.html</span><span class="delimiter">&quot;</span></span><span class="tag">&gt;</span>
@@ -263,8 +264,9 @@ ngRoutes模块使得我们能够更改我们在应用中看到的东西，基于
 
 <p><code>&lt;script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.25/angular-route.min.js"&gt;&lt;/script&gt;</code></p>
 
-<p><strong>新功能</strong>：向todo任务中添加记录。让我们从路由开始。<br />
-<figure class='code'><figcaption class='code-header'><span>Custom AngularJS directives </span></figcaption>
+<p><strong>新功能</strong>：向todo任务中添加记录。让我们从路由开始。  </p>
+
+<p><figure class='code'><figcaption class='code-header'><span>Custom AngularJS directives </span></figcaption>
  <table class="CodeRay"><tr>
   <td class="line-numbers"><pre><a href="#n1" name="n1">1</a>
 <a href="#n2" name="n2">2</a>
@@ -275,17 +277,22 @@ ngRoutes模块使得我们能够更改我们在应用中看到的东西，基于
 <a href="#n7" name="n7">7</a>
 <a href="#n8" name="n8">8</a>
 <a href="#n9" name="n9">9</a>
+<strong><a href="#n10" name="n10">10</a></strong>
+<a href="#n11" name="n11">11</a>
+<a href="#n12" name="n12">12</a>
 </pre></td>
-  <td class="code"><pre><span class="tag">&lt;br</span> <span class="tag">/&gt;</span>
-angular.module(<span class="error">‘</span>app<span class="error">’</span>, [<span class="error">‘</span>ngRoute<span class="error">’</span>])
-  .config([<span class="error">‘</span><span class="predefined">$routeProvider</span><span class="error">’</span>, <span class="keyword">function</span> (<span class="predefined">$routeProvider</span>) {
-    <span class="predefined">$routeProvider</span>
-      .when(<span class="error">‘</span><span class="regexp"><span class="delimiter">/</span><span class="content">’, {
-        templateUrl: ‘</span><span class="delimiter">/</span></span>todos.html<span class="error">’</span>,
-        <span class="key">controller</span>: <span class="error">‘</span>TodoController<span class="error">’</span>
+  <td class="code"><pre>  &lt;<span class="regexp"><span class="delimiter">/</span><span class="content">p&gt;
+
+&lt;p&gt;angular.module(‘app’, [‘ngRoute’])
+  .config([‘$routeProvider’, function ($routeProvider) {
+    $routeProvider
+      .when(‘</span><span class="delimiter">/</span></span><span class="error">’</span>, {
+        <span class="key">templateUrl</span>: <span class="error">‘</span><span class="regexp"><span class="delimiter">/</span><span class="content">todos.html’,
+        controller: ‘TodoController’
       });
-  }]);
-</pre></td>
+  }]);&lt;</span><span class="delimiter">/</span></span>p&gt;
+
+&lt;p&gt;</pre></td>
 </tr></table>
  </figure>  </p>
 
