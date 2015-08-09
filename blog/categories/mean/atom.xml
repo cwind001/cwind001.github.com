@@ -4,7 +4,7 @@
   <title><![CDATA[Category: MEAN | 辰风君的笔记本]]></title>
   <link href="http://cwind001.github.io/blog/categories/mean/atom.xml" rel="self"/>
   <link href="http://cwind001.github.io/"/>
-  <updated>2015-08-10T00:34:49+08:00</updated>
+  <updated>2015-08-10T00:39:35+08:00</updated>
   <id>http://cwind001.github.io/</id>
   <author>
     <name><![CDATA[辰风君]]></name>
@@ -1564,7 +1564,7 @@ router.<span class="keyword">delete</span>(<span class="error">‘</span><span c
 <p>将AngularJS与后台服务连接。  </p>
 
 <ul>
-  <li>第三部分 - <a href="http://adrianmejia.com/blog/2014/10/03/mean-stack-tutorial-mongodb-expressjs-angularjs-nodejs/">MEAN全栈开发：前后端整合</a>    </li>
+  <li>第三部分 - <a href="http://gocwind.com/blog/2015/06/09/mean-stack-tutorial-mongodb-expressjs-angularjs-nodejs/">MEAN全栈开发：前后端整合</a>    </li>
 </ul>
 
 <p><img src="http://dl.iteye.com/upload/picture/pic/133685/7c4ef50f-b7cd-3334-a29e-816cfcea7eba.png">  </p>
@@ -1573,7 +1573,7 @@ router.<span class="keyword">delete</span>(<span class="error">‘</span><span c
 
 <ul>
   <li>第一部分 - <a href="http://gocwind.com/blog/2015/06/05/angularjs-tutorial-for-beginners/">MEAN全栈开发：AngularJS实战教程</a>  </li>
-  <li>第三部分 - <a href="http://adrianmejia.com/blog/2014/10/03/mean-stack-tutorial-mongodb-expressjs-angularjs-nodejs/">MEAN全栈开发：前后端整合</a>  </li>
+  <li>第三部分 - <a href="http://gocwind.com/blog/2015/06/09/mean-stack-tutorial-mongodb-expressjs-angularjs-nodejs/">MEAN全栈开发：前后端整合</a>  </li>
   <li><a href="http://adrianmejia.com/blog/categories/backbonejs">BackboneJS教程</a>    </li>
 </ul>
 
@@ -2018,12 +2018,12 @@ angular.module(<span class="error">‘</span>app<span class="error">’</span>, 
 <h2 id="section-1">下一步？</h2>
 <p>祝贺你！你已经完成了第一部分。我们将会使用目前所学构建一些东西。在后续文章中我们将会使用NodeJS和MongoDB搭建后台，连接到AngularJS上来提供一个具备完整功能的CRUD应用。  </p>
 
-<p>第二部分 - <a href="http://adrianmejia.com/blog/2014/10/01/creating-a-restful-api-tutorial-with-nodejs-and-mongodb/">NodeJS/ExpressJS 与 MongoDB/Mongoose</a>  </p>
+<p>第二部分 - <a href="http://gocwind.com/blog/2015/06/09/creating-a-restful-api-tutorial-with-nodejs-and-mongodb/">MEAN全栈开发：使用NodeJS和MongoDB创建REST服务</a>  </p>
 
 <p><img class="left" src="http://dl.iteye.com/upload/picture/pic/133663/abf21050-a55a-347e-9e0f-501586af10c7.png"><br />
 <img src="http://dl.iteye.com/upload/picture/pic/133661/636d3c41-5c03-33a4-af9f-a539fc997fcd.png">  </p>
 
-<p>第三部分 - <a href="http://adrianmejia.com/blog/2014/10/03/mean-stack-tutorial-mongodb-expressjs-angularjs-nodejs/">MEAN全栈开发： 前后端整合</a>  </p>
+<p>第三部分 - <a href="http://gocwind.com/blog/2015/06/09/mean-stack-tutorial-mongodb-expressjs-angularjs-nodejs/">MEAN全栈开发： 前后端整合</a>  </p>
 
 <p>如果想要学习BackboneJS，可以访问我的<a href="http://adrianmejia.com/blog/categories/backbonejs">BackboneJS教程</a>  </p>
 
