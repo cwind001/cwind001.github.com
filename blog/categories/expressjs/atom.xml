@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <feed xmlns="http://www.w3.org/2005/Atom">
 
-  <title><![CDATA[Category: MEAN | 辰风君的笔记本]]></title>
-  <link href="http://cwind001.github.io/blog/categories/mean/atom.xml" rel="self"/>
+  <title><![CDATA[Category: ExpressJS | 辰风君的笔记本]]></title>
+  <link href="http://cwind001.github.io/blog/categories/expressjs/atom.xml" rel="self"/>
   <link href="http://cwind001.github.io/"/>
   <updated>2015-08-10T00:54:45+08:00</updated>
   <id>http://cwind001.github.io/</id>

@@ -4,7 +4,7 @@
   <title><![CDATA[辰风君的笔记本]]></title>
   <link href="http://cwind001.github.io/atom.xml" rel="self"/>
   <link href="http://cwind001.github.io/"/>
-  <updated>2015-08-10T00:39:35+08:00</updated>
+  <updated>2015-08-10T00:54:23+08:00</updated>
   <id>http://cwind001.github.io/</id>
   <author>
     <name><![CDATA[辰风君]]></name>
@@ -695,7 +695,7 @@ function ($scope, $routeParams, Todos, $location) {
     <link href="http://cwind001.github.io/blog/2015/06/09/creating-a-restful-api-tutorial-with-nodejs-and-mongodb/"/>
     <updated>2015-06-09T21:30:19+08:00</updated>
     <id>http://cwind001.github.io/blog/2015/06/09/creating-a-restful-api-tutorial-with-nodejs-and-mongodb</id>
-    <content type="html"><![CDATA[<p>本教程介绍如何使用Node.js (Express.js) 和MongoDB (mongoose) 创建REST服务。你可以参考本教程创建一个独立的后台服务，也可以回顾之前的AngularJS[link]或是BackboneJS[link]教程来构建一个javascript客户端，来与我们将要构建的后台集成。  </p>
+    <content type="html"><![CDATA[<p>本教程介绍如何使用Node.js (Express.js) 和MongoDB (mongoose) 创建REST服务。你可以参考本教程创建一个独立的后台服务，也可以回顾之前的<a href="http://gocwind.com/blog/2015/06/05/angularjs-tutorial-for-beginners/">AngularJS</a>或是<a href="http://adrianmejia.com/blog/2012/09/11/backbone-dot-js-for-absolute-beginners-getting-started">BackboneJS</a>教程来构建一个javascript客户端，来与我们将要构建的后台集成。  </p>
 
 <p><img class="left" src="http://dl.iteye.com/upload/picture/pic/133663/abf21050-a55a-347e-9e0f-501586af10c7.png" /><br />
 <img src="http://dl.iteye.com/upload/picture/pic/133661/636d3c41-5c03-33a4-af9f-a539fc997fcd.png" /><br />
