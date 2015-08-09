@@ -4,7 +4,7 @@
   <title><![CDATA[辰风君的笔记本]]></title>
   <link href="http://cwind001.github.io/atom.xml" rel="self"/>
   <link href="http://cwind001.github.io/"/>
-  <updated>2015-08-07T22:59:01+08:00</updated>
+  <updated>2015-08-09T23:53:28+08:00</updated>
   <id>http://cwind001.github.io/</id>
   <author>
     <name><![CDATA[辰风君]]></name>
@@ -14,13 +14,922 @@
 
   
   <entry>
+    <title type="html"><![CDATA[MEAN全栈开发：使用NodeJS和MongoDB创建REST服务]]></title>
+    <link href="http://cwind001.github.io/blog/2015/06/09/creating-a-restful-api-tutorial-with-nodejs-and-mongodb/"/>
+    <updated>2015-06-09T21:30:19+08:00</updated>
+    <id>http://cwind001.github.io/blog/2015/06/09/creating-a-restful-api-tutorial-with-nodejs-and-mongodb</id>
+    <content type="html"><![CDATA[<p>本教程介绍如何使用Node.js (Express.js) 和MongoDB (mongoose) 创建REST服务。你可以参考本教程创建一个独立的后台服务，也可以回顾之前的AngularJS[link]或是BackboneJS[link]教程来构建一个javascript客户端，来与我们将要构建的后台集成。  </p>
+
+<p><img class="left" src="http://dl.iteye.com/upload/picture/pic/133663/abf21050-a55a-347e-9e0f-501586af10c7.png" /><br />
+<img src="http://dl.iteye.com/upload/picture/pic/133661/636d3c41-5c03-33a4-af9f-a539fc997fcd.png" /><br />
+<!--more-->  </p>
+
+<h1 id="nodejsmongodbrest">第二部分 使用NodeJS和MongoDB创建REST服务</h1>
+
+<h2 id="restful-api">RESTful API是什么</h2>
+
+<p>REST指表述性状态转移。它是允许以统一的接口进行客户端-服务器通信的架构。REST是“无状态”、“可缓存”以及“幂等”的。幂等意味着多次调用与单次请求的结果相同。  </p>
+
+<p>HTTP RESTful API 由以下要素组成：  </p>
+
+<ul>
+  <li>HTTP方法，如GET，PUT，DELETE，PATCH，POST，……  </li>
+  <li>基本URL，如 http://gocwind.com/   </li>
+  <li>URL路径，如 /blog/2014/10/01/creating-a-restful-api-tutorial-with-nodejs-and-mongodb/  </li>
+  <li>媒介类型，如html，JSON，XML，Microformats，Atom，Images……  </li>
+</ul>
+
+<p>下表是我们将要实现的API摘要：  </p>
+<table>
+<tbody>
+<tr><td><strong>Resource(URI) </strong></td><td><strong>POST(创建) </strong></td><td><strong>GET(读取) </strong></td><td><strong>PUT(更新 )</strong></td><td><strong>DELETE(删除) </strong></td></tr>
+<tr><td>/todos</td><td>创建新的任务 </td><td>列出所有任务  </td><td>N/A（更新全部）</td><td>N/A（删除全部） </td></tr>
+<tr><td>/todos/1</td><td>错误 </td><td>显示ID为1的任务  </td><td>更新ID为1的任务  </td><td>删除ID为1的任务  </td></tr>
+</tbody>
+</table>
+<p><br /></p>
+
+<p><strong>注意</strong>：我们采用JSON格式。批量更新和批量删除并不安全，所以我们将不实现这两个接口。POST，GET，PUT，DELETE方法分别对应创建(CREATE)，查询(READ)，更新(UPDATE)，删除(DELETE)操作，即CRUD。  </p>
+
+<h2 id="section">搭建开发环境</h2>
+
+<p>MEAN技术栈的两个主要组件是NodeJS以及MongoDB。<br />
+<img src="http://dl.iteye.com/upload/picture/pic/133677/a1b8cfdb-27cc-3d4f-8494-7cde0cb41ff9.png" />  </p>
+
+<p>注意：如果你已经安装了NodeJS，MongoDB(Mongoose)，ExpressJS并且分别对它们已经有所了解，你可以跳过下面一节。如果你想要回顾或了解以上的每个成员，请继续阅读。  </p>
+
+<h2 id="nodejs">NodeJS</h2>
+<p>简言之，NodeJS是运行在服务器上，浏览器之外的JavaScript。    </p>
+
+<p>安装NodeJS，可以访问<a href="http://nodejs.org/">NodeJS官方网站</a>。如果你使用Mac和<a href="http://brew.sh/">brew</a>你可以执行brew install nodejs，如果你使用ubuntu可以利用<a href="https://github.com/creationix/nvm">nvm</a>来安装它。  </p>
+
+<p>检查node版本和npm版本：  </p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"> <table class="CodeRay"><tr>
+  <td class="line-numbers"><pre><a href="#n1" name="n1">1</a>
+<a href="#n2" name="n2">2</a>
+<a href="#n3" name="n3">3</a>
+<a href="#n4" name="n4">4</a>
+<a href="#n5" name="n5">5</a>
+<a href="#n6" name="n6">6</a>
+</pre></td>
+  <td class="code"><pre>  
+node -v
+<span class="error">#</span> =&gt; v0<span class="float">.12</span><span class="float">.4</span>
+
+npm -v
+<span class="error">#</span> =&gt; <span class="float">2.10</span><span class="float">.1</span>
+</pre></td>
+</tr></table>
+ </figure></notextile></div>
+
+<h2 id="expressjs">ExpressJS</h2>
+
+<p>ExpressJS是运行在NodeJS上的Web应用框架。它可以用于构建Web应用或API服务（后文详述）。  </p>
+
+<p>利用npm安装它：  </p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"> <table class="CodeRay"><tr>
+  <td class="line-numbers"><pre><a href="#n1" name="n1">1</a>
+<a href="#n2" name="n2">2</a>
+</pre></td>
+  <td class="code"><pre> 
+npm install -g express
+</pre></td>
+</tr></table>
+ </figure></notextile></div>
+
+<p>请注意<code>-g</code>选项。它将会把<code>express</code>安装供全局使用，并加入<code>PATH</code>环境变量，因此你可以在任何地方运行它。  </p>
+
+<p>检查版本：  </p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"> <table class="CodeRay"><tr>
+  <td class="line-numbers"><pre><a href="#n1" name="n1">1</a>
+<a href="#n2" name="n2">2</a>
+<a href="#n3" name="n3">3</a>
+</pre></td>
+  <td class="code"><pre>   
+express --version
+<span class="error">#</span> =&gt; <span class="float">4.12</span><span class="float">.4</span>
+</pre></td>
+</tr></table>
+ </figure></notextile></div>
+
+<h2 id="mongodb">MongoDB</h2>
+
+<p>MongoDB是一个面向文档的NoSQL数据库（可用于处理大数据）。它将数据以JSON格式存储，允许执行类似SQL的查询。
+你可以参照<a href="http://docs.mongodb.org/manual/installation/">这篇文档</a>来安装它。如果你使用Mac和brew，就可以简单执行：<code>brew install mongodb &amp;&amp; mongod</code>。在ubuntu下则是 <code>sudo apt-get -y install mongodb</code>。   </p>
+
+<p>检查版本：  </p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"> <table class="CodeRay"><tr>
+  <td class="line-numbers"><pre><a href="#n1" name="n1">1</a>
+<a href="#n2" name="n2">2</a>
+<a href="#n3" name="n3">3</a>
+<a href="#n4" name="n4">4</a>
+<a href="#n5" name="n5">5</a>
+<a href="#n6" name="n6">6</a>
+<a href="#n7" name="n7">7</a>
+<a href="#n8" name="n8">8</a>
+<a href="#n9" name="n9">9</a>
+<strong><a href="#n10" name="n10">10</a></strong>
+</pre></td>
+  <td class="code"><pre>  
+<span class="error">#</span> Mac
+mongod --version
+<span class="error">#</span> =&gt; db version v2<span class="float">.6</span><span class="float">.4</span>
+<span class="error">#</span> =&gt; <span class="integer">2014</span>-<span class="integer">10</span>-<span class="octal">01</span>T19:<span class="octal">07</span>:<span class="float">26.649</span>-<span class="octal">0400</span> git version: nogitversion
+
+<span class="error">#</span> Ubuntu
+mongod --version
+<span class="error">#</span> =&gt; db version v2<span class="float">.0</span><span class="float">.4</span>, pdfile version <span class="float">4.5</span>
+<span class="error">#</span> =&gt; Wed Oct  <span class="integer">1</span> <span class="integer">23</span>:<span class="octal">06</span>:<span class="integer">54</span> git version: nogitversion
+</pre></td>
+</tr></table>
+ </figure></notextile></div>
+
+<h2 id="mean">理解MEAN技术栈</h2>
+
+<p>经过以上几步你已经准备好了用于完成本教程的所有事情。简单地说，我们将会构建RESTful API，使得用户可以执行CRUD（创建-读取-更新-删除）操作，来处理数据库中的Todo任务。  </p>
+
+<h3 id="mongoose-crud">Mongoose CRUD</h3>
+
+<p>CRUD = Create-Read-Update-Delete (创建-读取-更新-删除)  </p>
+
+<p>我们可以在控制台里使用Mongoose。在<code>todoAPIjs</code>目录，键入<code>node</code>来进入node CLI，然后：  </p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"> <table class="CodeRay"><tr>
+  <td class="line-numbers"><pre><a href="#n1" name="n1">1</a>
+<a href="#n2" name="n2">2</a>
+<a href="#n3" name="n3">3</a>
+<a href="#n4" name="n4">4</a>
+<a href="#n5" name="n5">5</a>
+<a href="#n6" name="n6">6</a>
+<a href="#n7" name="n7">7</a>
+<a href="#n8" name="n8">8</a>
+<a href="#n9" name="n9">9</a>
+<strong><a href="#n10" name="n10">10</a></strong>
+<a href="#n11" name="n11">11</a>
+<a href="#n12" name="n12">12</a>
+<a href="#n13" name="n13">13</a>
+</pre></td>
+  <td class="code"><pre> 
+<span class="comment">/* prompt&gt; */</span> <span class="keyword">var</span> mongoose = require(<span class="string"><span class="delimiter">'</span><span class="content">mongoose</span><span class="delimiter">'</span></span>);
+
+<span class="comment">/* prompt&gt; */</span> mongoose.connect(<span class="string"><span class="delimiter">'</span><span class="content">mongodb://localhost/test3</span><span class="delimiter">'</span></span>);
+
+<span class="comment">/* prompt&gt; */</span> <span class="keyword">var</span> TodoSchema = <span class="keyword">new</span> mongoose.Schema({
+  <span class="key">name</span>: String,
+  <span class="key">completed</span>: Boolean,
+  <span class="key">note</span>: String,
+  <span class="key">updated_at</span>: { <span class="key">type</span>: Date, <span class="keyword">default</span>: Date.now },
+});
+
+<span class="comment">/* prompt&gt; */</span> <span class="keyword">var</span> Todo = mongoose.model(<span class="string"><span class="delimiter">'</span><span class="content">Todo</span><span class="delimiter">'</span></span>, TodoSchema);
+</pre></td>
+</tr></table>
+ </figure></notextile></div>
+
+<p><strong>Mongoose 创建</strong>  </p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"> <table class="CodeRay"><tr>
+  <td class="line-numbers"><pre><a href="#n1" name="n1">1</a>
+<a href="#n2" name="n2">2</a>
+<a href="#n3" name="n3">3</a>
+<a href="#n4" name="n4">4</a>
+<a href="#n5" name="n5">5</a>
+<a href="#n6" name="n6">6</a>
+<a href="#n7" name="n7">7</a>
+<a href="#n8" name="n8">8</a>
+<a href="#n9" name="n9">9</a>
+<strong><a href="#n10" name="n10">10</a></strong>
+</pre></td>
+  <td class="code"><pre>  
+<span class="comment">/* prompt&gt; */</span> <span class="keyword">var</span> todo = <span class="keyword">new</span> Todo({<span class="key">name</span>: <span class="string"><span class="delimiter">'</span><span class="content">Master NodeJS</span><span class="delimiter">'</span></span>, <span class="key">completed</span>: <span class="predefined-constant">false</span>, <span class="key">note</span>: <span class="string"><span class="delimiter">'</span><span class="content">Getting 
+there...</span><span class="delimiter">'</span></span>});
+
+<span class="comment">/* prompt&gt; */</span> todo.save(<span class="keyword">function</span>(err){
+    <span class="keyword">if</span>(err)
+        console.log(err);
+    <span class="keyword">else</span>
+        console.log(todo);
+});
+</pre></td>
+</tr></table>
+ </figure></notextile></div>
+
+<p>你可以创建对象，并利用<code>create</code>来进行保存：  </p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"> <table class="CodeRay"><tr>
+  <td class="line-numbers"><pre><a href="#n1" name="n1">1</a>
+<a href="#n2" name="n2">2</a>
+<a href="#n3" name="n3">3</a>
+<a href="#n4" name="n4">4</a>
+<a href="#n5" name="n5">5</a>
+<a href="#n6" name="n6">6</a>
+</pre></td>
+  <td class="code"><pre>  
+<span class="comment">/* prompt&gt; */</span> Todo.create({<span class="key">name</span>: <span class="string"><span class="delimiter">'</span><span class="content">Master Javscript</span><span class="delimiter">'</span></span>, <span class="key">completed</span>: <span class="predefined-constant">true</span>, <span class="key">note</span>: <span class="string"><span class="delimiter">'</span><span class="content">Getting better 
+everyday</span><span class="delimiter">'</span></span>}, <span class="keyword">function</span>(err, todo){
+    <span class="keyword">if</span>(err) console.log(err);
+    <span class="keyword">else</span> console.log(todo);
+});
+</pre></td>
+</tr></table>
+ </figure></notextile></div>
+
+<p><strong>Mongoose 读取与查询</strong>  </p>
+
+<p>读取/查询数据有下列多种方式：  </p>
+
+<ul>
+  <li>Model.find(conditions, [fields], [options], [callback])   </li>
+  <li>Model.findById(id, [fields], [options], [callback])   </li>
+  <li>Model.findOne(conditions, [fields], [options], [callback])</li>
+</ul>
+
+<p>一些例子：  </p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption class="code-header"><span>Find all </span></figcaption>
+ <table class="CodeRay"><tr>
+  <td class="line-numbers"><pre><a href="#n1" name="n1">1</a>
+<a href="#n2" name="n2">2</a>
+<a href="#n3" name="n3">3</a>
+<a href="#n4" name="n4">4</a>
+<a href="#n5" name="n5">5</a>
+</pre></td>
+  <td class="code"><pre>  
+<span class="comment">/* prompt&gt; */</span> Todo.find(<span class="keyword">function</span> (err, todos) {
+  <span class="keyword">if</span> (err) <span class="keyword">return</span> console.error(err);
+  console.log(todos)
+});
+</pre></td>
+</tr></table>
+ </figure></notextile></div>
+
+<p>你也可以加入查询条件：  </p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption class="code-header"><span>Find with queries </span></figcaption>
+ <table class="CodeRay"><tr>
+  <td class="line-numbers"><pre><a href="#n1" name="n1">1</a>
+<a href="#n2" name="n2">2</a>
+<a href="#n3" name="n3">3</a>
+<a href="#n4" name="n4">4</a>
+<a href="#n5" name="n5">5</a>
+<a href="#n6" name="n6">6</a>
+<a href="#n7" name="n7">7</a>
+<a href="#n8" name="n8">8</a>
+<a href="#n9" name="n9">9</a>
+<strong><a href="#n10" name="n10">10</a></strong>
+<a href="#n11" name="n11">11</a>
+</pre></td>
+  <td class="code"><pre>  
+<span class="comment">/* prompt&gt; */</span> <span class="keyword">var</span> <span class="function">callback</span> = <span class="keyword">function</span> (err, data) {
+  <span class="keyword">if</span> (err) <span class="keyword">return</span> console.error(err);
+  <span class="keyword">else</span> console.log(data);
+}
+
+<span class="comment">// Get all completed tasks</span>
+<span class="comment">/* prompt&gt; */</span> Todo.find({<span class="key">completed</span>: <span class="predefined-constant">true</span> }, callback);
+
+<span class="comment">// Get all tasks ending with `JS`</span>
+<span class="comment">/* prompt&gt; */</span> Todo.find({<span class="key">name</span>: <span class="regexp"><span class="delimiter">/</span><span class="content">JS$</span><span class="delimiter">/</span></span> }, callback);
+</pre></td>
+</tr></table>
+ </figure></notextile></div>
+
+<p>当然，也可以加入多个查询条件，例如：  </p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"> <table class="CodeRay"><tr>
+  <td class="line-numbers"><pre><a href="#n1" name="n1">1</a>
+<a href="#n2" name="n2">2</a>
+<a href="#n3" name="n3">3</a>
+<a href="#n4" name="n4">4</a>
+<a href="#n5" name="n5">5</a>
+<a href="#n6" name="n6">6</a>
+<a href="#n7" name="n7">7</a>
+<a href="#n8" name="n8">8</a>
+<a href="#n9" name="n9">9</a>
+<strong><a href="#n10" name="n10">10</a></strong>
+</pre></td>
+  <td class="code"><pre>  
+<span class="comment">/* prompt&gt; */</span> <span class="keyword">var</span> oneYearAgo = <span class="keyword">new</span> Date();
+oneYearAgo.setYear(oneYearAgo.getFullYear() - <span class="integer">1</span>);
+
+<span class="comment">// Get all tasks staring with `Master`, completed</span>
+<span class="comment">/* prompt&gt; */</span> Todo.find({<span class="key">name</span>: <span class="regexp"><span class="delimiter">/</span><span class="content">^Master</span><span class="delimiter">/</span></span>, <span class="key">completed</span>: <span class="predefined-constant">true</span> }, callback);
+
+<span class="comment">// Get all tasks staring with `Master`, not completed and created from year ago to now...</span>
+<span class="comment">/* prompt&gt; */</span> Todo.find({<span class="key">name</span>: <span class="regexp"><span class="delimiter">/</span><span class="content">^Master</span><span class="delimiter">/</span></span>, <span class="key">completed</span>: <span class="predefined-constant">false</span> }).where(<span class="string"><span class="delimiter">'</span><span class="content">updated_at</span><span class="delimiter">'</span></span>).gt(oneYearAgo)
+.exec(callback);
+</pre></td>
+</tr></table>
+ </figure></notextile></div>
+
+<p><strong>Mongoose 更新</strong>  </p>
+
+<p>每个模型都有一个<code>update</code>方法，可以接受多条数据的更新操作（用于批量更新，并不返回数据数组）。同时<code>findOneAndUpdate</code>方法可以用于更新单独一条数据并将该条数据返回。  </p>
+
+<ul>
+  <li>Model.update(conditions, update, [options], [callback])   </li>
+  <li>Model.findByIdAndUpdate(id, [update], [options], [callback])   </li>
+  <li>Model.findOneAndUpdate([conditions], [update], [options], [callback])  </li>
+</ul>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption class="code-header"><span>Todo.update and Todo.findOneAndUpdate </span></figcaption>
+ <table class="CodeRay"><tr>
+  <td class="line-numbers"><pre><a href="#n1" name="n1">1</a>
+<a href="#n2" name="n2">2</a>
+<a href="#n3" name="n3">3</a>
+<a href="#n4" name="n4">4</a>
+<a href="#n5" name="n5">5</a>
+<a href="#n6" name="n6">6</a>
+<a href="#n7" name="n7">7</a>
+<a href="#n8" name="n8">8</a>
+<a href="#n9" name="n9">9</a>
+<strong><a href="#n10" name="n10">10</a></strong>
+<a href="#n11" name="n11">11</a>
+<a href="#n12" name="n12">12</a>
+<a href="#n13" name="n13">13</a>
+</pre></td>
+  <td class="code"><pre>  
+<span class="comment">// Model.update(conditions, update, [options], [callback])</span>
+<span class="comment">// update `multi`ple tasks from complete false to true</span>
+
+<span class="comment">/* prompt&gt; */</span> Todo.update({ <span class="key">completed</span>: <span class="predefined-constant">false</span> }, { <span class="key">completed</span>: <span class="predefined-constant">true</span> }, { <span class="key">multi</span>: <span class="predefined-constant">true</span> }, 
+<span class="keyword">function</span> (err, numberAffected, raw) {
+  <span class="keyword">if</span> (err) <span class="keyword">return</span> handleError(err);
+  console.log(<span class="string"><span class="delimiter">'</span><span class="content">The number of updated documents was %d</span><span class="delimiter">'</span></span>, numberAffected);
+  console.log(<span class="string"><span class="delimiter">'</span><span class="content">The raw response from Mongo was </span><span class="delimiter">'</span></span>, raw);
+});
+
+<span class="comment">//Model.findOneAndUpdate([conditions], [update], [options], [callback])</span>
+<span class="comment">/* prompt&gt; */</span> Todo.findOneAndUpdate({<span class="key">name</span>: <span class="regexp"><span class="delimiter">/</span><span class="content">JS$</span><span class="delimiter">/</span></span> }, {<span class="key">completed</span>: <span class="predefined-constant">false</span>}, callback);
+</pre></td>
+</tr></table>
+ </figure></notextile></div>
+
+<p><strong>Mongoose 删除</strong>  </p>
+
+<p>mongoose的<code>update</code>与<code>remove</code> API非常相似，唯一的区别是并没有任何元素被返回。  </p>
+
+<ul>
+  <li>Model.remove(conditions, [callback])   </li>
+  <li>Model.findByIdAndRemove(id, [options], [callback])   </li>
+  <li>Model.findOneAndRemove(conditions, [options], [callback])  </li>
+</ul>
+
+<h3 id="expressjs-1">ExpressJS与中间件</h3>
+
+<p>ExpressJS是一个完备的Web框架解决方案。它包括HTML模板解决方案（jade, ejs, handlebars, hogan.js）与CSS预编译器（less, stylus, compass）。在中间件层它能够处理：cookies, sessions, caching, CSRF, 压缩以及许多其他的功能。  </p>
+
+<p><strong>中间件</strong>是一组用于处理每个发往服务器的请求的软件栈。你可以使用任意数量的中间件，以串行方式一个接一个地处理请求。其中的一些可能用于改变请求输入，打印日志输出，添加数据并将其传递到处理链中的下一个中间件。  </p>
+
+<p>中间件通过<code>app.use</code>被加载到ExpressJS栈，从而可以被任何方法或app.动词（如app.get, app.delete, app.post, app.update, …）所使用。  </p>
+
+<p><img src="http://dl.iteye.com/upload/picture/pic/133679/eb6d578c-b8fe-33ab-aad1-20728b95ffe3.png" /></p>
+
+<p>假设我们想要打印每个请求的来源客户端的IP：  </p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption class="code-header"><span>Log the client IP on every request </span></figcaption>
+ <table class="CodeRay"><tr>
+  <td class="line-numbers"><pre><a href="#n1" name="n1">1</a>
+<a href="#n2" name="n2">2</a>
+<a href="#n3" name="n3">3</a>
+<a href="#n4" name="n4">4</a>
+<a href="#n5" name="n5">5</a>
+<a href="#n6" name="n6">6</a>
+</pre></td>
+  <td class="code"><pre>  
+app.use(<span class="keyword">function</span> (req, res, next) {
+  <span class="keyword">var</span> ip = req.headers[<span class="string"><span class="delimiter">'</span><span class="content">x-forwarded-for</span><span class="delimiter">'</span></span>] || req.connection.remoteAddress;
+  console.log(<span class="string"><span class="delimiter">'</span><span class="content">Client IP:</span><span class="delimiter">'</span></span>, ip);
+  next();
+});
+</pre></td>
+</tr></table>
+ </figure></notextile></div>
+
+<p>你也可以指定路径，使得你的中间件在该路径生效： </p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption class="code-header"><span>Middleware mounted on “/todos/:id” and log the request method </span></figcaption>
+ <table class="CodeRay"><tr>
+  <td class="line-numbers"><pre><a href="#n1" name="n1">1</a>
+<a href="#n2" name="n2">2</a>
+<a href="#n3" name="n3">3</a>
+<a href="#n4" name="n4">4</a>
+<a href="#n5" name="n5">5</a>
+</pre></td>
+  <td class="code"><pre>  
+app.use(<span class="string"><span class="delimiter">'</span><span class="content">/todos/:id</span><span class="delimiter">'</span></span>, <span class="keyword">function</span> (req, res, next) {
+  console.log(<span class="string"><span class="delimiter">'</span><span class="content">Request Type:</span><span class="delimiter">'</span></span>, req.method);
+  next();
+});
+</pre></td>
+</tr></table>
+ </figure></notextile></div>
+
+<p>最终，你可以使用app.get来捕捉相匹配路由的GET请求，在中间件链末端通过<code>response.send</code>来为该请求产生一个响应。让我们使用mongoose读取与查询一节中的函数来返回一条与参数id相匹配的用户数据。  </p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption class="code-header"><span>Middleware mounted on “/todos/:id” and returns </span></figcaption>
+ <table class="CodeRay"><tr>
+  <td class="line-numbers"><pre><a href="#n1" name="n1">1</a>
+<a href="#n2" name="n2">2</a>
+<a href="#n3" name="n3">3</a>
+<a href="#n4" name="n4">4</a>
+<a href="#n5" name="n5">5</a>
+<a href="#n6" name="n6">6</a>
+<a href="#n7" name="n7">7</a>
+</pre></td>
+  <td class="code"><pre>  
+app.get(<span class="string"><span class="delimiter">'</span><span class="content">/todos/:id</span><span class="delimiter">'</span></span>, <span class="keyword">function</span> (req, res, next) {
+  Todo.findById(req.params.id, <span class="keyword">function</span>(err, todo){
+    <span class="keyword">if</span>(err) res.send(err);
+    res.json(todo);
+  });
+});
+</pre></td>
+</tr></table>
+ </figure></notextile></div>
+
+<p>请注意之前所有的中间件都调用了<code>next()</code>，除了这最后一个，因为它将把包含指定<code>todo</code>数据的响应（以JSON格式）发送给客户端。  </p>
+
+<p>除了路由之外，你不必自己去开发各种功能的中间件。因为ExpressJS已经包含了许多常用的中间件。  </p>
+
+<h3 id="express-40-">Express 4.0 默认中间件</h3>
+
+<ul>
+  <li><a href="https://github.com/expressjs/morgan">morgan</a>: 日志处理  </li>
+  <li><a href="https://github.com/expressjs/body-parser">body-parser</a>: 解析请求体，从而可以访问请求体<code>req.body</code>中的参数。例如：<code>req.body.name</code>。  </li>
+  <li><a href="https://github.com/expressjs/cookie-parser">cookie-parser</a>: 解析cookies，从而可以访问cookies中的参数。例如：<code>req.cookies.name</code>。  </li>
+  <li><a href="https://github.com/expressjs/serve-favicon">serve-favicon</a>: 顾名思义，为路由/favicon.ico提供图标。它应该在其他任何路由/中间件之前被调用，从而避免不必要的解析。  </li>
+</ul>
+
+<h3 id="express">其他Express中间件</h3>
+<p>下列中间件并非内置，但了解一下很有益处。  </p>
+
+<ul>
+  <li><a href="https://github.com/expressjs/compression">compression</a>: 压缩所有请求。例：app.use(compression())  </li>
+  <li><a href="https://github.com/expressjs/session">session</a>: 创建会话。例：app.use(session({secret: ‘Secr3t’}))  </li>
+  <li><a href="https://github.com/expressjs/method-override">method-override</a>: <code>app.use(methodOverride('_method'))</code>，以<code>_method</code>参数值来覆盖方法。例：<code>GET /resource/1?_method=DELETE</code>将会变为<code>DELETE /resource/1</code>  </li>
+  <li><a href="https://github.com/expressjs/response-time">response-time</a>: <code>app.use(responseTime())</code>向响应添加响应头<code>X-Response-Time</code>。  </li>
+  <li><a href="https://github.com/expressjs/errorhandler">errorhandler</a>: 当错误发生时，通过向客户端发送完整的错误堆栈来辅助开发。<code>app.use(errorhandler())</code>。一个最佳实践是在加载它之前检测环境：<code>process.env.NODE_ENV === 'development'</code>。  </li>
+  <li><a href="https://github.com/expressjs/vhost">vhost</a>: 允许你根据请求的<code>hostname</code>不同使用不同的中间件栈。例：<code>app.use(vhost('*.user.local', userapp))</code>以及<code>app.use(vhost('assets-*.example.com', staticapp))</code>，其中<code>userapp</code>与<code>staticapp</code>是有不同中间件栈的不同express实例。  </li>
+  <li><a href="https://github.com/expressjs/csurf">csrurf</a>: 使用<code>session</code>或<code>cookie-parser</code>在响应中添加token，起到防止跨站请求伪造（Cross-site request forgery, CSRF）的作用。例：<code>app.use(csrf())</code>。  </li>
+  <li><a href="https://github.com/expressjs/timeout">timeout</a>: 当程序执行时间超过预设值时终止程序。例：<code>app.use(timeout('5s'));</code>。你需要自定义一个中间件检查每一个请求<code>if(!req.timeout) next();</code>。  </li>
+</ul>
+
+<h2 id="api-postmancurl">API 客户端（浏览器，Postman和curl）</h2>
+<p>我知道你还没有创建路由，我们在下一节中将会创建。通过你创建的API，有三种方式来查询、改动或删除数据。  </p>
+
+<h3 id="curl">Curl</h3>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption class="code-header"><span>Create tasks </span></figcaption>
+ <table class="CodeRay"><tr>
+  <td class="line-numbers"><pre><a href="#n1" name="n1">1</a>
+<a href="#n2" name="n2">2</a>
+<a href="#n3" name="n3">3</a>
+<a href="#n4" name="n4">4</a>
+<a href="#n5" name="n5">5</a>
+<a href="#n6" name="n6">6</a>
+</pre></td>
+  <td class="code"><pre> 
+<span class="error">#</span> Create task
+curl -XPOST http:<span class="comment">//localhost:3000/todos -d 'name=Master%20Routes&amp;completed=false&amp;note=soon...'</span>
+
+<span class="error">#</span> List tasks
+curl -XGET http:<span class="comment">//localhost:3000/todos</span>
+</pre></td>
+</tr></table>
+ </figure></notextile></div>
+
+<h3 id="postman">浏览器和Postman</h3>
+<p>当你打开浏览器并在地址栏输入<code>localhost:3000/todos</code>你将会看到所有的任务（当你实现了API之后）。然而，默认情况下你并不能POST命令。为了后面的测试，我们可以使用一个名为Postman[link]的Chrome插件。它使你能够很容易地使用所有的HTTP命令，如果需要添加参数时，选中<code>x-www-form-urlencoded</code>。（译者注：使用RestClient for Firefox一样很方便）。  </p>
+
+<p><img src="http://dl.iteye.com/upload/picture/pic/133681/84a293ae-e910-37af-abae-194e60294aed.png" /></p>
+
+<h3 id="section-1">网站和移动应用</h3>
+<p>这很有可能是最主要的API调用者。你可以使用jQuery<code>$ajax</code>方便地与RESTful API交互，或者使用它的包装器–BackboneJS的Collections/models， AngularJS的<code>$http</code>或<code>$resource</code>，或许许多多其他的库/框架以及移动客户端。  </p>
+
+<p>最后，我们来阐释如何使用AngularJS与API交互。  </p>
+
+<p><img src="http://dl.iteye.com/upload/picture/pic/133683/1737b0c6-2c33-3ed9-89aa-9bc385dd89cd.png" /><br />
+（图片来自CodeSchool）  </p>
+
+<p>整合MEAN技术栈</p>
+
+<h2 id="expressjs-2">引导ExpressJS</h2>
+
+<p>花了较大篇幅来了解Node CLI，MongoDB，Mongoose，工具以及中间件之后，让我们回到我们的express应用todoApp。现在我们创建路由并最终实现我们的RESTful API。<br />
+通过<code>express -e todoApp</code>创建应用。安装所有依赖<code>cd todoApp &amp;&amp; npm install</code>。运行该应用：<code>DEBUG=todoApp ./bin/www</code>；  </p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"> <table class="CodeRay"><tr>
+  <td class="line-numbers"><pre><a href="#n1" name="n1">1</a>
+<a href="#n2" name="n2">2</a>
+<a href="#n3" name="n3">3</a>
+<a href="#n4" name="n4">4</a>
+<a href="#n5" name="n5">5</a>
+<a href="#n6" name="n6">6</a>
+<a href="#n7" name="n7">7</a>
+<a href="#n8" name="n8">8</a>
+<a href="#n9" name="n9">9</a>
+<strong><a href="#n10" name="n10">10</a></strong>
+<a href="#n11" name="n11">11</a>
+<a href="#n12" name="n12">12</a>
+<a href="#n13" name="n13">13</a>
+<a href="#n14" name="n14">14</a>
+<a href="#n15" name="n15">15</a>
+<a href="#n16" name="n16">16</a>
+<a href="#n17" name="n17">17</a>
+<a href="#n18" name="n18">18</a>
+<a href="#n19" name="n19">19</a>
+<strong><a href="#n20" name="n20">20</a></strong>
+<a href="#n21" name="n21">21</a>
+<a href="#n22" name="n22">22</a>
+<a href="#n23" name="n23">23</a>
+<a href="#n24" name="n24">24</a>
+<a href="#n25" name="n25">25</a>
+<a href="#n26" name="n26">26</a>
+<a href="#n27" name="n27">27</a>
+</pre></td>
+  <td class="code"><pre> 
+express -e todoApp
+<span class="error">#</span> =&gt;   create : todoApp                  <span class="error">#</span> app directory  
+<span class="error">#</span> =&gt;   create : todoApp/<span class="reserved">package</span>.json     <span class="error">#</span> file containing all the dependencies
+<span class="error">#</span> =&gt;   create : todoApp/app.js           <span class="error">#</span> Entry point of the application: defines middleware, 
+initialize database connections, routes and more.
+<span class="error">#</span> =&gt;   create : todoApp/<span class="reserved">public</span>           <span class="error">#</span> all files contained here are accessible through to 
+<span class="reserved">public</span> (browser or API calls).
+<span class="error">#</span> =&gt;   create : todoApp/<span class="reserved">public</span>/javascripts
+<span class="error">#</span> =&gt;   create : todoApp/<span class="reserved">public</span>/images
+<span class="error">#</span> =&gt;   create : todoApp/<span class="reserved">public</span>/stylesheets
+<span class="error">#</span> =&gt;   create : todoApp/<span class="reserved">public</span>/stylesheets/style.css
+<span class="error">#</span> =&gt;   create : todoApp/routes           <span class="error">#</span> containes all the routes files
+<span class="error">#</span> =&gt;   create : todoApp/routes/index.js
+<span class="error">#</span> =&gt;   create : todoApp/routes/users.js
+<span class="error">#</span> =&gt;   create : todoApp/views            <span class="error">#</span> contains all the HTML templates
+<span class="error">#</span> =&gt;   create : todoApp/views/index.ejs
+<span class="error">#</span> =&gt;   create : todoApp/views/error.ejs
+<span class="error">#</span> =&gt;   create : todoApp/bin              <span class="error">#</span> contains executable files
+<span class="error">#</span> =&gt;   create : todoApp/bin/www          <span class="error">#</span> bootstrap the app: loads app.js, and set the port 
+<span class="keyword">for</span> the webserver.
+<span class="error">#</span> =&gt;
+<span class="error">#</span> =&gt;   install dependencies:
+<span class="error">#</span> =&gt;     <span class="predefined">$</span> cd todoApp &amp;&amp; npm install
+<span class="error">#</span> =&gt;
+<span class="error">#</span> =&gt;   run the app:
+<span class="error">#</span> =&gt;     <span class="predefined">$</span> DEBUG=todoApp .<span class="regexp"><span class="delimiter">/</span><span class="content">bin</span><span class="delimiter">/</span></span>www
+</pre></td>
+</tr></table>
+ </figure></notextile></div>
+
+<h3 id="expressjsmongodb">将ExpressJS与MongoDB连接</h3>
+<p>在上一节中你已经安装好了MongoDB，键入以下命令来启动它：<br />
+<code>mongod</code><br />
+为NodeJS安装名为mongoose的MongoDB驱动：<br />
+<code>npm install mongoose --save</code>  </p>
+
+<p>注意<code>--save</code>参数，这将会把它加到<code>todoApp/package.json</code>里。<br />
+接下来，你需要在<code>todoApp/app.js</code>里引入mongoose。  </p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"> <table class="CodeRay"><tr>
+  <td class="line-numbers"><pre><a href="#n1" name="n1">1</a>
+<a href="#n2" name="n2">2</a>
+<a href="#n3" name="n3">3</a>
+<a href="#n4" name="n4">4</a>
+<a href="#n5" name="n5">5</a>
+<a href="#n6" name="n6">6</a>
+<a href="#n7" name="n7">7</a>
+<a href="#n8" name="n8">8</a>
+<a href="#n9" name="n9">9</a>
+</pre></td>
+  <td class="code"><pre> 
+<span class="keyword">var</span> mongoose = require(<span class="string"><span class="delimiter">'</span><span class="content">mongoose</span><span class="delimiter">'</span></span>);
+mongoose.connect(<span class="string"><span class="delimiter">'</span><span class="content">mongodb://localhost/todoApp</span><span class="delimiter">'</span></span>, <span class="keyword">function</span>(err) {
+    <span class="keyword">if</span>(err) {
+        console.log(<span class="string"><span class="delimiter">'</span><span class="content">connection error</span><span class="delimiter">'</span></span>, err);
+    } <span class="keyword">else</span> {
+        console.log(<span class="string"><span class="delimiter">'</span><span class="content">connection successful</span><span class="delimiter">'</span></span>);
+    }
+});
+</pre></td>
+</tr></table>
+ </figure></notextile></div>
+
+<p>现在，你可以运行<code>npm start</code>或者<code>./bin/www</code>，你将会注意到下面的信息：<code>connection successful</code>。看到了吗？很好！  </p>
+
+<p>你可以查看<a href="https://github.com/amejiarosario/todoAPIjs">完整的代码</a>， 或者截止目前我们所做的<a href="https://github.com/amejiarosario/todoAPIjs/commit/d3be6a287e8aff39ab862971da4f050d04e552a1">改动</a>。  </p>
+
+<h3 id="mongoosetodo">使用Mongoose创建Todo模型</h3>
+
+<p>表演时间到！目前为止，上面所做的工作都是搭建环境和准备工作。现在我们开始专注于实现API。<br />
+创建<code>models</code>目录以及<code>Todo.js</code>模型：<br />
+<code>mkdir models  
+touch models/Todo.js</code></p>
+
+<p>编辑models/Todo.js文件：  </p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"> <table class="CodeRay"><tr>
+  <td class="line-numbers"><pre><a href="#n1" name="n1">1</a>
+<a href="#n2" name="n2">2</a>
+<a href="#n3" name="n3">3</a>
+<a href="#n4" name="n4">4</a>
+<a href="#n5" name="n5">5</a>
+<a href="#n6" name="n6">6</a>
+<a href="#n7" name="n7">7</a>
+<a href="#n8" name="n8">8</a>
+<a href="#n9" name="n9">9</a>
+</pre></td>
+  <td class="code"><pre> 
+<span class="keyword">var</span> mongoose = require(<span class="string"><span class="delimiter">'</span><span class="content">mongoose</span><span class="delimiter">'</span></span>);
+<span class="keyword">var</span> TodoSchema = <span class="keyword">new</span> mongoose.Schema({
+  <span class="key">name</span>: String,
+  <span class="key">completed</span>: Boolean,
+  <span class="key">note</span>: String,
+  <span class="key">updated_at</span>: { <span class="key">type</span>: Date, <span class="keyword">default</span>: Date.now },
+});
+module.exports = mongoose.model(<span class="string"><span class="delimiter">'</span><span class="content">Todo</span><span class="delimiter">'</span></span>, TodoSchema);
+</pre></td>
+</tr></table>
+ </figure></notextile></div>
+
+<p><a href="https://github.com/amejiarosario/todoAPIjs/commit/afc908027339b22f10de3b77518ac0728668d470">变更</a>  </p>
+
+<p>这里发生了什么？MongoDB难道不是无模式的吗？没错，它确实无模式并且很灵活，然而，很多情况下我们会想要使我们的数据保持一个一致的结构，从而方便验证，也方便我们的API/WebApp实际应用。Mongoose帮我们做了这些事情。  </p>
+
+<p>我们可以使用下面的类型：  </p>
+
+<ul>
+  <li>String  </li>
+  <li>Boolean  </li>
+  <li>Date  </li>
+  <li>Array   </li>
+  <li>Number   </li>
+  <li>ObjectId   </li>
+  <li>Mixed   </li>
+  <li>Buffer  </li>
+</ul>
+
+<h3 id="expressjs-">ExpressJS 路由</h3>
+<p>我们将要实现以下API：  </p>
+<table>
+<tbody>
+<tr><td><strong>Resource(URI) </strong></td><td><strong>POST(创建) </strong></td><td><strong>GET(读取) </strong></td><td><strong>PUT(更新 )</strong></td><td><strong>DELETE(删除) </strong></td></tr>
+<tr><td>/todos</td><td>创建新的任务 </td><td>列出所有任务  </td><td>N/A（更新全部）</td><td>N/A（删除全部） </td></tr>
+<tr><td>/todos/:id </td><td>错误 </td><td>显示ID为:id的任务  </td><td>更新ID为:id的任务  </td><td>删除ID为:id的任务  </td></tr>
+</tbody>
+</table>
+<p><br /></p>
+
+<p>建立路由：  </p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption class="code-header"><span>Create a new route called `todos.js` in the `routes` folder or rename `users.js` </span></figcaption>
+ <table class="CodeRay"><tr>
+  <td class="line-numbers"><pre><a href="#n1" name="n1">1</a>
+<a href="#n2" name="n2">2</a>
+</pre></td>
+  <td class="code"><pre>  
+mv routes/users.js routes/todos.js
+</pre></td>
+</tr></table>
+ </figure></notextile></div>
+
+<p>在<code>app.js</code>中，添加新的<code>todos</code>路由，或者替换<code>./routes/users</code>为<code>./routes/todos</code>  </p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption class="code-header"><span>Adding todos routes </span></figcaption>
+ <table class="CodeRay"><tr>
+  <td class="line-numbers"><pre><a href="#n1" name="n1">1</a>
+<a href="#n2" name="n2">2</a>
+<a href="#n3" name="n3">3</a>
+</pre></td>
+  <td class="code"><pre>
+<span class="keyword">var</span> todos = require(<span class="string"><span class="delimiter">'</span><span class="content">./routes/todos</span><span class="delimiter">'</span></span>);
+app.use(<span class="string"><span class="delimiter">'</span><span class="content">/todos</span><span class="delimiter">'</span></span>, todos);
+</pre></td>
+</tr></table>
+ </figure></notextile></div>
+
+<p>搞定！现在返回编辑<code>routes/todos.js</code>。 </p>
+
+<p><strong>查询： GET /todos</strong><br />
+还记得Mongoose查询API吗？下面的例子显示如何在上下文中使用它：  </p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption class="code-header"><span>routes/todos.js </span></figcaption>
+ <table class="CodeRay"><tr>
+  <td class="line-numbers"><pre><a href="#n1" name="n1">1</a>
+<a href="#n2" name="n2">2</a>
+<a href="#n3" name="n3">3</a>
+<a href="#n4" name="n4">4</a>
+<a href="#n5" name="n5">5</a>
+<a href="#n6" name="n6">6</a>
+<a href="#n7" name="n7">7</a>
+<a href="#n8" name="n8">8</a>
+<a href="#n9" name="n9">9</a>
+<strong><a href="#n10" name="n10">10</a></strong>
+<a href="#n11" name="n11">11</a>
+<a href="#n12" name="n12">12</a>
+<a href="#n13" name="n13">13</a>
+</pre></td>
+  <td class="code"><pre>
+<span class="keyword">var</span> express = require(<span class="string"><span class="delimiter">'</span><span class="content">express</span><span class="delimiter">'</span></span>);
+<span class="keyword">var</span> router = express.Router();
+<span class="keyword">var</span> mongoose = require(<span class="string"><span class="delimiter">'</span><span class="content">mongoose</span><span class="delimiter">'</span></span>);
+<span class="keyword">var</span> Todo = require(<span class="string"><span class="delimiter">'</span><span class="content">../models/Todo.js</span><span class="delimiter">'</span></span>);
+<span class="comment">/* GET /todos listing. */</span>
+router.get(<span class="string"><span class="delimiter">'</span><span class="content">/</span><span class="delimiter">'</span></span>, <span class="keyword">function</span>(req, res, next) {
+  Todo.find(<span class="keyword">function</span> (err, todos) {
+    <span class="keyword">if</span> (err) <span class="keyword">return</span> next(err);
+    res.json(todos);
+  });
+});
+module.exports = router;
+</pre></td>
+</tr></table>
+ </figure></notextile></div>
+
+<p>收获时间到！数据库里暂时没有任务记录，不过我们至少可以证明它能够正常工作：  </p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption class="code-header"><span>Testing all together </span></figcaption>
+ <table class="CodeRay"><tr>
+  <td class="line-numbers"><pre><a href="#n1" name="n1">1</a>
+<a href="#n2" name="n2">2</a>
+<a href="#n3" name="n3">3</a>
+<a href="#n4" name="n4">4</a>
+<a href="#n5" name="n5">5</a>
+<a href="#n6" name="n6">6</a>
+<a href="#n7" name="n7">7</a>
+<a href="#n8" name="n8">8</a>
+</pre></td>
+  <td class="code"><pre>
+<span class="error">#</span> Start database
+mongod
+<span class="error">#</span> Start Webserver (<span class="keyword">in</span> other terminal tab)
+DEBUG=todoApp .<span class="regexp"><span class="delimiter">/</span><span class="content">bin</span><span class="delimiter">/</span></span>www
+<span class="error">#</span> Test API (<span class="keyword">in</span> other terminal tab)
+curl localhost:<span class="integer">3000</span>/todos
+<span class="error">#</span> =&gt; []% 
+</pre></td>
+</tr></table>
+ </figure></notextile></div>
+
+<p><a href="https://github.com/amejiarosario/todoAPIjs/commit/54ab912ea9aa2b6633ae12816beb6e6c3d2702e6">变更</a></p>
+
+<p>如果看到返回空数组[]则证明一切都准备就绪了。如果你看到错误，尝试回顾并确认没有遗漏每个步骤，或者在本贴子下面添加评论以寻求帮助。  </p>
+
+<p><strong>创建： POST/ todos</strong><br />
+回到<code>routes/todos.js</code>，我们将使用mongoose create[link]来实现用于创建的API。你能够在不参照下面例子的情况下尝试实现它吗？  </p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption class="code-header"><span>routes/todos.js (showing just create route) </span></figcaption>
+ <table class="CodeRay"><tr>
+  <td class="line-numbers"><pre><a href="#n1" name="n1">1</a>
+<a href="#n2" name="n2">2</a>
+<a href="#n3" name="n3">3</a>
+<a href="#n4" name="n4">4</a>
+<a href="#n5" name="n5">5</a>
+<a href="#n6" name="n6">6</a>
+<a href="#n7" name="n7">7</a>
+<a href="#n8" name="n8">8</a>
+</pre></td>
+  <td class="code"><pre>
+<span class="comment">/* POST /todos */</span>
+router.post(<span class="string"><span class="delimiter">'</span><span class="content">/</span><span class="delimiter">'</span></span>, <span class="keyword">function</span>(req, res, next) {
+  Todo.create(req.body, <span class="keyword">function</span> (err, post) {
+    <span class="keyword">if</span> (err) <span class="keyword">return</span> next(err);
+    res.json(post);
+  });
+});
+</pre></td>
+</tr></table>
+ </figure></notextile></div>
+
+<p><a href="https://github.com/amejiarosario/todoAPIjs/commit/28b60c4bf9c6d8b08c3351f725e17c7f40a077be">变更</a>  </p>
+
+<p>几点需要注意：  </p>
+
+<ul>
+  <li>这里我们使用<code>router.post</code>而不是<code>router.get</code>。  </li>
+  <li>你必须关掉并且重启服务：<code>DEBUG=todoApp ./bin/www</code>。强烈推荐使用<code>nodemon</code>以自动刷新。执行<code>npm install nodemon</code>，然后通过<code>nodemon</code>运行程序。  </li>
+</ul>
+
+<p><strong>展示单条任务： GET /todos/:id</strong><br />
+以下是一个使用<code>Todo.findeById</code>和<code>req.params</code>的快照。请注意<code>params</code>与路径中占位符名称相匹配。这里我们用的是<code>:id</code>。  </p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption class="code-header"><span>routes/todos.js (showing just show route) </span></figcaption>
+ <table class="CodeRay"><tr>
+  <td class="line-numbers"><pre><a href="#n1" name="n1">1</a>
+<a href="#n2" name="n2">2</a>
+<a href="#n3" name="n3">3</a>
+<a href="#n4" name="n4">4</a>
+<a href="#n5" name="n5">5</a>
+<a href="#n6" name="n6">6</a>
+<a href="#n7" name="n7">7</a>
+<a href="#n8" name="n8">8</a>
+</pre></td>
+  <td class="code"><pre>
+<span class="comment">/* GET /todos/id */</span>
+router.get(<span class="string"><span class="delimiter">'</span><span class="content">/:id</span><span class="delimiter">'</span></span>, <span class="keyword">function</span>(req, res, next) {
+  Todo.findById(req.params.id, <span class="keyword">function</span> (err, post) {
+    <span class="keyword">if</span> (err) <span class="keyword">return</span> next(err);
+    res.json(post);
+  });
+});
+</pre></td>
+</tr></table>
+ </figure></notextile></div>
+
+<p><a href="https://github.com/amejiarosario/todoAPIjs/commit/7d8bc67178a4f162858395845c076d9223926bf8">变更</a></p>
+
+<p>通过<em>POSTMAN</em>，使用一个你已经创建的元素<code>_id</code>来进行测试。例如：<code>localhost:3000/todos/542d7d290a705126360ac635</code>。  </p>
+
+<p><strong>更新： PUT /todos/:id</strong><br />
+回到<code>routes/todos.js</code>，我们来实现用于更新任务的API。请回顾findByIdAndUpdate[link]方法，并尝试利用它来实现该API。  </p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption class="code-header"><span>routes/todos.js (showing just update route) </span></figcaption>
+ <table class="CodeRay"><tr>
+  <td class="line-numbers"><pre><a href="#n1" name="n1">1</a>
+<a href="#n2" name="n2">2</a>
+<a href="#n3" name="n3">3</a>
+<a href="#n4" name="n4">4</a>
+<a href="#n5" name="n5">5</a>
+<a href="#n6" name="n6">6</a>
+<a href="#n7" name="n7">7</a>
+<a href="#n8" name="n8">8</a>
+</pre></td>
+  <td class="code"><pre>
+<span class="comment">/* PUT /todos/:id */</span>
+router.put(<span class="string"><span class="delimiter">'</span><span class="content">/:id</span><span class="delimiter">'</span></span>, <span class="keyword">function</span>(req, res, next) {
+  Todo.findByIdAndUpdate(req.params.id, req.body, <span class="keyword">function</span> (err, post) {
+    <span class="keyword">if</span> (err) <span class="keyword">return</span> next(err);
+    res.json(post);
+  });
+});
+</pre></td>
+</tr></table>
+ </figure></notextile></div>
+
+<p><a href="https://github.com/amejiarosario/todoAPIjs/commit/00dafe491e0d0b59fa53e86d8c187c42d7824200">变更</a></p>
+
+<p>同样请在<em>POSTMAN</em>中测试 :-)  </p>
+
+<p><strong>删除： DELETE /todos/:id</strong><br />
+终于轮到最后一个API了！几乎与<code>update</code>完全相同，使用<code>findByIdAndRemove</code>。  </p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption class="code-header"><span>routes/todos.js (showing just update route) </span></figcaption>
+ <table class="CodeRay"><tr>
+  <td class="line-numbers"><pre><a href="#n1" name="n1">1</a>
+<a href="#n2" name="n2">2</a>
+<a href="#n3" name="n3">3</a>
+<a href="#n4" name="n4">4</a>
+<a href="#n5" name="n5">5</a>
+<a href="#n6" name="n6">6</a>
+<a href="#n7" name="n7">7</a>
+<a href="#n8" name="n8">8</a>
+</pre></td>
+  <td class="code"><pre>
+<span class="comment">/* DELETE /todos/:id */</span>
+router.<span class="keyword">delete</span>(<span class="string"><span class="delimiter">'</span><span class="content">/:id</span><span class="delimiter">'</span></span>, <span class="keyword">function</span>(req, res, next) {
+  Todo.findByIdAndRemove(req.params.id, req.body, <span class="keyword">function</span> (err, post) {
+    <span class="keyword">if</span> (err) <span class="keyword">return</span> next(err);
+    res.json(post);
+  });
+});
+</pre></td>
+</tr></table>
+ </figure></notextile></div>
+
+<p><a href="https://github.com/amejiarosario/todoAPIjs/commit/cbf5366e2b4e1a683ed50d2148ed6a548616d3f8">变更</a>  </p>
+
+<p>上面的API都正常工作吗？非常好，你已经完成了我们教程的第二部分。如果有错误，请参照<a href="https://github.com/amejiarosario/todoAPIjs">完整代码</a>。  </p>
+
+<h2 id="section-2">下一步？</h2>
+<p>将AngularJS与后台服务连接。  </p>
+
+<ul>
+  <li>第三部分 - <a href="http://adrianmejia.com/blog/2014/10/03/mean-stack-tutorial-mongodb-expressjs-angularjs-nodejs/">MEAN全栈开发：前后端整合</a>    </li>
+</ul>
+
+<p><img src="http://dl.iteye.com/upload/picture/pic/133685/7c4ef50f-b7cd-3334-a29e-816cfcea7eba.png" />  </p>
+
+<p><strong>相关教程：</strong>  </p>
+
+<ul>
+  <li>第一部分 - <a href="http://gocwind.com/blog/2015/06/05/angularjs-tutorial-for-beginners/">MEAN全栈开发：AngularJS实战教程</a>  </li>
+  <li>第三部分 - <a href="http://adrianmejia.com/blog/2014/10/03/mean-stack-tutorial-mongodb-expressjs-angularjs-nodejs/">MEAN全栈开发：前后端整合</a>  </li>
+  <li><a href="http://adrianmejia.com/blog/categories/backbonejs">BackboneJS教程</a>    </li>
+</ul>
+
+<p>原文链接：<a href="http://adrianmejia.com/blog/2014/10/01/creating-a-restful-api-tutorial-with-nodejs-and-mongodb/">Creating RESTful APIs With NodeJS and MongoDB Tutorial (Part II)</a></p>
+]]></content>
+  </entry>
+  
+  <entry>
     <title type="html"><![CDATA[MEAN全栈开发：AngularJS实战教程]]></title>
     <link href="http://cwind001.github.io/blog/2015/06/05/angularjs-tutorial-for-beginners/"/>
     <updated>2015-06-05T21:36:10+08:00</updated>
     <id>http://cwind001.github.io/blog/2015/06/05/angularjs-tutorial-for-beginners</id>
     <content type="html"><![CDATA[<p>本系列教程的主要目的是尽可能清楚地阐释如何使AngularJS与Node.js、Express.js和MongoDB实现的后台服务连接 – 这套技术栈也被称为MEAN stack（M=MongoDB, E = Express.js, A = AngularJS, N = Node.js）。让我们从AngularJS开始。  </p>
 
-<h2 id="angularjs">第一部分：AngularJS</h2>
+<h1 id="angularjs">第一部分：AngularJS</h1>
 
 <p>我们将会在一个单独的HTML文件中构建所有的示例，它将嵌入javascript，同时为了简化，我们并不关心样式/CSS。我们将在后续教程中讨论如何利用angularJS模块来分解代码，加入测试以及样式。<br />
 <!--more--></p>
@@ -29,7 +938,7 @@
 <img src="http://dl.iteye.com/upload/picture/pic/133659/9d9848ea-e94e-322c-9d73-f7d9c072146f.jpg" /><br />
 Angular.js是一个MVW（模型-视图-随便什么）开源的JavaScript Web框架，使得创建单页应用（SPA）和数据驱动的应用更加方便快捷。  </p>
 
-<h3 id="section">背景简介</h3>
+<h2 id="section">背景简介</h2>
 <p><strong>AngularJS vs jQuery vs BackbonesJS vs EmberJS</strong><br />
 AngularJS非常适用于构建可测试的单页应用（SPA），以及数据驱动的CRUD应用。  </p>
 
@@ -49,9 +958,11 @@ AngularJS非常适用于构建可测试的单页应用（SPA），以及数据�
   <li>AngularJS提供了编写模块化的代码和依赖管理的解决方案。  </li>
 </ul>
 
-<h3 id="angularjs-1">AngularJS主要组件</h3>
-<p><strong>AngularJS指令</strong><br />
-关于AngularJS，你需要了解的第一个概念就是指令（directives）。</p>
+<h2 id="angularjs-1">AngularJS主要组件</h2>
+
+<h3 id="angularjs-2">AngularJS指令</h3>
+
+<p>关于AngularJS，你需要了解的第一个概念就是指令（directives）。</p>
 
 <p><strong>Directives</strong>是指HTML标记扩展，通常以属性、元素名称、CSS类甚至HTML注释等形式存在。当AngularJS框架被加载之后，ng-app指令中的一切 – 数据、事件和DOM转换将与该指令绑定。</p>
 
@@ -146,23 +1057,46 @@ app.directive(<span class="string"><span class="delimiter">'</span><span class="
 
 <p>如果你对指令的其他选项感兴趣，可以阅读 <a href="http://www.sitepoint.com/practical-guide-angularjs-directives/">A Practical Guide to AngularJS Directives</a></p>
 
-<p><strong>AngularJS数据绑定</strong><br />
-数据绑定是AngularJS的特性之一，它使得模型数据可以与HTML自动同步。这非常了不起因为模型是“唯一的真相来源”同时你不需要关心如何去更新它。这里有一张来自docs.angularjs.org的图：<br />
+<h3 id="angularjs-3">AngularJS数据绑定</h3>
+<p>数据绑定是AngularJS的特性之一，它使得模型数据可以与HTML自动同步。这非常了不起因为模型是“唯一的真相来源”同时你不需要关心如何去更新它。这里有一张来自docs.angularjs.org的图：<br />
 <img src="http://dl.iteye.com/upload/picture/pic/133665/3d238e26-a15f-3865-b217-1e8723407f67.png" />  </p>
 
 <p>无论什么时候HTML发生变化时，模型将会被更新；同时无论什么时候模型被更新时，它将会反映到HTML上。  </p>
 
-<p><strong>AngularJS作用域</strong><br />
-$scope是一个包含了HTML绑定的所有数据的对象。它是javascript代码(controllers)与视图(HTML)之间的胶水。附加在$scope上的所有数据，将会被AngularJS自动地”$watch”以及更新。  </p>
+<h3 id="angularjs-4">AngularJS作用域</h3>
+<p>$scope是一个包含了HTML绑定的所有数据的对象。它是javascript代码(controllers)与视图(HTML)之间的胶水。附加在$scope上的所有数据，将会被AngularJS自动地”$watch”以及更新。  </p>
 
 <p>作用域可以绑定到javascript函数上。你也可以使用多个$scope，或者从外部$scope继承。在控制器一节中我们将继续深入讨论。  </p>
 
-<p><strong>AngularJS控制器</strong><br />
-AngularJS控制器是用于”控制”包含了特定DOM元素的区域的代码段。它们封装了行为、回调函数并且把$scope模型和视图粘合起来。让我们通过下面示例代码来加深对此概念的理解：  </p>
+<h3 id="angularjs-5">AngularJS控制器</h3>
+<p>AngularJS控制器是用于”控制”包含了特定DOM元素的区域的代码段。它们封装了行为、回调函数并且把$scope模型和视图粘合起来。让我们通过下面示例代码来加深对此概念的理解：  </p>
 
-<div class="bogus-wrapper"><notextile><figure class="code"><figcaption class="code-header"><span>lineno:true </span></figcaption>
- <div class="CodeRay">
-  <div class="code"><pre>  
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption class="code-header"><span>AngularJS Controller Example </span></figcaption>
+ <table class="CodeRay"><tr>
+  <td class="line-numbers"><pre><a href="#n1" name="n1">1</a>
+<a href="#n2" name="n2">2</a>
+<a href="#n3" name="n3">3</a>
+<a href="#n4" name="n4">4</a>
+<a href="#n5" name="n5">5</a>
+<a href="#n6" name="n6">6</a>
+<a href="#n7" name="n7">7</a>
+<a href="#n8" name="n8">8</a>
+<a href="#n9" name="n9">9</a>
+<strong><a href="#n10" name="n10">10</a></strong>
+<a href="#n11" name="n11">11</a>
+<a href="#n12" name="n12">12</a>
+<a href="#n13" name="n13">13</a>
+<a href="#n14" name="n14">14</a>
+<a href="#n15" name="n15">15</a>
+<a href="#n16" name="n16">16</a>
+<a href="#n17" name="n17">17</a>
+<a href="#n18" name="n18">18</a>
+<a href="#n19" name="n19">19</a>
+<strong><a href="#n20" name="n20">20</a></strong>
+<a href="#n21" name="n21">21</a>
+<a href="#n22" name="n22">22</a>
+</pre></td>
+  <td class="code"><pre>  
 <span class="tag">&lt;body</span> <span class="attribute-name">ng-controller</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">TodoController</span><span class="delimiter">&quot;</span></span><span class="tag">&gt;</span>
   <span class="tag">&lt;ul&gt;</span>
     <span class="tag">&lt;li</span> <span class="attribute-name">ng-repeat</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">todo in todos</span><span class="delimiter">&quot;</span></span><span class="tag">&gt;</span>
@@ -184,8 +1118,8 @@ AngularJS控制器是用于”控制”包含了特定DOM元素的区域的代�
     }</span>
   <span class="tag">&lt;/script&gt;</span>
 <span class="tag">&lt;/body&gt;</span>
-</pre></div>
-</div>
+</pre></td>
+</tr></table>
  </figure></notextile></div>
 
 <p>你可能会注意到这些新朋友：ng-controller, ng-repeat和$scope  </p>
@@ -197,8 +1131,8 @@ AngularJS控制器是用于”控制”包含了特定DOM元素的区域的代�
   <li><strong>ng-model</strong>，请注意复选框被绑定到todo.completed属性。如果todo.completed为true，复选框将被自动选中，反之亦然。</li>
 </ul>
 
-<p><strong>AngularJS模块</strong><br />
-模块是用来封装应用中不同部分（指令、控制器、工厂……）的一种方式，可以方便地在其他地方重用。这里有一个通过模块来重写我们之前的控制器的实例：  </p>
+<h3 id="angularjs-6">AngularJS模块</h3>
+<p>模块是用来封装应用中不同部分（指令、控制器、工厂……）的一种方式，可以方便地在其他地方重用。这里有一个通过模块来重写我们之前的控制器的实例：  </p>
 
 <div class="bogus-wrapper"><notextile><figure class="code"><figcaption class="code-header"><span>Custom AngularJS directives </span></figcaption>
  <table class="CodeRay"><tr>
@@ -231,14 +1165,23 @@ angular.module(<span class="string"><span class="delimiter">'</span><span class=
 
 <p>使用模块可以带来许多好处，比如可以以任意顺序加载模块，并行加载依赖，测试可以只加载需要的模块以加快速度，使得依赖关系更加清晰。  </p>
 
-<p><strong>AngularJS模板</strong><br />
-模板同时包含HTML与Angular元素（指令、标记、过滤器或表单控件）。它们可以被缓存或者被通过id引用。  </p>
+<h3 id="angularjs-7">AngularJS模板</h3>
+<p>模板同时包含HTML与Angular元素（指令、标记、过滤器或表单控件）。它们可以被缓存或者被通过id引用。  </p>
 
 <p>这里有一个示例：  </p>
 
-<div class="bogus-wrapper"><notextile><figure class="code"><figcaption class="code-header"><span>lineno:true </span></figcaption>
- <div class="CodeRay">
-  <div class="code"><pre>  
+<div class="bogus-wrapper"><notextile><figure class="code"> <table class="CodeRay"><tr>
+  <td class="line-numbers"><pre><a href="#n1" name="n1">1</a>
+<a href="#n2" name="n2">2</a>
+<a href="#n3" name="n3">3</a>
+<a href="#n4" name="n4">4</a>
+<a href="#n5" name="n5">5</a>
+<a href="#n6" name="n6">6</a>
+<a href="#n7" name="n7">7</a>
+<a href="#n8" name="n8">8</a>
+<a href="#n9" name="n9">9</a>
+</pre></td>
+  <td class="code"><pre>  
   <span class="tag">&lt;script</span> <span class="attribute-name">type</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">text/ng-template</span><span class="delimiter">&quot;</span></span> <span class="attribute-name">id</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">/todos.html</span><span class="delimiter">&quot;</span></span><span class="tag">&gt;</span>
 <span class="inline">    <span class="tag">&lt;ul&gt;</span>
       <span class="tag">&lt;li</span> <span class="attribute-name">ng-repeat</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">todo in todos</span><span class="delimiter">&quot;</span></span><span class="tag">&gt;</span>
@@ -247,16 +1190,16 @@ angular.module(<span class="string"><span class="delimiter">'</span><span class=
       <span class="tag">&lt;/li&gt;</span>
     <span class="tag">&lt;/ul&gt;</span></span>
   <span class="tag">&lt;/script&gt;</span>
-</pre></div>
-</div>
+</pre></td>
+</tr></table>
  </figure></notextile></div>
 
 <p>代码看起来眼熟吗？；）</p>
 
 <p>请注意script标签中的类型属性为“text/ng-template”。</p>
 
-<p><strong>AngularJS路由（ngRoutes）</strong><br />
-ngRoutes模块使得我们能够更改我们在应用中看到的东西，基于URL(路由)。通常，它使用模板向应用中注入HTML。  </p>
+<h3 id="angularjsngroutes">AngularJS路由（ngRoutes）</h3>
+<p>ngRoutes模块使得我们能够更改我们在应用中看到的东西，基于URL(路由)。通常，它使用模板向应用中注入HTML。  </p>
 
 <p>它并没有包含在AngularJS核心模块里面，我们必须将其作为一个依赖引入。我们可以从Google CDN上获取它：  </p>
 
@@ -298,8 +1241,8 @@ angular.module(<span class="string"><span class="delimiter">'</span><span class=
   <li>ngView是$routeProvider所使用的指令，用于渲染HTML。每次URL变化时，一个新的HTML模板和控制器将会被注入ngView。</li>
 </ul>
 
-<p><strong>AngularJS服务（工厂）</strong><br />
-请注意目前暂时无法创建第二个控制器并共享$scope.todos。当我们使用服务时，就方便了许多。服务是我们将数据依赖注入到控制器中的一种方式，他们通过工厂生成。我们看实例：</p>
+<h3 id="angularjs-8">AngularJS服务（工厂）</h3>
+<p>请注意目前暂时无法创建第二个控制器并共享$scope.todos。当我们使用服务时，就方便了许多。服务是我们将数据依赖注入到控制器中的一种方式，他们通过工厂生成。我们看实例：</p>
 
 <div class="bogus-wrapper"><notextile><figure class="code"><figcaption class="code-header"><span>Custom AngularJS directives </span></figcaption>
  <table class="CodeRay"><tr>
@@ -361,7 +1304,7 @@ angular.module(<span class="string"><span class="delimiter">'</span><span class=
 
 <p>注意：在codepen中你无法看到URL。如果你想要看到它的变化，你可以在 这里 [ url ]下载整个示例。  </p>
 
-<p><strong>AngularJS过滤器</strong>  </p>
+<h3 id="angularjs-9">AngularJS过滤器</h3>
 
 <p>过滤器使你可以格式化并转换双括号里表达式的输出。AngularJS内置了许多有用的过滤器。  </p>
 
@@ -382,9 +1325,19 @@ angular.module(<span class="string"><span class="delimiter">'</span><span class=
 
 <p><strong>新功能</strong>：通过名字搜索代办任务。让我们使用过滤器来解决这个问题。</p>
 
-<div class="bogus-wrapper"><notextile><figure class="code"><figcaption class="code-header"><span>lineno:true </span></figcaption>
- <div class="CodeRay">
-  <div class="code"><pre>  
+<div class="bogus-wrapper"><notextile><figure class="code"> <table class="CodeRay"><tr>
+  <td class="line-numbers"><pre><a href="#n1" name="n1">1</a>
+<a href="#n2" name="n2">2</a>
+<a href="#n3" name="n3">3</a>
+<a href="#n4" name="n4">4</a>
+<a href="#n5" name="n5">5</a>
+<a href="#n6" name="n6">6</a>
+<a href="#n7" name="n7">7</a>
+<a href="#n8" name="n8">8</a>
+<a href="#n9" name="n9">9</a>
+<strong><a href="#n10" name="n10">10</a></strong>
+</pre></td>
+  <td class="code"><pre>  
   <span class="tag">&lt;script</span> <span class="attribute-name">type</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">text/ng-template</span><span class="delimiter">&quot;</span></span> <span class="attribute-name">id</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">/todos.html</span><span class="delimiter">&quot;</span></span><span class="tag">&gt;</span>
 <span class="inline">    Search: &lt;input type=<span class="string"><span class="delimiter">&quot;</span><span class="content">text</span><span class="delimiter">&quot;</span></span> ng-model=<span class="string"><span class="delimiter">&quot;</span><span class="content">search.name</span><span class="delimiter">&quot;</span></span>&gt;
     <span class="tag">&lt;ul&gt;</span>
@@ -394,14 +1347,14 @@ angular.module(<span class="string"><span class="delimiter">'</span><span class=
       <span class="tag">&lt;/li&gt;</span>
     <span class="tag">&lt;/ul&gt;</span></span>
   <span class="tag">&lt;/script&gt;</span>
-</pre></div>
-</div>
+</pre></td>
+</tr></table>
  </figure></notextile></div>
 
 <p>请注意我们在ng-model中使用search.name用于搜索。这将会把搜索限制在’name’属性，search.notes将会只在notes里搜索。猜猜不指定属性只使用‘search’将会做些什么？没错！它会在所有的属性中搜索。  </p>
 
-<p><strong>下一步？</strong><br />
-祝贺你！你已经完成了第一部分。我们将会使用目前所学构建一些东西。在后续文章中我们将会使用NodeJS和MongoDB搭建后台，连接到AngularJS上来提供一个具备完整功能的CRUD应用。  </p>
+<h2 id="section-1">下一步？</h2>
+<p>祝贺你！你已经完成了第一部分。我们将会使用目前所学构建一些东西。在后续文章中我们将会使用NodeJS和MongoDB搭建后台，连接到AngularJS上来提供一个具备完整功能的CRUD应用。  </p>
 
 <p>第二部分 - <a href="http://adrianmejia.com/blog/2014/10/01/creating-a-restful-api-tutorial-with-nodejs-and-mongodb/">NodeJS/ExpressJS 与 MongoDB/Mongoose</a>  </p>
 
