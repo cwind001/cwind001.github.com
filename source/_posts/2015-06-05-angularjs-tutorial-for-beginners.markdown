@@ -4,13 +4,13 @@ title: "MEAN全栈开发：AngularJS实战教程"
 date: 2015-06-05 21:36:10 +0800
 updated: 2015-06-05 21:36:10 +0800
 comments: true
-categories: Nodejs
+categories: MEAN MongoDB ExpressJS AngularJS NodeJS 
 tags: [translation, MEAN, full stack, Nodejs, Angularjs, Express, MongoDB]
 keywords: MEAN, 全栈开发, Nodejs, Angularjs, Express, MongoDB  
 ---  
 本系列教程的主要目的是尽可能清楚地阐释如何使AngularJS与Node.js、Express.js和MongoDB实现的后台服务连接 -- 这套技术栈也被称为MEAN stack（M=MongoDB, E = Express.js, A = AngularJS, N = Node.js）。让我们从AngularJS开始。  
 
-##第一部分：AngularJS  
+#第一部分：AngularJS  
 
 我们将会在一个单独的HTML文件中构建所有的示例，它将嵌入javascript，同时为了简化，我们并不关心样式/CSS。我们将在后续教程中讨论如何利用angularJS模块来分解代码，加入测试以及样式。  
 <!--more-->
@@ -19,7 +19,7 @@ keywords: MEAN, 全栈开发, Nodejs, Angularjs, Express, MongoDB
 {% img http://dl.iteye.com/upload/picture/pic/133659/9d9848ea-e94e-322c-9d73-f7d9c072146f.jpg %}  
 Angular.js是一个MVW（模型-视图-随便什么）开源的JavaScript Web框架，使得创建单页应用（SPA）和数据驱动的应用更加方便快捷。  
   
-###背景简介  
+##背景简介  
 **AngularJS vs jQuery vs BackbonesJS vs EmberJS**  
 AngularJS非常适用于构建可测试的单页应用（SPA），以及数据驱动的CRUD应用。  
 
@@ -37,8 +37,10 @@ AngularJS的格言是："HTML enhanced for web apps（为网络应用增强HTML�
 - **写更少的代码**：AngularJS的主要特性诸如指令（directives），过滤器（filters）以及自动数据绑定减少了代码量。
 - AngularJS提供了编写模块化的代码和依赖管理的解决方案。  
 
-###AngularJS主要组件
-**AngularJS指令**  
+##AngularJS主要组件  
+
+###AngularJS指令  
+
 关于AngularJS，你需要了解的第一个概念就是指令（directives）。
 
 **Directives**是指HTML标记扩展，通常以属性、元素名称、CSS类甚至HTML注释等形式存在。当AngularJS框架被加载之后，ng-app指令中的一切 -- 数据、事件和DOM转换将与该指令绑定。
@@ -89,21 +91,21 @@ app.directive('hello', [function () {
 
 如果你对指令的其他选项感兴趣，可以阅读 [A Practical Guide to AngularJS Directives](http://www.sitepoint.com/practical-guide-angularjs-directives/)
 
-**AngularJS数据绑定**  
+###AngularJS数据绑定  
 数据绑定是AngularJS的特性之一，它使得模型数据可以与HTML自动同步。这非常了不起因为模型是“唯一的真相来源”同时你不需要关心如何去更新它。这里有一张来自docs.angularjs.org的图：  
 {% img http://dl.iteye.com/upload/picture/pic/133665/3d238e26-a15f-3865-b217-1e8723407f67.png %}  
 
 无论什么时候HTML发生变化时，模型将会被更新；同时无论什么时候模型被更新时，它将会反映到HTML上。  
 
-**AngularJS作用域**  
+###AngularJS作用域  
 $scope是一个包含了HTML绑定的所有数据的对象。它是javascript代码(controllers)与视图(HTML)之间的胶水。附加在$scope上的所有数据，将会被AngularJS自动地"$watch"以及更新。  
 
 作用域可以绑定到javascript函数上。你也可以使用多个$scope，或者从外部$scope继承。在控制器一节中我们将继续深入讨论。  
 
-**AngularJS控制器**  
+###AngularJS控制器  
 AngularJS控制器是用于"控制"包含了特定DOM元素的区域的代码段。它们封装了行为、回调函数并且把$scope模型和视图粘合起来。让我们通过下面示例代码来加深对此概念的理解：  
 
-{% coderay lang:HTML lineno:true %}  
+{% coderay lang:HTML linenos:true AngularJS Controller Example %}  
 <body ng-controller="TodoController">
   <ul>
     <li ng-repeat="todo in todos">
@@ -134,7 +136,7 @@ AngularJS控制器是用于"控制"包含了特定DOM元素的区域的代码段
 - **ng-repeat**，正如其名，它将会在声明该指令的地方“重复”输出元素及其子元素。对于示例，它将会遍历$scope.todos数组中的每一个元素。
 - **ng-model**，请注意复选框被绑定到todo.completed属性。如果todo.completed为true，复选框将被自动选中，反之亦然。
 
-**AngularJS模块**  
+###AngularJS模块  
 模块是用来封装应用中不同部分（指令、控制器、工厂……）的一种方式，可以方便地在其他地方重用。这里有一个通过模块来重写我们之前的控制器的实例：  
 
 {% coderay lang:JavaScript linenos:true Custom AngularJS directives %}  
@@ -152,12 +154,12 @@ angular.module('app', [])
 
 使用模块可以带来许多好处，比如可以以任意顺序加载模块，并行加载依赖，测试可以只加载需要的模块以加快速度，使得依赖关系更加清晰。  
 
-**AngularJS模板**  
+###AngularJS模板  
 模板同时包含HTML与Angular元素（指令、标记、过滤器或表单控件）。它们可以被缓存或者被通过id引用。  
 
 这里有一个示例：  
 
-{% coderay lang:HTML lineno:true %}  
+{% coderay lang:HTML linenos:true %}  
   <script type="text/ng-template" id="/todos.html">
     <ul>
       <li ng-repeat="todo in todos">
@@ -172,7 +174,7 @@ angular.module('app', [])
 
 请注意script标签中的类型属性为“text/ng-template”。
 
-**AngularJS路由（ngRoutes）**  
+###AngularJS路由（ngRoutes）  
 ngRoutes模块使得我们能够更改我们在应用中看到的东西，基于URL(路由)。通常，它使用模板向应用中注入HTML。  
 
 它并没有包含在AngularJS核心模块里面，我们必须将其作为一个依赖引入。我们可以从Google CDN上获取它：  
@@ -197,7 +199,7 @@ angular.module('app', ['ngRoute'])
 - 首先请注意我们将ng-controller="TodoController"从body标签移除了。现在控制器将通过路由被调用。
 - ngView是$routeProvider所使用的指令，用于渲染HTML。每次URL变化时，一个新的HTML模板和控制器将会被注入ngView。
 
-**AngularJS服务（工厂）**  
+###AngularJS服务（工厂）  
 请注意目前暂时无法创建第二个控制器并共享$scope.todos。当我们使用服务时，就方便了许多。服务是我们将数据依赖注入到控制器中的一种方式，他们通过工厂生成。我们看实例：
 
 {% coderay lang:JavaScript linenos:true Custom AngularJS directives %}  
@@ -235,7 +237,7 @@ angular.module('app', ['ngRoute'])
 
 注意：在codepen中你无法看到URL。如果你想要看到它的变化，你可以在 这里 [ url ]下载整个示例。  
 
-**AngularJS过滤器**  
+###AngularJS过滤器  
 
 过滤器使你可以格式化并转换双括号里表达式的输出。AngularJS内置了许多有用的过滤器。  
 
@@ -254,7 +256,7 @@ angular.module('app', ['ngRoute'])
 
 **新功能**：通过名字搜索代办任务。让我们使用过滤器来解决这个问题。
 
-{% coderay lang:HTML lineno:true %}  
+{% coderay lang:HTML linenos:true %}  
   <script type="text/ng-template" id="/todos.html">
     Search: <input type="text" ng-model="search.name">
     <ul>
@@ -268,15 +270,15 @@ angular.module('app', ['ngRoute'])
 
 请注意我们在ng-model中使用search.name用于搜索。这将会把搜索限制在'name'属性，search.notes将会只在notes里搜索。猜猜不指定属性只使用‘search’将会做些什么？没错！它会在所有的属性中搜索。  
 
-**下一步？**  
+##下一步？  
 祝贺你！你已经完成了第一部分。我们将会使用目前所学构建一些东西。在后续文章中我们将会使用NodeJS和MongoDB搭建后台，连接到AngularJS上来提供一个具备完整功能的CRUD应用。  
 
-第二部分 - [NodeJS/ExpressJS 与 MongoDB/Mongoose](http://adrianmejia.com/blog/2014/10/01/creating-a-restful-api-tutorial-with-nodejs-and-mongodb/)  
+第二部分 - [MEAN全栈开发：使用NodeJS和MongoDB创建REST服务](http://gocwind.com/blog/2015/06/09/creating-a-restful-api-tutorial-with-nodejs-and-mongodb/)  
 
 {% img left http://dl.iteye.com/upload/picture/pic/133663/abf21050-a55a-347e-9e0f-501586af10c7.png %}  
 {% img http://dl.iteye.com/upload/picture/pic/133661/636d3c41-5c03-33a4-af9f-a539fc997fcd.png %}  
 
-第三部分 - [MEAN全栈开发： 前后端整合](http://adrianmejia.com/blog/2014/10/03/mean-stack-tutorial-mongodb-expressjs-angularjs-nodejs/)  
+第三部分 - [MEAN全栈开发： 前后端整合](http://gocwind.com/blog/2015/06/09/mean-stack-tutorial-mongodb-expressjs-angularjs-nodejs/)  
 
 如果想要学习BackboneJS，可以访问我的[BackboneJS教程](http://adrianmejia.com/blog/categories/backbonejs)  
 
@@ -292,4 +294,4 @@ angular.module('app', ['ngRoute'])
 
 [项目代码@Github](https://github.com/cwind001/CwindJsLab/tree/master/todoAPIjs)  
 
-原文链接：[AngularJS Tutorial for Beginners With NodeJS ExpressJS and MongoDB (Part I)](http://adrianmejia.com/blog/2014/09/28/angularjs-tutorial-for-beginners-with-nodejs-expressjs-and-mongodb/#start)
+原文链接：[AngularJS Tutorial for Beginners With NodeJS ExpressJS and MongoDB (Part I)](http://adrianmejia.com/blog/2014/09/28/angularjs-tutorial-for-beginners-with-nodejs-expressjs-and-mongodb/)
