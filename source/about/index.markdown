@@ -11,7 +11,7 @@ footer: true
 
 学习中的全栈开发者，理想化的实用主义者，热爱美景与美食，对各种事物的来龙去脉和运行原理有浓厚兴趣  
 
-目前从事JavaEE开发，关注中间件和前端技术
+目前从事JavaEE开发，关注电商领域相关技术
 
 Email: billchen01 # 163.com  
 Github: [cwind001](https://github.com/cwind001) 
