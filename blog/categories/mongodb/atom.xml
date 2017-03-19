@@ -4,7 +4,7 @@
   <title><![CDATA[Category: MongoDB | 辰风君的笔记本]]></title>
   <link href="http://cwind001.github.io/blog/categories/mongodb/atom.xml" rel="self"/>
   <link href="http://cwind001.github.io/"/>
-  <updated>2017-03-15T08:15:56+08:00</updated>
+  <updated>2017-03-20T01:18:48+08:00</updated>
   <id>http://cwind001.github.io/</id>
   <author>
     <name><![CDATA[辰风君]]></name>
@@ -21,7 +21,7 @@
     <content type="html"><![CDATA[<p>本文是由三个部分组成的系列教程的最后一篇。我们将使用MEAN技术栈（MongoDB，ExpressJS，AngularJS和NodeJS）构建一个待办事项应用程序。  </p>
 
 <h1 id="section">第三部分：前后端整合</h1>
-<p><img src="http://dl.iteye.com/upload/picture/pic/133685/7c4ef50f-b7cd-3334-a29e-816cfcea7eba.png"> <br />
+<p>{% img http://dl.iteye.com/upload/picture/pic/133685/7c4ef50f-b7cd-3334-a29e-816cfcea7eba.png %} <br />
 <!--more-->  </p>
 
 <h2 id="section-1">后台服务端简述</h2>
@@ -29,7 +29,7 @@
 <p>NodeJS是一个自底向上构建的非阻塞I/O范例，比起使用线程技术的其他语言如Java，它使得每个CPU的使用更加高效。<br />
 LAMP技术栈（Linux-Apache-MySQL-PHP）是被广泛使用了多年的Web应用开发栈。很多著名的平台，如Wikipedia，Wordpress，甚至Facebook都正在使用它或是由它起步的。对于企业应用，通常来说走Java路线：Hibernate，Spring，Struts，JBoss。有些更敏捷的框架也被广泛使用，例如Ruby on Rails，对于Python而言则有Django和Pylon。  </p>
 
-<p><img src="http://dl.iteye.com/upload/picture/pic/133687/f1084b0c-0f4a-323b-9834-0193a5896822.jpg">  </p>
+<p>{% img http://dl.iteye.com/upload/picture/pic/133687/f1084b0c-0f4a-323b-9834-0193a5896822.jpg %}  </p>
 
 <p>（图片来自<a href="http://blog.backand.com/mean-vs-lamp/">backand.com</a>）  </p>
 
@@ -41,8 +41,8 @@ LAMP技术栈（Linux-Apache-MySQL-PHP）是被广泛使用了多年的Web应用
 <p><strong>非阻塞架构</strong><br />
 JavaScript是动态类型，面向对象的功能性脚本语言。在数年前的脚本语言战争中，它能够胜过Java Applets的特性是，简单轻量以及非阻塞的事件循环。阻塞是指当执行某行代码时，其他代码被锁住并等待那行代码执行结束。相对的，非阻塞给予了每行代码执行机会，当事件发生时，可以通过回调来返回。阻塞式编程语言（Java，Ruby，Python，PHP，……）使用多线程技术来解决并发问题，而JavaScript通过单线程非阻塞事件循环来处理该问题。  </p>
 
-<p><img src="http://dl.iteye.com/upload/picture/pic/133689/ba48f6f9-6434-371a-a1b3-611ef83c74fd.png">
-<img src="http://dl.iteye.com/upload/picture/pic/133691/c024765a-1a8d-3678-8f85-18298d0e670e.png"></p>
+<p>{% img http://dl.iteye.com/upload/picture/pic/133689/ba48f6f9-6434-371a-a1b3-611ef83c74fd.png %}
+{% img http://dl.iteye.com/upload/picture/pic/133691/c024765a-1a8d-3678-8f85-18298d0e670e.png %}</p>
 
 <p>（图片来自<a href="http://strongloop.com/strongblog/node-js-is-faster-than-java/">strongloop.com</a>）  </p>
 
@@ -56,16 +56,9 @@ JavaScript背后的社区非常有活力，并且几乎涉足了技术相关的�
 <h3 id="menmongodbexpressjsnodejs">MEN：MongoDB，ExpressJS与NodeJS</h3>
 <p>在<a href="http://gocwind.com/blog/2015/06/09/creating-a-restful-api-tutorial-with-nodejs-and-mongodb/">前一篇教程</a>里，我们一起构建了RESTful API，现在我们使用它创建Web应用。<a href="https://github.com/amejiarosario/todoAPIjs">完整代码</a>  </p>
 
-<p><figure class='code'><figcaption class='code-header'><span>Getting the back-end code build on Part II </span></figcaption>
- <table class="CodeRay"><tr>
-  <td class="line-numbers"><pre><a href="#n1" name="n1">1</a>
-<a href="#n2" name="n2">2</a>
-</pre></td>
-  <td class="code"><pre>
-git clone https:<span class="comment">//github.com/amejiarosario/todoAPIjs.git</span>
-</pre></td>
-</tr></table>
- </figure> </p>
+<p>{% coderay lang:javascript linenos:true Getting the back-end code build on Part II %}
+git clone https://github.com/amejiarosario/todoAPIjs.git
+{% endcoderay %} </p>
 
 <h3 id="aangularjs">A：AngularJS</h3>
 <p>在本系列教程的第一篇里，我们构建了一个非常简单的todoApp。你可以下载<a href="https://gist.githubusercontent.com/amejiarosario/068143b53e54db43ef38/raw/ngTodo.html">源文件</a>作为参照，或者查看<a href="https://cdn.rawgit.com/amejiarosario/068143b53e54db43ef38/raw/ngTodo.html">动态演示</a>。你可能注意到angularJS应用非常简单，甚至简单到可以完全在同一个文件。在后续的教程里，我们将把它模块化，放到不同文件，添加测试以及样式表。  </p>
@@ -78,38 +71,20 @@ git clone https:<span class="comment">//github.com/amejiarosario/todoAPIjs.git</
   <li><code>routes/index.js</code>设置变量“title”的值，并渲染<code>index.ejs</code>。  </li>
 </ol>
 
-<p><figure class='code'><figcaption class='code-header'><span>Tracing ExpressJS index route </span></figcaption>
- <table class="CodeRay"><tr>
-  <td class="line-numbers"><pre><a href="#n1" name="n1">1</a>
-<a href="#n2" name="n2">2</a>
-<a href="#n3" name="n3">3</a>
-<a href="#n4" name="n4">4</a>
-<a href="#n5" name="n5">5</a>
-<a href="#n6" name="n6">6</a>
-<a href="#n7" name="n7">7</a>
-<a href="#n8" name="n8">8</a>
-<a href="#n9" name="n9">9</a>
-<strong><a href="#n10" name="n10">10</a></strong>
-<a href="#n11" name="n11">11</a>
-<a href="#n12" name="n12">12</a>
-<a href="#n13" name="n13">13</a>
-</pre></td>
-  <td class="code"><pre>
-<span class="comment">// app.js</span>
-<span class="keyword">var</span> routes = require(<span class="error">‘</span>.<span class="regexp"><span class="delimiter">/</span><span class="content">routes</span><span class="delimiter">/</span><span class="modifier">i</span></span>ndex<span class="error">’</span>);
-app.use(<span class="error">‘</span><span class="regexp"><span class="delimiter">/</span><span class="content">’, routes);&lt;</span><span class="delimiter">/</span></span>p&gt;
+<p>{% coderay lang:javascript linenos:true Tracing ExpressJS index route %}
+// app.js
+var routes = require(‘./routes/index’);
+app.use(‘/’, routes);</p>
 
-<span class="tag">&lt;p&gt;</span>// ./routes/index.js
+<p>// ./routes/index.js
 router.get(‘/’, function(req, res) {
   res.render(‘index’, { title: ‘Express’ });
-});<span class="tag">&lt;/p&gt;</span>
+});</p>
 
-&lt;p&gt;<span class="comment">// ./views/index.ejs</span>
-    &amp;lt;h1&amp;gt;&amp;lt;%= title %&amp;gt;&amp;lt;<span class="regexp"><span class="delimiter">/</span><span class="content">h1&amp;gt;
-    &amp;lt;p&amp;gt;Welcome to &amp;lt;%= title %&amp;gt;&amp;lt;</span><span class="delimiter">/</span></span>p&amp;gt;
-</pre></td>
-</tr></table>
- </figure>  </p>
+<p>// ./views/index.ejs
+    &lt;h1&gt;&lt;%= title %&gt;&lt;/h1&gt;
+    &lt;p&gt;Welcome to &lt;%= title %&gt;&lt;/p&gt;
+{% endcoderay %}  </p>
 
 <p>让我们把<code>ngTodo.html</code>中的文件内容拷贝到<code>./views/index.ejs</code>，在<code>./routes/index.js</code>把title值设为“ngTodo App”。不要忘记添加ng-app指令。<code>&lt;html ng-app="app"&gt;</code>。</p>
 
@@ -126,74 +101,37 @@ router.get(‘/’, function(req, res) {
 
 <p><code>$http</code>返回一个promise，它有<code>success</code>和<code>error</code>两个方法。  </p>
 
-<p><figure class='code'><figcaption class='code-header'><span>AngularJS $HTTP Usage Example </span></figcaption>
- <table class="CodeRay"><tr>
-  <td class="line-numbers"><pre><a href="#n1" name="n1">1</a>
-<a href="#n2" name="n2">2</a>
-<a href="#n3" name="n3">3</a>
-<a href="#n4" name="n4">4</a>
-<a href="#n5" name="n5">5</a>
-<a href="#n6" name="n6">6</a>
-<a href="#n7" name="n7">7</a>
-<a href="#n8" name="n8">8</a>
-<a href="#n9" name="n9">9</a>
-<strong><a href="#n10" name="n10">10</a></strong>
-<a href="#n11" name="n11">11</a>
-<a href="#n12" name="n12">12</a>
-</pre></td>
-  <td class="code"><pre>
-<span class="predefined">$http</span>({<span class="key">method</span>: <span class="error">‘</span>GET<span class="error">’</span>, <span class="key">url</span>: <span class="error">‘</span><span class="regexp"><span class="delimiter">/</span><span class="content">todos’}).
+<p>{% coderay lang:javascript linenos:true AngularJS $HTTP Usage Example %}
+$http({method: ‘GET’, url: ‘/todos’}).
   success(function(data, status, headers, config) {
-    </span><span class="delimiter">/</span></span>/ <span class="local-variable">this</span> callback will be called asynchronously
-    <span class="comment">// when the response is available.</span>
-    console.log(<span class="error">‘</span>todos: <span class="error">‘</span>, data );
+    // this callback will be called asynchronously
+    // when the response is available.
+    console.log(‘todos: ‘, data );
   }).
-  error(<span class="keyword">function</span>(data, status, headers, config) {
-    <span class="comment">// called asynchronously if an error occurs</span>
-    <span class="comment">// or server returns response with an error status.</span>
-    console.log(<span class="error">‘</span>Oops and error<span class="error">’</span>, data);
+  error(function(data, status, headers, config) {
+    // called asynchronously if an error occurs
+    // or server returns response with an error status.
+    console.log(‘Oops and error’, data);
   });
-</pre></td>
-</tr></table>
- </figure>  </p>
+{% endcoderay %}  </p>
 
 <p>现在尝试把它用到我们的应用里。打开<code>vies/index.ejs</code>做如下改动：  </p>
 
-<p><figure class='code'><figcaption class='code-header'><span>Using $http to retrieve data from database </span></figcaption>
- <table class="CodeRay"><tr>
-  <td class="line-numbers"><pre><a href="#n1" name="n1">1</a>
-<a href="#n2" name="n2">2</a>
-<a href="#n3" name="n3">3</a>
-<a href="#n4" name="n4">4</a>
-<a href="#n5" name="n5">5</a>
-<a href="#n6" name="n6">6</a>
-<a href="#n7" name="n7">7</a>
-<a href="#n8" name="n8">8</a>
-<a href="#n9" name="n9">9</a>
-<strong><a href="#n10" name="n10">10</a></strong>
-<a href="#n11" name="n11">11</a>
-<a href="#n12" name="n12">12</a>
-<a href="#n13" name="n13">13</a>
-<a href="#n14" name="n14">14</a>
-<a href="#n15" name="n15">15</a>
-</pre></td>
-  <td class="code"><pre>
-    <span class="comment">// Service</span>
-    .factory(<span class="error">‘</span>Todos<span class="error">’</span>, [<span class="error">‘</span><span class="predefined">$http</span><span class="error">’</span>, <span class="keyword">function</span>(<span class="predefined">$http</span>){
-      <span class="keyword">return</span> <span class="predefined">$http</span>.get(<span class="error">‘</span><span class="regexp"><span class="delimiter">/</span><span class="content">todos’);
-    }])&lt;</span><span class="delimiter">/</span></span>p&gt;
+<p>{% coderay lang:javascript linenos:true Using $http to retrieve data from database %}
+    // Service
+    .factory(‘Todos’, [‘$http’, function($http){
+      return $http.get(‘/todos’);
+    }])</p>
 
-&lt;pre&gt;&lt;code&gt;<span class="comment">// Controller</span>
-.controller(<span class="string"><span class="delimiter">'</span><span class="content">TodoController</span><span class="delimiter">'</span></span>, [<span class="string"><span class="delimiter">'</span><span class="content">$scope</span><span class="delimiter">'</span></span>, <span class="string"><span class="delimiter">'</span><span class="content">Todos</span><span class="delimiter">'</span></span>, <span class="keyword">function</span> (<span class="predefined">$scope</span>, Todos) {
-  Todos.success(<span class="keyword">function</span>(data){
-    <span class="predefined">$scope</span>.todos = data;
-  }).error(<span class="keyword">function</span>(data, status){
+<pre><code>// Controller
+.controller('TodoController', ['$scope', 'Todos', function ($scope, Todos) {
+  Todos.success(function(data){
+    $scope.todos = data;
+  }).error(function(data, status){
     console.log(data, status);
-    <span class="predefined">$scope</span>.todos = [];
+    $scope.todos = [];
   });
-}]) </pre></td>
-</tr></table>
- </figure>  
+}]) {% endcoderay %}  
 </code></pre>
 
 <p>如果你在MongoDB中有数据，你就可以在首页中看到它们。如果没有，可以参照上篇教程添加一些数据。  </p>
@@ -207,26 +145,14 @@ router.get(‘/’, function(req, res) {
 
 <p>它包含了下面几个我们之前已经定义的动作。但是少了一个，你能发现缺少的是哪一个吗？  </p>
 
-<p><figure class='code'><figcaption class='code-header'><span>$resource actions </span></figcaption>
- <table class="CodeRay"><tr>
-  <td class="line-numbers"><pre><a href="#n1" name="n1">1</a>
-<a href="#n2" name="n2">2</a>
-<a href="#n3" name="n3">3</a>
-<a href="#n4" name="n4">4</a>
-<a href="#n5" name="n5">5</a>
-<a href="#n6" name="n6">6</a>
-<a href="#n7" name="n7">7</a>
-</pre></td>
-  <td class="code"><pre>
-{ <span class="error">‘</span>get<span class="error">’</span>:    {<span class="key">method</span>:<span class="error">’</span>GET<span class="error">’</span>},  <span class="comment">// get individual record</span>
-  <span class="error">‘</span>save<span class="error">’</span>:   {<span class="key">method</span>:<span class="error">’</span>POST<span class="error">’</span>}, <span class="comment">// create record</span>
-  <span class="error">‘</span>query<span class="error">’</span>:  {<span class="key">method</span>:<span class="error">’</span>GET<span class="error">’</span>, <span class="key">isArray</span>:<span class="predefined-constant">true</span>}, <span class="comment">// get list all records</span>
-  <span class="error">‘</span>remove<span class="error">’</span>: {<span class="key">method</span>:<span class="error">’</span>DELETE<span class="error">’</span>}, <span class="comment">// remove record</span>
-  <span class="error">‘</span><span class="keyword">delete</span><span class="error">’</span>: {<span class="key">method</span>:<span class="error">’</span>DELETE<span class="error">’</span>} }; <span class="comment">// same, remove record</span>
+<p>{% coderay lang:javascript linenos:true $resource actions %}
+{ ‘get’:    {method:’GET’},  // get individual record
+  ‘save’:   {method:’POST’}, // create record
+  ‘query’:  {method:’GET’, isArray:true}, // get list all records
+  ‘remove’: {method:’DELETE’}, // remove record
+  ‘delete’: {method:’DELETE’} }; // same, remove record
 }
-</pre></td>
-</tr></table>
- </figure>  </p>
+{% endcoderay %}  </p>
 
 <p>实例的使用方式见下（稍后给出示例）：  </p>
 
@@ -240,34 +166,18 @@ router.get(‘/’, function(req, res) {
 
 <p>引入依赖并使用它的示例：  </p>
 
-<p><figure class='code'><figcaption class='code-header'><span>$resource.query() </span></figcaption>
- <table class="CodeRay"><tr>
-  <td class="line-numbers"><pre><a href="#n1" name="n1">1</a>
-<a href="#n2" name="n2">2</a>
-<a href="#n3" name="n3">3</a>
-<a href="#n4" name="n4">4</a>
-<a href="#n5" name="n5">5</a>
-<a href="#n6" name="n6">6</a>
-<a href="#n7" name="n7">7</a>
-<a href="#n8" name="n8">8</a>
-<a href="#n9" name="n9">9</a>
-<strong><a href="#n10" name="n10">10</a></strong>
-<a href="#n11" name="n11">11</a>
-</pre></td>
-  <td class="code"><pre>
-  <span class="comment">// add ngResource dependency</span>
-  angular.module(<span class="error">‘</span>app<span class="error">’</span>, [<span class="error">‘</span>ngRoute<span class="error">’</span>, <span class="error">‘</span>ngResource<span class="error">’</span>])
-        .factory(<span class="error">‘</span>Todos<span class="error">’</span>, [<span class="error">‘</span><span class="predefined">$resource</span><span class="error">’</span>, <span class="keyword">function</span>(<span class="predefined">$resource</span>){
-          <span class="keyword">return</span> <span class="predefined">$resource</span>(<span class="error">‘</span><span class="regexp"><span class="delimiter">/</span><span class="content">todos</span><span class="delimiter">/</span></span>:id<span class="error">’</span>, <span class="predefined-constant">null</span>, {
-            <span class="error">‘</span>update<span class="error">’</span>: { <span class="key">method</span>:<span class="error">’</span>PUT<span class="error">’</span> }
+<p>{% coderay lang:javascript linenos:true $resource.query() %}
+  // add ngResource dependency
+  angular.module(‘app’, [‘ngRoute’, ‘ngResource’])
+        .factory(‘Todos’, [‘$resource’, function($resource){
+          return $resource(‘/todos/:id’, null, {
+            ‘update’: { method:’PUT’ }
           });
         }])
-        .controller(<span class="error">‘</span>TodoController<span class="error">’</span>, [<span class="error">‘</span><span class="predefined">$scope</span><span class="error">’</span>, <span class="error">‘</span>Todos<span class="error">’</span>, <span class="keyword">function</span> (<span class="predefined">$scope</span>, Todos) {
-          <span class="predefined">$scope</span>.todos = Todos.query();
+        .controller(‘TodoController’, [‘$scope’, ‘Todos’, function ($scope, Todos) {
+          $scope.todos = Todos.query();
         }])
-</pre></td>
-</tr></table>
- </figure>  </p>
+{% endcoderay %}  </p>
 
 <p>请注意<code>$resource</code>并不像<code>$http</code>那样返回一个promise，它会返回一个空引用。Angular会使用一个空的<code>$scope.todos</code>来进行渲染。当<code>Todos.query()</code>返回从服务器读取的数据时，UI将会自动被重新渲染。  </p>
 
@@ -276,52 +186,26 @@ router.get(‘/’, function(req, res) {
 <p><strong>AngualrJS新建</strong><br />
 我们需要创建一个新的文本框，一个按钮来发送<code>POST</code>请求给服务器，并将其添加到<code>$scope</code>。  </p>
 
-<p><figure class='code'><figcaption class='code-header'><span>New textbox for adding Todos </span></figcaption>
- <table class="CodeRay"><tr>
-  <td class="line-numbers"><pre><a href="#n1" name="n1">1</a>
-<a href="#n2" name="n2">2</a>
-</pre></td>
-  <td class="code"><pre><span class="tag">&lt;br</span> <span class="tag">/&gt;</span>
-New task &lt;input type=<span class="string"><span class="delimiter">&quot;</span><span class="content">text</span><span class="delimiter">&quot;</span></span> ng-model=<span class="string"><span class="delimiter">&quot;</span><span class="content">newTodo</span><span class="delimiter">&quot;</span></span> /&gt;&lt;button ng-click=<span class="string"><span class="delimiter">&quot;</span><span class="content">save()</span><span class="delimiter">&quot;</span></span>&gt;Create&lt;<span class="regexp"><span class="delimiter">/</span><span class="content">button&gt;
-</span></span></pre></td>
-</tr></table>
- </figure>  </p>
+<p>{% coderay lang:javascript linenos:true New textbox for adding Todos %}<br />
+New task <input type="text" ng-model="newTodo" /><button ng-click="save()">Create</button>
+{% endcoderay %}  </p>
 
 <p>请注意这里我们使用了一个新的指令<code>ng-click</code>，当它被点击时，执行指定函数。Angular会保证不同浏览器的行为都是一致的。  </p>
 
-<p><figure class='code'><figcaption class='code-header'><span>Save function $resource.$save(…) </span></figcaption>
- <table class="CodeRay"><tr>
-  <td class="line-numbers"><pre><a href="#n1" name="n1">1</a>
-<a href="#n2" name="n2">2</a>
-<a href="#n3" name="n3">3</a>
-<a href="#n4" name="n4">4</a>
-<a href="#n5" name="n5">5</a>
-<a href="#n6" name="n6">6</a>
-<a href="#n7" name="n7">7</a>
-<a href="#n8" name="n8">8</a>
-<a href="#n9" name="n9">9</a>
-<strong><a href="#n10" name="n10">10</a></strong>
-<a href="#n11" name="n11">11</a>
-<a href="#n12" name="n12">12</a>
-<a href="#n13" name="n13">13</a>
-<a href="#n14" name="n14">14</a>
-</pre></td>
-  <td class="code"><pre><span class="tag">&lt;br</span> <span class="tag">/&gt;</span>
-.controller(<span class="error">‘</span>TodoController<span class="error">’</span>, [<span class="error">‘</span><span class="predefined">$scope</span><span class="error">’</span>, <span class="error">‘</span>Todos<span class="error">’</span>, <span class="keyword">function</span> (<span class="predefined">$scope</span>, Todos) {
-      <span class="predefined">$scope</span>.todos = Todos.query();&lt;<span class="regexp"><span class="delimiter">/</span><span class="content">p&gt;
+<p>{% coderay lang:javascript linenos:true Save function $resource.$save(…) %}<br />
+.controller(‘TodoController’, [‘$scope’, ‘Todos’, function ($scope, Todos) {
+      $scope.todos = Todos.query();</p>
 
-&lt;pre&gt;&lt;code&gt;  $scope.save = function(){
-    if(!$scope.newTodo || $scope.newTodo.length &amp;lt; 1) return;
+<pre><code>  $scope.save = function(){
+    if(!$scope.newTodo || $scope.newTodo.length &lt; 1) return;
     var todo = new Todos({ name: $scope.newTodo, completed: false });
 
     todo.$save(function(){
       $scope.todos.push(todo);
-      $scope.newTodo = ''; </span><span class="delimiter">/</span></span>/ clear textbox
+      $scope.newTodo = ''; // clear textbox
     });
   }
-}]) </pre></td>
-</tr></table>
- </figure>  
+}]) {% endcoderay %}  
 </code></pre>
 
 <p><a href="https://github.com/amejiarosario/todoAPIjs/commit/46dd14023e2d9eff72d1366dbba9c9c8c872e07b">变更</a>  </p>
@@ -329,39 +213,19 @@ New task &lt;input type=<span class="string"><span class="delimiter">&quot;</spa
 <p><strong>显示待办事项详情</strong><br />
 每次我们点击待办事项链接时，显示的内容为空。现在我们对此做点改动。首先我们需要设置真实的<code>_id</code>给链接，以取代索引<code>$index</code>。 </p>
 
-<p><figure class='code'><figcaption class='code-header'><span>Change the ID link in the “/todos.html” template </span></figcaption>
- <table class="CodeRay"><tr>
-  <td class="line-numbers"><pre><a href="#n1" name="n1">1</a>
-<a href="#n2" name="n2">2</a>
-<a href="#n3" name="n3">3</a>
-<a href="#n4" name="n4">4</a>
-<a href="#n5" name="n5">5</a>
-</pre></td>
-  <td class="code"><pre><span class="tag">&lt;br</span> <span class="tag">/&gt;</span>
-    &amp;lt;li ng-repeat=<span class="string"><span class="delimiter">&quot;</span><span class="content">todo in todos | filter: search</span><span class="delimiter">&quot;</span></span>&amp;gt;
-      <span class="tag">&lt;input</span> <span class="attribute-name">type</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">checkbox</span><span class="delimiter">&quot;</span></span> <span class="attribute-name">ng-model</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">todo.completed</span><span class="delimiter">&quot;</span></span> <span class="tag">/&gt;</span>
-      <span class="tag">&lt;a</span> <span class="attribute-name">href</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">#/</span><span class="delimiter">&quot;</span></span><span class="tag">&gt;</span><span class="tag">&lt;/a&gt;</span>
-    &amp;lt;<span class="regexp"><span class="delimiter">/</span><span class="content">li&amp;gt;
-</span></span></pre></td>
-</tr></table>
- </figure> </p>
+<p>{% coderay lang:javascript linenos:true Change the ID link in the “/todos.html” template %}<br />
+    &lt;li ng-repeat=&#8221;todo in todos | filter: search&#8221;&gt;
+      <input type="checkbox" ng-model="todo.completed" />
+      <a href="#/"></a>
+    &lt;/li&gt;
+{% endcoderay %} </p>
 
-<p><figure class='code'><figcaption class='code-header'><span>Update TodoDetailCtrl with $resource.get </span></figcaption>
- <table class="CodeRay"><tr>
-  <td class="line-numbers"><pre><a href="#n1" name="n1">1</a>
-<a href="#n2" name="n2">2</a>
-<a href="#n3" name="n3">3</a>
-<a href="#n4" name="n4">4</a>
-<a href="#n5" name="n5">5</a>
-</pre></td>
-  <td class="code"><pre> 
-    .controller(<span class="error">‘</span>TodoDetailCtrl<span class="error">’</span>, [<span class="error">‘</span><span class="predefined">$scope</span><span class="error">’</span>, <span class="error">‘</span><span class="predefined">$routeParams</span><span class="error">’</span>, <span class="error">‘</span>Todos<span class="error">’</span>, 
-<span class="keyword">function</span> (<span class="predefined">$scope</span>, <span class="predefined">$routeParams</span>, Todos) {
-      <span class="predefined">$scope</span>.todo = Todos.get({<span class="key">id</span>: <span class="predefined">$routeParams</span>.id });
+<p>{% coderay lang:javascript linenos:true Update TodoDetailCtrl with $resource.get %} 
+    .controller(‘TodoDetailCtrl’, [‘$scope’, ‘$routeParams’, ‘Todos’, 
+function ($scope, $routeParams, Todos) {
+      $scope.todo = Todos.get({id: $routeParams.id });
     }])
-</pre></td>
-</tr></table>
- </figure> </p>
+{% endcoderay %} </p>
 
 <p>现在你可以看到待办事项详情了。:-)</p>
 
@@ -375,172 +239,86 @@ New task &lt;input type=<span class="string"><span class="delimiter">&quot;</spa
   <li><strong>ng-change</strong>: 发生任何改动后，用来求输入元素表达式的值的指令。  </li>
 </ul>
 
-<p><figure class='code'><figcaption class='code-header'><span>Template todos.html </span></figcaption>
- <table class="CodeRay"><tr>
-  <td class="line-numbers"><pre><a href="#n1" name="n1">1</a>
-<a href="#n2" name="n2">2</a>
-<a href="#n3" name="n3">3</a>
-<a href="#n4" name="n4">4</a>
-<a href="#n5" name="n5">5</a>
-<a href="#n6" name="n6">6</a>
-<a href="#n7" name="n7">7</a>
-<a href="#n8" name="n8">8</a>
-<a href="#n9" name="n9">9</a>
-<strong><a href="#n10" name="n10">10</a></strong>
-<a href="#n11" name="n11">11</a>
-<a href="#n12" name="n12">12</a>
-<a href="#n13" name="n13">13</a>
-<a href="#n14" name="n14">14</a>
-<a href="#n15" name="n15">15</a>
-<a href="#n16" name="n16">16</a>
-</pre></td>
-  <td class="code"><pre> 
-<span class="tag">&lt;script</span> <span class="attribute-name">type</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">text/ng-template</span><span class="delimiter">&quot;</span></span> <span class="attribute-name">id</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">/todos.html</span><span class="delimiter">&quot;</span></span><span class="tag">&gt;</span>
-<span class="inline">  Search: <span class="tag">&lt;input</span> <span class="attribute-name">type</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">text</span><span class="delimiter">&quot;</span></span> <span class="attribute-name">ng-model</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">search.name</span><span class="delimiter">&quot;</span></span> <span class="tag">/&gt;</span></span><span class="tag">&lt;/script&gt;</span>&lt;<span class="regexp"><span class="delimiter">/</span><span class="content">p&gt;
-&lt;ul&gt;
-    &lt;li ng-repeat=&quot;todo in todos | filter: search&quot;&gt;
-      &lt;input type=&quot;checkbox&quot; ng-model=&quot;todo.completed&quot; ng-change=&quot;update($index)&quot; </span><span class="delimiter">/</span></span>&gt;
-      <span class="tag">&lt;a</span> <span class="attribute-name">ng-show</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">!editing[$index]</span><span class="delimiter">&quot;</span></span> <span class="attribute-name">href</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">#/</span><span class="delimiter">&quot;</span></span><span class="tag">&gt;</span><span class="tag">&lt;/a&gt;</span>
-      <span class="tag">&lt;button</span> <span class="attribute-name">ng-show</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">!editing[$index]</span><span class="delimiter">&quot;</span></span> <span class="attribute-name">ng-click</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">edit($index)</span><span class="delimiter">&quot;</span></span><span class="tag">&gt;</span>edit<span class="tag">&lt;/button&gt;</span>
+<p>{% coderay lang:javascript linenos:true Template todos.html %} 
+<script type="text/ng-template" id="/todos.html">
+  Search: <input type="text" ng-model="search.name" /></script></p>
+<ul>
+    <li ng-repeat="todo in todos | filter: search">
+      <input type="checkbox" ng-model="todo.completed" ng-change="update($index)" />
+      <a ng-show="!editing[$index]" href="#/"></a>
+      <button ng-show="!editing[$index]" ng-click="edit($index)">edit</button>
 
-      <span class="tag">&lt;input</span> <span class="attribute-name">ng-show</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">editing[$index]</span><span class="delimiter">&quot;</span></span> <span class="attribute-name">type</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">text</span><span class="delimiter">&quot;</span></span> <span class="attribute-name">ng-model</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">todo.name</span><span class="delimiter">&quot;</span></span> <span class="tag">/&gt;</span>
-      <span class="tag">&lt;button</span> <span class="attribute-name">ng-show</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">editing[$index]</span><span class="delimiter">&quot;</span></span> <span class="attribute-name">ng-click</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">update($index)</span><span class="delimiter">&quot;</span></span><span class="tag">&gt;</span>Update<span class="tag">&lt;/button&gt;</span>
-      <span class="tag">&lt;button</span> <span class="attribute-name">ng-show</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">editing[$index]</span><span class="delimiter">&quot;</span></span> <span class="attribute-name">ng-click</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">cancel($index)</span><span class="delimiter">&quot;</span></span><span class="tag">&gt;</span>Cancel<span class="tag">&lt;/button&gt;</span>
-    &lt;<span class="regexp"><span class="delimiter">/</span><span class="content">li&gt;
-  &lt;</span><span class="delimiter">/</span></span>ul&gt;
-&lt;p&gt;New task &lt;input type=<span class="string"><span class="delimiter">&quot;</span><span class="content">text</span><span class="delimiter">&quot;</span></span> ng-model=<span class="string"><span class="delimiter">&quot;</span><span class="content">newTodo</span><span class="delimiter">&quot;</span></span> /&gt;&lt;button ng-click=<span class="string"><span class="delimiter">&quot;</span><span class="content">save()</span><span class="delimiter">&quot;</span></span>&gt;Create&lt;<span class="regexp"><span class="delimiter">/</span><span class="content">button&gt;
-&amp;lt;</span><span class="delimiter">/</span></span>script&amp;gt;
-</pre></td>
-</tr></table>
- </figure> </p>
+      <input ng-show="editing[$index]" type="text" ng-model="todo.name" />
+      <button ng-show="editing[$index]" ng-click="update($index)">Update</button>
+      <button ng-show="editing[$index]" ng-click="cancel($index)">Cancel</button>
+    </li>
+  </ul>
+<p>New task <input type="text" ng-model="newTodo" /><button ng-click="save()">Create</button>
+&lt;/script&gt;
+{% endcoderay %} </p>
 
 <p>我们添加了一个新的变量<code>$scope.editing</code>用来指示表单中编辑区域显示与否。更进一步，请注意ng-click函数：编辑、更新与取消。我们来看看它们做了些什么。  </p>
 
-<p><figure class='code'><figcaption class='code-header'><span>Todo Controller </span></figcaption>
- <table class="CodeRay"><tr>
-  <td class="line-numbers"><pre><a href="#n1" name="n1">1</a>
-<a href="#n2" name="n2">2</a>
-<a href="#n3" name="n3">3</a>
-<a href="#n4" name="n4">4</a>
-<a href="#n5" name="n5">5</a>
-<a href="#n6" name="n6">6</a>
-<a href="#n7" name="n7">7</a>
-<a href="#n8" name="n8">8</a>
-<a href="#n9" name="n9">9</a>
-<strong><a href="#n10" name="n10">10</a></strong>
-<a href="#n11" name="n11">11</a>
-<a href="#n12" name="n12">12</a>
-<a href="#n13" name="n13">13</a>
-<a href="#n14" name="n14">14</a>
-<a href="#n15" name="n15">15</a>
-<a href="#n16" name="n16">16</a>
-<a href="#n17" name="n17">17</a>
-<a href="#n18" name="n18">18</a>
-<a href="#n19" name="n19">19</a>
-<strong><a href="#n20" name="n20">20</a></strong>
-<a href="#n21" name="n21">21</a>
-<a href="#n22" name="n22">22</a>
-<a href="#n23" name="n23">23</a>
-<a href="#n24" name="n24">24</a>
-<a href="#n25" name="n25">25</a>
-<a href="#n26" name="n26">26</a>
-<a href="#n27" name="n27">27</a>
-<a href="#n28" name="n28">28</a>
-<a href="#n29" name="n29">29</a>
-<strong><a href="#n30" name="n30">30</a></strong>
-</pre></td>
-  <td class="code"><pre> 
-    .controller(<span class="error">‘</span>TodoController<span class="error">’</span>, [<span class="error">‘</span><span class="predefined">$scope</span><span class="error">’</span>, <span class="error">‘</span>Todos<span class="error">’</span>, <span class="keyword">function</span> (<span class="predefined">$scope</span>, Todos) {
-      <span class="predefined">$scope</span>.editing = [];
-      <span class="predefined">$scope</span>.todos = Todos.query();&lt;<span class="regexp"><span class="delimiter">/</span><span class="content">p&gt;
+<p>{% coderay lang:javascript linenos:true Todo Controller %} 
+    .controller(‘TodoController’, [‘$scope’, ‘Todos’, function ($scope, Todos) {
+      $scope.editing = [];
+      $scope.todos = Todos.query();</p>
 
-&lt;pre&gt;&lt;code&gt;  $scope.save = function(){
-    if(!$scope.newTodo || $scope.newTodo.length &amp;lt; 1) return;
+<pre><code>  $scope.save = function(){
+    if(!$scope.newTodo || $scope.newTodo.length &lt; 1) return;
     var todo = new Todos({ name: $scope.newTodo, completed: false });
 
     todo.$save(function(){
       $scope.todos.push(todo);
-      $scope.newTodo = ''; </span><span class="delimiter">/</span></span>/ clear textbox
+      $scope.newTodo = ''; // clear textbox
     });
   }
 
-  <span class="predefined">$scope</span>.<span class="function">update</span> = <span class="keyword">function</span>(index){
-    <span class="keyword">var</span> todo = <span class="predefined">$scope</span>.todos[index];
-    Todos.update({<span class="key">id</span>: todo._id}, todo);
-    <span class="predefined">$scope</span>.editing[index] = <span class="predefined-constant">false</span>;
+  $scope.update = function(index){
+    var todo = $scope.todos[index];
+    Todos.update({id: todo._id}, todo);
+    $scope.editing[index] = false;
   }
 
-  <span class="predefined">$scope</span>.<span class="function">edit</span> = <span class="keyword">function</span>(index){
-    <span class="predefined">$scope</span>.editing[index] = angular.copy(<span class="predefined">$scope</span>.todos[index]);
+  $scope.edit = function(index){
+    $scope.editing[index] = angular.copy($scope.todos[index]);
   }
 
-  <span class="predefined">$scope</span>.<span class="function">cancel</span> = <span class="keyword">function</span>(index){
-    <span class="predefined">$scope</span>.todos[index] = angular.copy(<span class="predefined">$scope</span>.editing[index]);
-    <span class="predefined">$scope</span>.editing[index] = <span class="predefined-constant">false</span>;
+  $scope.cancel = function(index){
+    $scope.todos[index] = angular.copy($scope.editing[index]);
+    $scope.editing[index] = false;
   }
-}]) </pre></td>
-</tr></table>
- </figure> 
+}]) {% endcoderay %} 
 </code></pre>
 
 <p>当我们编辑时请注意我们把原始todo任务拷贝到editing变量。这能够起到两个作用：1. 将值置为<code>ture</code>以显示带有<code>ng-show</code>的表单元素，2. 保存原始值的拷贝，以防我们点击取消。  </p>
 
 <p>现在，我们来看一下待办事项细节页面。我们将它像添加记录页面一样去更新一下。  </p>
 
-<p><figure class='code'><figcaption class='code-header'><span>Todo Details </span></figcaption>
- <table class="CodeRay"><tr>
-  <td class="line-numbers"><pre><a href="#n1" name="n1">1</a>
-<a href="#n2" name="n2">2</a>
-<a href="#n3" name="n3">3</a>
-<a href="#n4" name="n4">4</a>
-<a href="#n5" name="n5">5</a>
-<a href="#n6" name="n6">6</a>
-<a href="#n7" name="n7">7</a>
-<a href="#n8" name="n8">8</a>
-<a href="#n9" name="n9">9</a>
-</pre></td>
-  <td class="code"><pre> 
-<span class="tag">&lt;script</span> <span class="attribute-name">type</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">text/ng-template</span><span class="delimiter">&quot;</span></span> <span class="attribute-name">id</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">/todoDetails.html</span><span class="delimiter">&quot;</span></span><span class="tag">&gt;</span><span class="tag">&lt;/script&gt;</span>&lt;<span class="regexp"><span class="delimiter">/</span><span class="content">p&gt;
-&lt;h1&gt;&lt;</span><span class="delimiter">/</span></span>h1&gt;
-<span class="tag">&lt;p&gt;</span>completed: <span class="tag">&lt;input</span> <span class="attribute-name">type</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">checkbox</span><span class="delimiter">&quot;</span></span> <span class="attribute-name">ng-model</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">todo.completed</span><span class="delimiter">&quot;</span></span> <span class="tag">/&gt;</span><span class="tag">&lt;br</span> <span class="tag">/&gt;</span>
-  note: <span class="tag">&lt;textarea</span> <span class="attribute-name">ng-model</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">todo.note</span><span class="delimiter">&quot;</span></span><span class="tag">&gt;</span><span class="tag">&lt;/textarea&gt;</span><span class="tag">&lt;br</span> <span class="tag">/&gt;</span><span class="tag">&lt;br</span> <span class="tag">/&gt;</span><span class="tag">&lt;/p&gt;</span>
+<p>{% coderay lang:javascript linenos:true Todo Details %} 
+<script type="text/ng-template" id="/todoDetails.html"></script></p>
+<h1></h1>
+<p>completed: <input type="checkbox" ng-model="todo.completed" /><br />
+  note: <textarea ng-model="todo.note"></textarea><br /><br /></p>
 
-&lt;p&gt;&lt;button ng-click=<span class="string"><span class="delimiter">&quot;</span><span class="content">update()</span><span class="delimiter">&quot;</span></span>&gt;Update&lt;<span class="regexp"><span class="delimiter">/</span><span class="content">button&gt;
-  &lt;a href=&quot;http:</span><span class="delimiter">/</span></span>/cwind001.github.io/<span class="string"><span class="delimiter">&quot;</span><span class="content">&gt;Cancel&lt;/a&gt;
-&amp;lt;/script&amp;gt;
-</span></span></pre></td>
-</tr></table>
- </figure> </p>
+<p><button ng-click="update()">Update</button>
+  <a href="http://cwind001.github.io/">Cancel</a>
+&lt;/script&gt;
+{% endcoderay %} </p>
 
 <p>类似的，我们添加了一个更新函数。然而，这一次我们不需要传递任何索引，因为每次只会有一个待办事项。保存了之后，我们转到根路径<code>/</code>。 </p>
 
-<p><figure class='code'><figcaption class='code-header'><span>Todo Details </span></figcaption>
- <table class="CodeRay"><tr>
-  <td class="line-numbers"><pre><a href="#n1" name="n1">1</a>
-<a href="#n2" name="n2">2</a>
-<a href="#n3" name="n3">3</a>
-<a href="#n4" name="n4">4</a>
-<a href="#n5" name="n5">5</a>
-<a href="#n6" name="n6">6</a>
-<a href="#n7" name="n7">7</a>
-<a href="#n8" name="n8">8</a>
-<a href="#n9" name="n9">9</a>
-<strong><a href="#n10" name="n10">10</a></strong>
-<a href="#n11" name="n11">11</a>
-</pre></td>
-  <td class="code"><pre> 
-    .controller(<span class="error">‘</span>TodoDetailCtrl<span class="error">’</span>, [<span class="error">‘</span><span class="predefined">$scope</span><span class="error">’</span>, <span class="error">‘</span><span class="predefined">$routeParams</span><span class="error">’</span>, <span class="error">‘</span>Todos<span class="error">’</span>, <span class="error">‘</span><span class="predefined">$location</span><span class="error">’</span>, 
-<span class="keyword">function</span> (<span class="predefined">$scope</span>, <span class="predefined">$routeParams</span>, Todos, <span class="predefined">$location</span>) {
-      <span class="predefined">$scope</span>.todo = Todos.get({<span class="key">id</span>: <span class="predefined">$routeParams</span>.id });&lt;<span class="regexp"><span class="delimiter">/</span><span class="content">p&gt;
+<p>{% coderay lang:javascript linenos:true Todo Details %} 
+    .controller(‘TodoDetailCtrl’, [‘$scope’, ‘$routeParams’, ‘Todos’, ‘$location’, 
+function ($scope, $routeParams, Todos, $location) {
+      $scope.todo = Todos.get({id: $routeParams.id });</p>
 
-&lt;pre&gt;&lt;code&gt;  $scope.update = function(){
+<pre><code>  $scope.update = function(){
     Todos.update({id: $scope.todo._id}, $scope.todo, function(){
-      $location.url('</span><span class="delimiter">/</span></span><span class="string"><span class="delimiter">'</span><span class="content">);
+      $location.url('/');
     });
   }
-}]) </span></span></pre></td>
-</tr></table>
- </figure>  
+}]) {% endcoderay %}  
 </code></pre>
 
 <ul>
@@ -552,70 +330,27 @@ New task &lt;input type=<span class="string"><span class="delimiter">&quot;</spa
 <p><strong>AngularJS 删除</strong><br />
 这是用于实现删除功能的函数。相当直白。请注意当我们从代办事项数组中删除元素时，<code>$scope.todos.splice(index, 1)</code>它同时会从DOM中消失。非常酷，是吧？  </p>
 
-<p><figure class='code'><figcaption class='code-header'><span>Delete functionality (diff) </span></figcaption>
- <table class="CodeRay"><tr>
-  <td class="line-numbers"><pre><a href="#n1" name="n1">1</a>
-<a href="#n2" name="n2">2</a>
-<a href="#n3" name="n3">3</a>
-<a href="#n4" name="n4">4</a>
-<a href="#n5" name="n5">5</a>
-<a href="#n6" name="n6">6</a>
-<a href="#n7" name="n7">7</a>
-<a href="#n8" name="n8">8</a>
-<a href="#n9" name="n9">9</a>
-<strong><a href="#n10" name="n10">10</a></strong>
-<a href="#n11" name="n11">11</a>
-<a href="#n12" name="n12">12</a>
-<a href="#n13" name="n13">13</a>
-<a href="#n14" name="n14">14</a>
-<a href="#n15" name="n15">15</a>
-<a href="#n16" name="n16">16</a>
-<a href="#n17" name="n17">17</a>
-<a href="#n18" name="n18">18</a>
-<a href="#n19" name="n19">19</a>
-<strong><a href="#n20" name="n20">20</a></strong>
-<a href="#n21" name="n21">21</a>
-<a href="#n22" name="n22">22</a>
-<a href="#n23" name="n23">23</a>
-<a href="#n24" name="n24">24</a>
-<a href="#n25" name="n25">25</a>
-<a href="#n26" name="n26">26</a>
-<a href="#n27" name="n27">27</a>
-<a href="#n28" name="n28">28</a>
-<a href="#n29" name="n29">29</a>
-<strong><a href="#n30" name="n30">30</a></strong>
-<a href="#n31" name="n31">31</a>
-<a href="#n32" name="n32">32</a>
-<a href="#n33" name="n33">33</a>
-<a href="#n34" name="n34">34</a>
-<a href="#n35" name="n35">35</a>
-<a href="#n36" name="n36">36</a>
-<a href="#n37" name="n37">37</a>
-<a href="#n38" name="n38">38</a>
-<a href="#n39" name="n39">39</a>
-<strong><a href="#n40" name="n40">40</a></strong>
-</pre></td>
-  <td class="code"><pre> 
-diff <span class="error">–</span>git a/views/index.ejs b/views/index.ejs
-index <span class="integer">9</span>c3ef46..afb37e1 <span class="integer">100644</span>
-<span class="error">—</span> a/views/index.ejs
+<p>{% coderay lang:javascript linenos:true Delete functionality (diff) %} 
+diff –git a/views/index.ejs b/views/index.ejs
+index 9c3ef46..afb37e1 100644
+— a/views/index.ejs
 +++ b/views/index.ejs
-<span class="error">@</span><span class="error">@</span> -<span class="integer">22</span>,<span class="integer">6</span> +<span class="integer">22</span>,<span class="integer">7</span> <span class="error">@</span><span class="error">@</span>
-           <span class="tag">&lt;input</span> <span class="attribute-name">type</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">checkbox</span><span class="delimiter">&quot;</span></span> <span class="attribute-name">ng-model</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">todo.completed</span><span class="delimiter">&quot;</span></span> <span class="attribute-name">ng-change</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">update($index)</span><span class="delimiter">&quot;</span></span> <span class="tag">/&gt;</span>
-           <span class="tag">&lt;a</span> <span class="attribute-name">ng-show</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">!editing[$index]</span><span class="delimiter">&quot;</span></span> <span class="attribute-name">href</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">#/</span><span class="delimiter">&quot;</span></span><span class="tag">&gt;</span><span class="tag">&lt;/a&gt;</span>
-           <span class="tag">&lt;button</span> <span class="attribute-name">ng-show</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">!editing[$index]</span><span class="delimiter">&quot;</span></span> <span class="attribute-name">ng-click</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">edit($index)</span><span class="delimiter">&quot;</span></span><span class="tag">&gt;</span>edit<span class="tag">&lt;/button&gt;</span>
-+          <span class="tag">&lt;button</span> <span class="attribute-name">ng-show</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">!editing[$index]</span><span class="delimiter">&quot;</span></span> <span class="attribute-name">ng-click</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">remove($index)</span><span class="delimiter">&quot;</span></span><span class="tag">&gt;</span>remove<span class="tag">&lt;/button&gt;</span>&lt;<span class="regexp"><span class="delimiter">/</span><span class="content">p&gt;
+@@ -22,6 +22,7 @@
+           <input type="checkbox" ng-model="todo.completed" ng-change="update($index)" />
+           <a ng-show="!editing[$index]" href="#/"></a>
+           <button ng-show="!editing[$index]" ng-click="edit($index)">edit</button>
++          <button ng-show="!editing[$index]" ng-click="remove($index)">remove</button></p>
 
-&lt;pre&gt;&lt;code&gt;       &amp;lt;input ng-show=&quot;editing[$index]&quot; type=&quot;text&quot; ng-model=&quot;todo.name&quot;&amp;gt;
-       &amp;lt;button ng-show=&quot;editing[$index]&quot; ng-click=&quot;update($index)&quot;&amp;gt;update&amp;lt;</span><span class="delimiter">/</span></span>button&amp;gt; <span class="error">@</span><span class="error">@</span> -<span class="integer">37</span>,<span class="integer">6</span> +<span class="integer">38</span>,<span class="integer">7</span> <span class="error">@</span><span class="error">@</span>
-   note: &amp;lt;textarea ng-model=<span class="string"><span class="delimiter">&quot;</span><span class="content">todo.note</span><span class="delimiter">&quot;</span></span>&amp;gt;&amp;lt;<span class="regexp"><span class="delimiter">/</span><span class="content">textarea&amp;gt;&amp;lt;br&amp;gt;&amp;lt;br&amp;gt;
+<pre><code>       &lt;input ng-show="editing[$index]" type="text" ng-model="todo.name"&gt;
+       &lt;button ng-show="editing[$index]" ng-click="update($index)"&gt;update&lt;/button&gt; @@ -37,6 +38,7 @@
+   note: &lt;textarea ng-model="todo.note"&gt;&lt;/textarea&gt;&lt;br&gt;&lt;br&gt;
 
-   &amp;lt;button ng-click=&quot;update()&quot;&amp;gt;update&amp;lt;</span><span class="delimiter">/</span></span>button&amp;gt; +      &amp;lt;button ng-click=<span class="string"><span class="delimiter">&quot;</span><span class="content">remove()</span><span class="delimiter">&quot;</span></span>&amp;gt;remove&amp;lt;<span class="regexp"><span class="delimiter">/</span><span class="content">button&amp;gt;
-   &amp;lt;a href=&quot;http:</span><span class="delimiter">/</span></span>/cwind001.github.io/<span class="string"><span class="delimiter">&quot;</span><span class="content">&amp;gt;Cancel&amp;lt;/a&amp;gt;
- &amp;lt;/script&amp;gt;
-&lt;/code&gt;&lt;/pre&gt;
+   &lt;button ng-click="update()"&gt;update&lt;/button&gt; +      &lt;button ng-click="remove()"&gt;remove&lt;/button&gt;
+   &lt;a href="http://cwind001.github.io/"&gt;Cancel&lt;/a&gt;
+ &lt;/script&gt;
+</code></pre>
 
-&lt;p&gt;@@ -85,6 +87,13 @@
+<p>@@ -85,6 +87,13 @@
              $scope.todos[index] = angular.copy($scope.editing[index]);
              $scope.editing[index] = false;
            }
@@ -626,17 +361,15 @@ index <span class="integer">9</span>c3ef46..afb37e1 <span class="integer">100644
 +              $scope.todos.splice(index, 1);
 +            });
 +          }
-         }])&lt;/p&gt;
+         }])</p>
 
-&lt;pre&gt;&lt;code&gt;     .controller('TodoDetailCtrl', ['$scope', '$routeParams', 'Todos', '$location',  function ($scope, $routeParams, Todos, $location) { @@ -95,6 +104,12 @@
+<pre><code>     .controller('TodoDetailCtrl', ['$scope', '$routeParams', 'Todos', '$location',  function ($scope, $routeParams, Todos, $location) { @@ -95,6 +104,12 @@
            $location.url('/');
          });
        } + +          $scope.remove = function(){ +            Todos.remove({id: $scope.todo._id}, function(){ +              $location.url('/'); +            }); +          }
      }])
 
-     //--------------- </span></span></pre></td>
-</tr></table>
- </figure>  
+     //--------------- {% endcoderay %}  
 </code></pre>
 
 <p><a href="https://github.com/amejiarosario/todoAPIjs/commit/b9ff3a863c78d72e71b5cc9eb573bb3cb9d87179">变更</a>  </p>
@@ -679,8 +412,8 @@ index <span class="integer">9</span>c3ef46..afb37e1 <span class="integer">100644
     <id>http://cwind001.github.io/blog/2015/06/09/creating-a-restful-api-tutorial-with-nodejs-and-mongodb</id>
     <content type="html"><![CDATA[<p>本教程介绍如何使用Node.js (Express.js) 和MongoDB (mongoose) 创建REST服务。你可以参考本教程创建一个独立的后台服务，也可以回顾之前的<a href="http://gocwind.com/blog/2015/06/05/angularjs-tutorial-for-beginners/">AngularJS</a>或是<a href="http://adrianmejia.com/blog/2012/09/11/backbone-dot-js-for-absolute-beginners-getting-started">BackboneJS</a>教程来构建一个javascript客户端，来与我们将要构建的后台集成。  </p>
 
-<p><img class="left" src="http://dl.iteye.com/upload/picture/pic/133663/abf21050-a55a-347e-9e0f-501586af10c7.png"><br />
-<img src="http://dl.iteye.com/upload/picture/pic/133661/636d3c41-5c03-33a4-af9f-a539fc997fcd.png"><br />
+<p>{% img left http://dl.iteye.com/upload/picture/pic/133663/abf21050-a55a-347e-9e0f-501586af10c7.png %}<br />
+{% img http://dl.iteye.com/upload/picture/pic/133661/636d3c41-5c03-33a4-af9f-a539fc997fcd.png %}<br />
 <!--more-->  </p>
 
 <h1 id="nodejsmongodbrest">第二部分 使用NodeJS和MongoDB创建REST服务</h1>
@@ -713,7 +446,7 @@ index <span class="integer">9</span>c3ef46..afb37e1 <span class="integer">100644
 <h2 id="section">搭建开发环境</h2>
 
 <p>MEAN技术栈的两个主要组件是NodeJS以及MongoDB。<br />
-<img src="http://dl.iteye.com/upload/picture/pic/133677/a1b8cfdb-27cc-3d4f-8494-7cde0cb41ff9.png">  </p>
+{% img http://dl.iteye.com/upload/picture/pic/133677/a1b8cfdb-27cc-3d4f-8494-7cde0cb41ff9.png %}  </p>
 
 <p>注意：如果你已经安装了NodeJS，MongoDB(Mongoose)，ExpressJS并且分别对它们已经有所了解，你可以跳过下面一节。如果你想要回顾或了解以上的每个成员，请继续阅读。  </p>
 
@@ -724,23 +457,13 @@ index <span class="integer">9</span>c3ef46..afb37e1 <span class="integer">100644
 
 <p>检查node版本和npm版本：  </p>
 
-<p><figure class='code'> <table class="CodeRay"><tr>
-  <td class="line-numbers"><pre><a href="#n1" name="n1">1</a>
-<a href="#n2" name="n2">2</a>
-<a href="#n3" name="n3">3</a>
-<a href="#n4" name="n4">4</a>
-<a href="#n5" name="n5">5</a>
-<a href="#n6" name="n6">6</a>
-</pre></td>
-  <td class="code"><pre><span class="tag">&lt;br</span> <span class="tag">/&gt;</span>
+<p>{% coderay lang:javascript linenos:true %}<br />
 node -v
-<span class="error">#</span> =&amp;gt; v0<span class="float">.12</span><span class="float">.4</span>&lt;<span class="regexp"><span class="delimiter">/</span><span class="content">p&gt;
+# =&gt; v0.12.4</p>
 
-&lt;p&gt;npm -v
-# =&amp;gt; 2.10.1
-</span></span></pre></td>
-</tr></table>
- </figure>  </p>
+<p>npm -v
+# =&gt; 2.10.1
+{% endcoderay %}  </p>
 
 <h2 id="expressjs">ExpressJS</h2>
 
@@ -748,31 +471,18 @@ node -v
 
 <p>利用npm安装它：  </p>
 
-<p><figure class='code'> <table class="CodeRay"><tr>
-  <td class="line-numbers"><pre><a href="#n1" name="n1">1</a>
-<a href="#n2" name="n2">2</a>
-</pre></td>
-  <td class="code"><pre> 
+<p>{% coderay lang:javascript linenos:true %} 
 npm install -g express
-</pre></td>
-</tr></table>
- </figure>  </p>
+{% endcoderay %}  </p>
 
 <p>请注意<code>-g</code>选项。它将会把<code>express</code>安装供全局使用，并加入<code>PATH</code>环境变量，因此你可以在任何地方运行它。  </p>
 
 <p>检查版本：  </p>
 
-<p><figure class='code'> <table class="CodeRay"><tr>
-  <td class="line-numbers"><pre><a href="#n1" name="n1">1</a>
-<a href="#n2" name="n2">2</a>
-<a href="#n3" name="n3">3</a>
-</pre></td>
-  <td class="code"><pre> <span class="tag">&lt;br</span> <span class="tag">/&gt;</span>
-express <span class="error">–</span>version
-<span class="error">#</span> =&amp;gt; <span class="float">4.12</span><span class="float">.4</span>
-</pre></td>
-</tr></table>
- </figure>  </p>
+<p>{% coderay lang:javascript linenos:true %} <br />
+express –version
+# =&gt; 4.12.4
+{% endcoderay %}  </p>
 
 <h2 id="mongodb">MongoDB</h2>
 
@@ -781,31 +491,17 @@ express <span class="error">–</span>version
 
 <p>检查版本：  </p>
 
-<p><figure class='code'> <table class="CodeRay"><tr>
-  <td class="line-numbers"><pre><a href="#n1" name="n1">1</a>
-<a href="#n2" name="n2">2</a>
-<a href="#n3" name="n3">3</a>
-<a href="#n4" name="n4">4</a>
-<a href="#n5" name="n5">5</a>
-<a href="#n6" name="n6">6</a>
-<a href="#n7" name="n7">7</a>
-<a href="#n8" name="n8">8</a>
-<a href="#n9" name="n9">9</a>
-<strong><a href="#n10" name="n10">10</a></strong>
-</pre></td>
-  <td class="code"><pre><span class="tag">&lt;br</span> <span class="tag">/&gt;</span>
-<span class="error">#</span> Mac
-mongod <span class="error">–</span>version
-<span class="error">#</span> =&amp;gt; db version v2<span class="float">.6</span><span class="float">.4</span>
-<span class="error">#</span> =&amp;gt; <span class="integer">2014</span>-<span class="integer">10</span>-<span class="octal">01</span>T19:<span class="octal">07</span>:<span class="float">26.649</span>-<span class="octal">0400</span> git version: nogitversion&lt;<span class="regexp"><span class="delimiter">/</span><span class="content">p&gt;
+<p>{% coderay lang:javascript linenos:true %}<br />
+# Mac
+mongod –version
+# =&gt; db version v2.6.4
+# =&gt; 2014-10-01T19:07:26.649-0400 git version: nogitversion</p>
 
-&lt;h1 id=&quot;ubuntu&quot;&gt;Ubuntu&lt;</span><span class="delimiter">/</span></span>h1&gt;
-&lt;p&gt;mongod <span class="error">–</span>version
-<span class="error">#</span> =&amp;gt; db version v2<span class="float">.0</span><span class="float">.4</span>, pdfile version <span class="float">4.5</span>
-<span class="error">#</span> =&amp;gt; Wed Oct  <span class="integer">1</span> <span class="integer">23</span>:<span class="octal">06</span>:<span class="integer">54</span> git version: nogitversion
-</pre></td>
-</tr></table>
- </figure>   </p>
+<h1 id="ubuntu">Ubuntu</h1>
+<p>mongod –version
+# =&gt; db version v2.0.4, pdfile version 4.5
+# =&gt; Wed Oct  1 23:06:54 git version: nogitversion
+{% endcoderay %}   </p>
 
 <h2 id="mean">理解MEAN技术栈</h2>
 
@@ -817,85 +513,44 @@ mongod <span class="error">–</span>version
 
 <p>我们可以在控制台里使用Mongoose。在<code>todoAPIjs</code>目录，键入<code>node</code>来进入node CLI，然后：  </p>
 
-<p><figure class='code'> <table class="CodeRay"><tr>
-  <td class="line-numbers"><pre><a href="#n1" name="n1">1</a>
-<a href="#n2" name="n2">2</a>
-<a href="#n3" name="n3">3</a>
-<a href="#n4" name="n4">4</a>
-<a href="#n5" name="n5">5</a>
-<a href="#n6" name="n6">6</a>
-<a href="#n7" name="n7">7</a>
-<a href="#n8" name="n8">8</a>
-<a href="#n9" name="n9">9</a>
-<strong><a href="#n10" name="n10">10</a></strong>
-<a href="#n11" name="n11">11</a>
-<a href="#n12" name="n12">12</a>
-<a href="#n13" name="n13">13</a>
-</pre></td>
-  <td class="code"><pre> 
-<span class="comment">/* prompt&amp;gt; */</span> <span class="keyword">var</span> mongoose = require(<span class="error">‘</span>mongoose<span class="error">’</span>);&lt;<span class="regexp"><span class="delimiter">/</span><span class="content">p&gt;
+<p>{% coderay lang:javascript linenos:true %} 
+/* prompt&gt; */ var mongoose = require(‘mongoose’);</p>
 
-&lt;p&gt;</span><span class="delimiter">/</span></span>* prompt&amp;gt; *<span class="regexp"><span class="delimiter">/</span><span class="content"> mongoose.connect(‘mongodb:</span><span class="delimiter">/</span></span>/localhost/test3<span class="error">’</span>);&lt;<span class="regexp"><span class="delimiter">/</span><span class="content">p&gt;
+<p>/* prompt&gt; */ mongoose.connect(‘mongodb://localhost/test3’);</p>
 
-&lt;p&gt;</span><span class="delimiter">/</span></span>* prompt&amp;gt; *<span class="regexp"><span class="delimiter">/</span><span class="content"> var TodoSchema = new mongoose.Schema({
+<p>/* prompt&gt; */ var TodoSchema = new mongoose.Schema({
   name: String,
   completed: Boolean,
   note: String,
   updated_at: { type: Date, default: Date.now },
-});&lt;</span><span class="delimiter">/</span></span>p&gt;
+});</p>
 
-&lt;p&gt;<span class="comment">/* prompt&amp;gt; */</span> <span class="keyword">var</span> Todo = mongoose.model(<span class="error">‘</span>Todo<span class="error">’</span>, TodoSchema);
-</pre></td>
-</tr></table>
- </figure> </p>
+<p>/* prompt&gt; */ var Todo = mongoose.model(‘Todo’, TodoSchema);
+{% endcoderay %} </p>
 
 <p><strong>Mongoose 创建</strong>  </p>
 
-<p><figure class='code'> <table class="CodeRay"><tr>
-  <td class="line-numbers"><pre><a href="#n1" name="n1">1</a>
-<a href="#n2" name="n2">2</a>
-<a href="#n3" name="n3">3</a>
-<a href="#n4" name="n4">4</a>
-<a href="#n5" name="n5">5</a>
-<a href="#n6" name="n6">6</a>
-<a href="#n7" name="n7">7</a>
-<a href="#n8" name="n8">8</a>
-<a href="#n9" name="n9">9</a>
-<strong><a href="#n10" name="n10">10</a></strong>
-</pre></td>
-  <td class="code"><pre><span class="tag">&lt;br</span> <span class="tag">/&gt;</span>
-<span class="comment">/* prompt&amp;gt; */</span> <span class="keyword">var</span> todo = <span class="keyword">new</span> Todo({<span class="key">name</span>: <span class="error">‘</span>Master NodeJS<span class="error">’</span>, <span class="key">completed</span>: <span class="predefined-constant">false</span>, <span class="key">note</span>: <span class="error">‘</span>Getting 
-there<span class="error">…</span><span class="error">’</span>});&lt;<span class="regexp"><span class="delimiter">/</span><span class="content">p&gt;
+<p>{% coderay lang:javascript linenos:true %}<br />
+/* prompt&gt; */ var todo = new Todo({name: ‘Master NodeJS’, completed: false, note: ‘Getting 
+there…’});</p>
 
-&lt;p&gt;</span><span class="delimiter">/</span></span>* prompt&amp;gt; *<span class="regexp"><span class="delimiter">/</span><span class="content"> todo.save(function(err){
+<p>/* prompt&gt; */ todo.save(function(err){
     if(err)
         console.log(err);
     else
         console.log(todo);
 });
-</span></span></pre></td>
-</tr></table>
- </figure>  </p>
+{% endcoderay %}  </p>
 
 <p>你可以创建对象，并利用<code>create</code>来进行保存：  </p>
 
-<p><figure class='code'> <table class="CodeRay"><tr>
-  <td class="line-numbers"><pre><a href="#n1" name="n1">1</a>
-<a href="#n2" name="n2">2</a>
-<a href="#n3" name="n3">3</a>
-<a href="#n4" name="n4">4</a>
-<a href="#n5" name="n5">5</a>
-<a href="#n6" name="n6">6</a>
-</pre></td>
-  <td class="code"><pre><span class="tag">&lt;br</span> <span class="tag">/&gt;</span>
-<span class="comment">/* prompt&amp;gt; */</span> Todo.create({<span class="key">name</span>: <span class="error">‘</span>Master Javscript<span class="error">’</span>, <span class="key">completed</span>: <span class="predefined-constant">true</span>, <span class="key">note</span>: <span class="error">‘</span>Getting better 
-everyday<span class="error">’</span>}, <span class="keyword">function</span>(err, todo){
-    <span class="keyword">if</span>(err) console.log(err);
-    <span class="keyword">else</span> console.log(todo);
+<p>{% coderay lang:javascript linenos:true %}<br />
+/* prompt&gt; */ Todo.create({name: ‘Master Javscript’, completed: true, note: ‘Getting better 
+everyday’}, function(err, todo){
+    if(err) console.log(err);
+    else console.log(todo);
 });
-</pre></td>
-</tr></table>
- </figure>  </p>
+{% endcoderay %}  </p>
 
 <p><strong>Mongoose 读取与查询</strong>  </p>
 
@@ -909,81 +564,41 @@ everyday<span class="error">’</span>}, <span class="keyword">function</span>(e
 
 <p>一些例子：  </p>
 
-<p><figure class='code'><figcaption class='code-header'><span>Find all </span></figcaption>
- <table class="CodeRay"><tr>
-  <td class="line-numbers"><pre><a href="#n1" name="n1">1</a>
-<a href="#n2" name="n2">2</a>
-<a href="#n3" name="n3">3</a>
-<a href="#n4" name="n4">4</a>
-<a href="#n5" name="n5">5</a>
-</pre></td>
-  <td class="code"><pre><span class="tag">&lt;br</span> <span class="tag">/&gt;</span>
-<span class="comment">/* prompt&amp;gt; */</span> Todo.find(<span class="keyword">function</span> (err, todos) {
-  <span class="keyword">if</span> (err) <span class="keyword">return</span> console.error(err);
+<p>{% coderay lang:javascript linenos:true Find all %}<br />
+/* prompt&gt; */ Todo.find(function (err, todos) {
+  if (err) return console.error(err);
   console.log(todos)
 });
-</pre></td>
-</tr></table>
- </figure>  </p>
+{% endcoderay %}  </p>
 
 <p>你也可以加入查询条件：  </p>
 
-<p><figure class='code'><figcaption class='code-header'><span>Find with queries </span></figcaption>
- <table class="CodeRay"><tr>
-  <td class="line-numbers"><pre><a href="#n1" name="n1">1</a>
-<a href="#n2" name="n2">2</a>
-<a href="#n3" name="n3">3</a>
-<a href="#n4" name="n4">4</a>
-<a href="#n5" name="n5">5</a>
-<a href="#n6" name="n6">6</a>
-<a href="#n7" name="n7">7</a>
-<a href="#n8" name="n8">8</a>
-<a href="#n9" name="n9">9</a>
-<strong><a href="#n10" name="n10">10</a></strong>
-<a href="#n11" name="n11">11</a>
-</pre></td>
-  <td class="code"><pre><span class="tag">&lt;br</span> <span class="tag">/&gt;</span>
-<span class="comment">/* prompt&amp;gt; */</span> <span class="keyword">var</span> <span class="function">callback</span> = <span class="keyword">function</span> (err, data) {
-  <span class="keyword">if</span> (err) <span class="keyword">return</span> console.error(err);
-  <span class="keyword">else</span> console.log(data);
-}&lt;<span class="regexp"><span class="delimiter">/</span><span class="content">p&gt;
+<p>{% coderay lang:javascript linenos:true Find with queries %}<br />
+/* prompt&gt; */ var callback = function (err, data) {
+  if (err) return console.error(err);
+  else console.log(data);
+}</p>
 
-&lt;p&gt;</span><span class="delimiter">/</span></span>/ Get all completed tasks
-<span class="comment">/* prompt&amp;gt; */</span> Todo.find({<span class="key">completed</span>: <span class="predefined-constant">true</span> }, callback);&lt;<span class="regexp"><span class="delimiter">/</span><span class="content">p&gt;
+<p>// Get all completed tasks
+/* prompt&gt; */ Todo.find({completed: true }, callback);</p>
 
-&lt;p&gt;</span><span class="delimiter">/</span></span>/ Get all tasks ending <span class="keyword">with</span> <span class="tag">&lt;code&gt;</span>JS<span class="tag">&lt;/code&gt;</span>
-<span class="comment">/* prompt&amp;gt; */</span> Todo.find({<span class="key">name</span>: <span class="regexp"><span class="delimiter">/</span><span class="content">JS$</span><span class="delimiter">/</span></span> }, callback);
-</pre></td>
-</tr></table>
- </figure> </p>
+<p>// Get all tasks ending with <code>JS</code>
+/* prompt&gt; */ Todo.find({name: /JS$/ }, callback);
+{% endcoderay %} </p>
 
 <p>当然，也可以加入多个查询条件，例如：  </p>
 
-<p><figure class='code'> <table class="CodeRay"><tr>
-  <td class="line-numbers"><pre><a href="#n1" name="n1">1</a>
-<a href="#n2" name="n2">2</a>
-<a href="#n3" name="n3">3</a>
-<a href="#n4" name="n4">4</a>
-<a href="#n5" name="n5">5</a>
-<a href="#n6" name="n6">6</a>
-<a href="#n7" name="n7">7</a>
-<a href="#n8" name="n8">8</a>
-<a href="#n9" name="n9">9</a>
-<strong><a href="#n10" name="n10">10</a></strong>
-</pre></td>
-  <td class="code"><pre><span class="tag">&lt;br</span> <span class="tag">/&gt;</span>
-<span class="comment">/* prompt&amp;gt; */</span> <span class="keyword">var</span> oneYearAgo = <span class="keyword">new</span> Date();
-oneYearAgo.setYear(oneYearAgo.getFullYear() - <span class="integer">1</span>);&lt;<span class="regexp"><span class="delimiter">/</span><span class="content">p&gt;
+<p>{% coderay lang:javascript linenos:true %}<br />
+/* prompt&gt; */ var oneYearAgo = new Date();
+oneYearAgo.setYear(oneYearAgo.getFullYear() - 1);</p>
 
-&lt;p&gt;</span><span class="delimiter">/</span></span>/ Get all tasks staring <span class="keyword">with</span> <span class="tag">&lt;code&gt;</span>Master<span class="tag">&lt;/code&gt;</span>, completed
-<span class="comment">/* prompt&amp;gt; */</span> Todo.find({<span class="key">name</span>: <span class="regexp"><span class="delimiter">/</span><span class="content">^Master</span><span class="delimiter">/</span></span>, <span class="key">completed</span>: <span class="predefined-constant">true</span> }, callback);&lt;<span class="regexp"><span class="delimiter">/</span><span class="content">p&gt;
+<p>// Get all tasks staring with <code>Master</code>, completed
+/* prompt&gt; */ Todo.find({name: /^Master/, completed: true }, callback);</p>
 
-&lt;p&gt;</span><span class="delimiter">/</span></span>/ Get all tasks staring <span class="keyword">with</span> <span class="tag">&lt;code&gt;</span>Master<span class="tag">&lt;/code&gt;</span>, not completed and created from year ago to now<span class="error">…</span>
-<span class="comment">/* prompt&amp;gt; */</span> Todo.find({<span class="key">name</span>: <span class="regexp"><span class="delimiter">/</span><span class="content">^Master</span><span class="delimiter">/</span></span>, <span class="key">completed</span>: <span class="predefined-constant">false</span> }).where(<span class="error">‘</span>updated_at<span class="error">’</span>).gt(oneYearAgo)
+<p>// Get all tasks staring with <code>Master</code>, not completed and created from year ago to now…
+/* prompt&gt; */ Todo.find({name: /^Master/, completed: false }).where(‘updated_at’).gt(oneYearAgo)
 .exec(callback);
-</pre></td>
-</tr></table>
- </figure>  </p>
+{% endcoderay %}  </p>
 
 <p><strong>Mongoose 更新</strong>  </p>
 
@@ -995,38 +610,20 @@ oneYearAgo.setYear(oneYearAgo.getFullYear() - <span class="integer">1</span>);&l
   <li>Model.findOneAndUpdate([conditions], [update], [options], [callback])  </li>
 </ul>
 
-<p><figure class='code'><figcaption class='code-header'><span>Todo.update and Todo.findOneAndUpdate </span></figcaption>
- <table class="CodeRay"><tr>
-  <td class="line-numbers"><pre><a href="#n1" name="n1">1</a>
-<a href="#n2" name="n2">2</a>
-<a href="#n3" name="n3">3</a>
-<a href="#n4" name="n4">4</a>
-<a href="#n5" name="n5">5</a>
-<a href="#n6" name="n6">6</a>
-<a href="#n7" name="n7">7</a>
-<a href="#n8" name="n8">8</a>
-<a href="#n9" name="n9">9</a>
-<strong><a href="#n10" name="n10">10</a></strong>
-<a href="#n11" name="n11">11</a>
-<a href="#n12" name="n12">12</a>
-<a href="#n13" name="n13">13</a>
-</pre></td>
-  <td class="code"><pre><span class="tag">&lt;br</span> <span class="tag">/&gt;</span>
-<span class="comment">// Model.update(conditions, update, [options], [callback])</span>
-<span class="comment">// update &lt;code&gt;multi&lt;/code&gt;ple tasks from complete false to true&lt;/p&gt;</span>
+<p>{% coderay lang:javascript linenos:true Todo.update and Todo.findOneAndUpdate %}<br />
+// Model.update(conditions, update, [options], [callback])
+// update <code>multi</code>ple tasks from complete false to true</p>
 
-<span class="tag">&lt;p&gt;</span>/* prompt<span class="entity">&amp;gt;</span> */ Todo.update({ completed: false }, { completed: true }, { multi: true }, 
+<p>/* prompt&gt; */ Todo.update({ completed: false }, { completed: true }, { multi: true }, 
 function (err, numberAffected, raw) {
   if (err) return handleError(err);
   console.log(‘The number of updated documents was %d’, numberAffected);
   console.log(‘The raw response from Mongo was ‘, raw);
-});<span class="tag">&lt;/p&gt;</span>
+});</p>
 
-&lt;p&gt;<span class="comment">//Model.findOneAndUpdate([conditions], [update], [options], [callback])</span>
-<span class="comment">/* prompt&amp;gt; */</span> Todo.findOneAndUpdate({<span class="key">name</span>: <span class="regexp"><span class="delimiter">/</span><span class="content">JS$</span><span class="delimiter">/</span></span> }, {<span class="key">completed</span>: <span class="predefined-constant">false</span>}, callback);
-</pre></td>
-</tr></table>
- </figure>  </p>
+<p>//Model.findOneAndUpdate([conditions], [update], [options], [callback])
+/* prompt&gt; */ Todo.findOneAndUpdate({name: /JS$/ }, {completed: false}, callback);
+{% endcoderay %}  </p>
 
 <p><strong>Mongoose 删除</strong>  </p>
 
@@ -1046,70 +643,37 @@ function (err, numberAffected, raw) {
 
 <p>中间件通过<code>app.use</code>被加载到ExpressJS栈，从而可以被任何方法或app.动词（如app.get, app.delete, app.post, app.update, …）所使用。  </p>
 
-<p><img src="http://dl.iteye.com/upload/picture/pic/133679/eb6d578c-b8fe-33ab-aad1-20728b95ffe3.png"></p>
+<p>{% img http://dl.iteye.com/upload/picture/pic/133679/eb6d578c-b8fe-33ab-aad1-20728b95ffe3.png %}</p>
 
 <p>假设我们想要打印每个请求的来源客户端的IP：  </p>
 
-<p><figure class='code'><figcaption class='code-header'><span>Log the client IP on every request </span></figcaption>
- <table class="CodeRay"><tr>
-  <td class="line-numbers"><pre><a href="#n1" name="n1">1</a>
-<a href="#n2" name="n2">2</a>
-<a href="#n3" name="n3">3</a>
-<a href="#n4" name="n4">4</a>
-<a href="#n5" name="n5">5</a>
-<a href="#n6" name="n6">6</a>
-</pre></td>
-  <td class="code"><pre><span class="tag">&lt;br</span> <span class="tag">/&gt;</span>
-app.use(<span class="keyword">function</span> (req, res, next) {
-  <span class="keyword">var</span> ip = req.headers[<span class="error">‘</span>x-forwarded-<span class="keyword">for</span><span class="error">’</span>] || req.connection.remoteAddress;
-  console.log(<span class="error">‘</span>Client IP:<span class="error">’</span>, ip);
+<p>{% coderay lang:javascript linenos:true Log the client IP on every request %}<br />
+app.use(function (req, res, next) {
+  var ip = req.headers[‘x-forwarded-for’] || req.connection.remoteAddress;
+  console.log(‘Client IP:’, ip);
   next();
 });
-</pre></td>
-</tr></table>
- </figure>  </p>
+{% endcoderay %}  </p>
 
 <p>你也可以指定路径，使得你的中间件在该路径生效： </p>
 
-<p><figure class='code'><figcaption class='code-header'><span>Middleware mounted on “/todos/:id” and log the request method </span></figcaption>
- <table class="CodeRay"><tr>
-  <td class="line-numbers"><pre><a href="#n1" name="n1">1</a>
-<a href="#n2" name="n2">2</a>
-<a href="#n3" name="n3">3</a>
-<a href="#n4" name="n4">4</a>
-<a href="#n5" name="n5">5</a>
-</pre></td>
-  <td class="code"><pre><span class="tag">&lt;br</span> <span class="tag">/&gt;</span>
-app.use(<span class="error">‘</span><span class="regexp"><span class="delimiter">/</span><span class="content">todos</span><span class="delimiter">/</span></span>:id<span class="error">’</span>, <span class="keyword">function</span> (req, res, next) {
-  console.log(<span class="error">‘</span>Request Type:<span class="error">’</span>, req.method);
+<p>{% coderay lang:javascript linenos:true Middleware mounted on “/todos/:id” and log the request method %}<br />
+app.use(‘/todos/:id’, function (req, res, next) {
+  console.log(‘Request Type:’, req.method);
   next();
 });
-</pre></td>
-</tr></table>
- </figure>  </p>
+{% endcoderay %}  </p>
 
 <p>最终，你可以使用app.get来捕捉相匹配路由的GET请求，在中间件链末端通过<code>response.send</code>来为该请求产生一个响应。让我们使用mongoose读取与查询一节中的函数来返回一条与参数id相匹配的用户数据。  </p>
 
-<p><figure class='code'><figcaption class='code-header'><span>Middleware mounted on “/todos/:id” and returns </span></figcaption>
- <table class="CodeRay"><tr>
-  <td class="line-numbers"><pre><a href="#n1" name="n1">1</a>
-<a href="#n2" name="n2">2</a>
-<a href="#n3" name="n3">3</a>
-<a href="#n4" name="n4">4</a>
-<a href="#n5" name="n5">5</a>
-<a href="#n6" name="n6">6</a>
-<a href="#n7" name="n7">7</a>
-</pre></td>
-  <td class="code"><pre><span class="tag">&lt;br</span> <span class="tag">/&gt;</span>
-app.get(<span class="error">‘</span><span class="regexp"><span class="delimiter">/</span><span class="content">todos</span><span class="delimiter">/</span></span>:id<span class="error">’</span>, <span class="keyword">function</span> (req, res, next) {
-  Todo.findById(req.params.id, <span class="keyword">function</span>(err, todo){
-    <span class="keyword">if</span>(err) res.send(err);
+<p>{% coderay lang:javascript linenos:true Middleware mounted on “/todos/:id” and returns %}<br />
+app.get(‘/todos/:id’, function (req, res, next) {
+  Todo.findById(req.params.id, function(err, todo){
+    if(err) res.send(err);
     res.json(todo);
   });
 });
-</pre></td>
-</tr></table>
- </figure>  </p>
+{% endcoderay %}  </p>
 
 <p>请注意之前所有的中间件都调用了<code>next()</code>，除了这最后一个，因为它将把包含指定<code>todo</code>数据的响应（以JSON格式）发送给客户端。  </p>
 
@@ -1143,36 +707,25 @@ app.get(<span class="error">‘</span><span class="regexp"><span class="delimite
 
 <h3 id="curl">Curl</h3>
 
-<p><figure class='code'><figcaption class='code-header'><span>Create tasks </span></figcaption>
- <table class="CodeRay"><tr>
-  <td class="line-numbers"><pre><a href="#n1" name="n1">1</a>
-<a href="#n2" name="n2">2</a>
-<a href="#n3" name="n3">3</a>
-<a href="#n4" name="n4">4</a>
-<a href="#n5" name="n5">5</a>
-<a href="#n6" name="n6">6</a>
-</pre></td>
-  <td class="code"><pre> 
-<span class="error">#</span> Create task
-curl -XPOST http:<span class="comment">//localhost:3000/todos -d ‘name=Master%20Routes&amp;amp;completed=false&amp;amp;note=soon…’&lt;/p&gt;</span>
+<p>{% coderay lang:javascript linenos:true Create tasks %} 
+# Create task
+curl -XPOST http://localhost:3000/todos -d ‘name=Master%20Routes&amp;completed=false&amp;note=soon…’</p>
 
-<span class="tag">&lt;h1</span> <span class="attribute-name">id</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">list-tasks</span><span class="delimiter">&quot;</span></span><span class="tag">&gt;</span>List tasks<span class="tag">&lt;/h1&gt;</span>
-&lt;p&gt;curl -XGET http:<span class="comment">//localhost:3000/todos</span>
-</pre></td>
-</tr></table>
- </figure>  </p>
+<h1 id="list-tasks">List tasks</h1>
+<p>curl -XGET http://localhost:3000/todos
+{% endcoderay %}  </p>
 
 <h3 id="postman">浏览器和Postman</h3>
 <p>当你打开浏览器并在地址栏输入<code>localhost:3000/todos</code>你将会看到所有的任务（当你实现了API之后）。然而，默认情况下你并不能POST命令。为了后面的测试，我们可以使用一个名为Postman[link]的Chrome插件。它使你能够很容易地使用所有的HTTP命令，如果需要添加参数时，选中<code>x-www-form-urlencoded</code>。（译者注：使用RestClient for Firefox一样很方便）。  </p>
 
-<p><img src="http://dl.iteye.com/upload/picture/pic/133681/84a293ae-e910-37af-abae-194e60294aed.png"></p>
+<p>{% img http://dl.iteye.com/upload/picture/pic/133681/84a293ae-e910-37af-abae-194e60294aed.png %}</p>
 
 <h3 id="section-1">网站和移动应用</h3>
 <p>这很有可能是最主要的API调用者。你可以使用jQuery<code>$ajax</code>方便地与RESTful API交互，或者使用它的包装器–BackboneJS的Collections/models， AngularJS的<code>$http</code>或<code>$resource</code>，或许许多多其他的库/框架以及移动客户端。  </p>
 
 <p>最后，我们来阐释如何使用AngularJS与API交互。  </p>
 
-<p><img src="http://dl.iteye.com/upload/picture/pic/133683/1737b0c6-2c33-3ed9-89aa-9bc385dd89cd.png"><br />
+<p>{% img http://dl.iteye.com/upload/picture/pic/133683/1737b0c6-2c33-3ed9-89aa-9bc385dd89cd.png %}<br />
 （图片来自CodeSchool）  </p>
 
 <p>整合MEAN技术栈</p>
@@ -1182,65 +735,34 @@ curl -XPOST http:<span class="comment">//localhost:3000/todos -d ‘name=Master%
 <p>花了较大篇幅来了解Node CLI，MongoDB，Mongoose，工具以及中间件之后，让我们回到我们的express应用todoApp。现在我们创建路由并最终实现我们的RESTful API。<br />
 通过<code>express -e todoApp</code>创建应用。安装所有依赖<code>cd todoApp &amp;&amp; npm install</code>。运行该应用：<code>DEBUG=todoApp ./bin/www</code>；  </p>
 
-<p><figure class='code'> <table class="CodeRay"><tr>
-  <td class="line-numbers"><pre><a href="#n1" name="n1">1</a>
-<a href="#n2" name="n2">2</a>
-<a href="#n3" name="n3">3</a>
-<a href="#n4" name="n4">4</a>
-<a href="#n5" name="n5">5</a>
-<a href="#n6" name="n6">6</a>
-<a href="#n7" name="n7">7</a>
-<a href="#n8" name="n8">8</a>
-<a href="#n9" name="n9">9</a>
-<strong><a href="#n10" name="n10">10</a></strong>
-<a href="#n11" name="n11">11</a>
-<a href="#n12" name="n12">12</a>
-<a href="#n13" name="n13">13</a>
-<a href="#n14" name="n14">14</a>
-<a href="#n15" name="n15">15</a>
-<a href="#n16" name="n16">16</a>
-<a href="#n17" name="n17">17</a>
-<a href="#n18" name="n18">18</a>
-<a href="#n19" name="n19">19</a>
-<strong><a href="#n20" name="n20">20</a></strong>
-<a href="#n21" name="n21">21</a>
-<a href="#n22" name="n22">22</a>
-<a href="#n23" name="n23">23</a>
-<a href="#n24" name="n24">24</a>
-<a href="#n25" name="n25">25</a>
-<a href="#n26" name="n26">26</a>
-<a href="#n27" name="n27">27</a>
-</pre></td>
-  <td class="code"><pre> 
+<p>{% coderay lang:javascript linenos:true %} 
 express -e todoApp
-<span class="error">#</span> =&amp;gt;   create : todoApp                  <span class="error">#</span> app directory&lt;br /&gt;
-<span class="error">#</span> =&amp;gt;   create : todoApp/<span class="reserved">package</span>.json     <span class="error">#</span> file containing all the dependencies
-<span class="error">#</span> =&amp;gt;   create : todoApp/app.js           <span class="error">#</span> Entry point of the application: defines middleware, 
+# =&gt;   create : todoApp                  # app directory<br />
+# =&gt;   create : todoApp/package.json     # file containing all the dependencies
+# =&gt;   create : todoApp/app.js           # Entry point of the application: defines middleware, 
 initialize database connections, routes and more.
-<span class="error">#</span> =&amp;gt;   create : todoApp/<span class="reserved">public</span>           <span class="error">#</span> all files contained here are accessible through to 
-<span class="reserved">public</span> (browser or API calls).
-<span class="error">#</span> =&amp;gt;   create : todoApp/<span class="reserved">public</span>/javascripts
-<span class="error">#</span> =&amp;gt;   create : todoApp/<span class="reserved">public</span>/images
-<span class="error">#</span> =&amp;gt;   create : todoApp/<span class="reserved">public</span>/stylesheets
-<span class="error">#</span> =&amp;gt;   create : todoApp/<span class="reserved">public</span>/stylesheets/style.css
-<span class="error">#</span> =&amp;gt;   create : todoApp/routes           <span class="error">#</span> containes all the routes files
-<span class="error">#</span> =&amp;gt;   create : todoApp/routes/index.js
-<span class="error">#</span> =&amp;gt;   create : todoApp/routes/users.js
-<span class="error">#</span> =&amp;gt;   create : todoApp/views            <span class="error">#</span> contains all the HTML templates
-<span class="error">#</span> =&amp;gt;   create : todoApp/views/index.ejs
-<span class="error">#</span> =&amp;gt;   create : todoApp/views/error.ejs
-<span class="error">#</span> =&amp;gt;   create : todoApp/bin              <span class="error">#</span> contains executable files
-<span class="error">#</span> =&amp;gt;   create : todoApp/bin/www          <span class="error">#</span> bootstrap the app: loads app.js, and set the port 
-<span class="keyword">for</span> the webserver.
-<span class="error">#</span> =&amp;gt;
-<span class="error">#</span> =&amp;gt;   install dependencies:
-<span class="error">#</span> =&amp;gt;     <span class="predefined">$</span> cd todoApp &amp;amp;&amp;amp; npm install
-<span class="error">#</span> =&amp;gt;
-<span class="error">#</span> =&amp;gt;   run the app:
-<span class="error">#</span> =&amp;gt;     <span class="predefined">$</span> DEBUG=todoApp .<span class="regexp"><span class="delimiter">/</span><span class="content">bin</span><span class="delimiter">/</span></span>www
-</pre></td>
-</tr></table>
- </figure>  </p>
+# =&gt;   create : todoApp/public           # all files contained here are accessible through to 
+public (browser or API calls).
+# =&gt;   create : todoApp/public/javascripts
+# =&gt;   create : todoApp/public/images
+# =&gt;   create : todoApp/public/stylesheets
+# =&gt;   create : todoApp/public/stylesheets/style.css
+# =&gt;   create : todoApp/routes           # containes all the routes files
+# =&gt;   create : todoApp/routes/index.js
+# =&gt;   create : todoApp/routes/users.js
+# =&gt;   create : todoApp/views            # contains all the HTML templates
+# =&gt;   create : todoApp/views/index.ejs
+# =&gt;   create : todoApp/views/error.ejs
+# =&gt;   create : todoApp/bin              # contains executable files
+# =&gt;   create : todoApp/bin/www          # bootstrap the app: loads app.js, and set the port 
+for the webserver.
+# =&gt;
+# =&gt;   install dependencies:
+# =&gt;     $ cd todoApp &amp;&amp; npm install
+# =&gt;
+# =&gt;   run the app:
+# =&gt;     $ DEBUG=todoApp ./bin/www
+{% endcoderay %}  </p>
 
 <h3 id="expressjsmongodb">将ExpressJS与MongoDB连接</h3>
 <p>在上一节中你已经安装好了MongoDB，键入以下命令来启动它：<br />
@@ -1251,29 +773,16 @@ initialize database connections, routes and more.
 <p>注意<code>--save</code>参数，这将会把它加到<code>todoApp/package.json</code>里。<br />
 接下来，你需要在<code>todoApp/app.js</code>里引入mongoose。  </p>
 
-<p><figure class='code'> <table class="CodeRay"><tr>
-  <td class="line-numbers"><pre><a href="#n1" name="n1">1</a>
-<a href="#n2" name="n2">2</a>
-<a href="#n3" name="n3">3</a>
-<a href="#n4" name="n4">4</a>
-<a href="#n5" name="n5">5</a>
-<a href="#n6" name="n6">6</a>
-<a href="#n7" name="n7">7</a>
-<a href="#n8" name="n8">8</a>
-<a href="#n9" name="n9">9</a>
-</pre></td>
-  <td class="code"><pre> 
-<span class="keyword">var</span> mongoose = require(<span class="error">‘</span>mongoose<span class="error">’</span>);
-mongoose.connect(<span class="error">‘</span>mongodb:<span class="comment">//localhost/todoApp’, function(err) {</span>
-    <span class="keyword">if</span>(err) {
-        console.log(<span class="error">‘</span>connection error<span class="error">’</span>, err);
-    } <span class="keyword">else</span> {
-        console.log(<span class="error">‘</span>connection successful<span class="error">’</span>);
+<p>{% coderay lang:javascript linenos:true %} 
+var mongoose = require(‘mongoose’);
+mongoose.connect(‘mongodb://localhost/todoApp’, function(err) {
+    if(err) {
+        console.log(‘connection error’, err);
+    } else {
+        console.log(‘connection successful’);
     }
 });
-</pre></td>
-</tr></table>
- </figure>  </p>
+{% endcoderay %}  </p>
 
 <p>现在，你可以运行<code>npm start</code>或者<code>./bin/www</code>，你将会注意到下面的信息：<code>connection successful</code>。看到了吗？很好！  </p>
 
@@ -1288,29 +797,16 @@ touch models/Todo.js</code></p>
 
 <p>编辑models/Todo.js文件：  </p>
 
-<p><figure class='code'> <table class="CodeRay"><tr>
-  <td class="line-numbers"><pre><a href="#n1" name="n1">1</a>
-<a href="#n2" name="n2">2</a>
-<a href="#n3" name="n3">3</a>
-<a href="#n4" name="n4">4</a>
-<a href="#n5" name="n5">5</a>
-<a href="#n6" name="n6">6</a>
-<a href="#n7" name="n7">7</a>
-<a href="#n8" name="n8">8</a>
-<a href="#n9" name="n9">9</a>
-</pre></td>
-  <td class="code"><pre> 
-<span class="keyword">var</span> mongoose = require(<span class="error">‘</span>mongoose<span class="error">’</span>);
-<span class="keyword">var</span> TodoSchema = <span class="keyword">new</span> mongoose.Schema({
-  <span class="key">name</span>: String,
-  <span class="key">completed</span>: Boolean,
-  <span class="key">note</span>: String,
-  <span class="key">updated_at</span>: { <span class="key">type</span>: Date, <span class="keyword">default</span>: Date.now },
+<p>{% coderay lang:javascript linenos:true %} 
+var mongoose = require(‘mongoose’);
+var TodoSchema = new mongoose.Schema({
+  name: String,
+  completed: Boolean,
+  note: String,
+  updated_at: { type: Date, default: Date.now },
 });
-module.exports = mongoose.model(<span class="error">‘</span>Todo<span class="error">’</span>, TodoSchema);
-</pre></td>
-</tr></table>
- </figure>  </p>
+module.exports = mongoose.model(‘Todo’, TodoSchema);
+{% endcoderay %}  </p>
 
 <p><a href="https://github.com/amejiarosario/todoAPIjs/commit/afc908027339b22f10de3b77518ac0728668d470">变更</a>  </p>
 
@@ -1342,94 +838,48 @@ module.exports = mongoose.model(<span class="error">‘</span>Todo<span class="e
 
 <p>建立路由：  </p>
 
-<p><figure class='code'><figcaption class='code-header'><span>Create a new route called <code>todos.js</code> in the <code>routes</code> folder or rename <code>users.js</code> </span></figcaption>
- <table class="CodeRay"><tr>
-  <td class="line-numbers"><pre><a href="#n1" name="n1">1</a>
-<a href="#n2" name="n2">2</a>
-</pre></td>
-  <td class="code"><pre><span class="tag">&lt;br</span> <span class="tag">/&gt;</span>
+<p>{% coderay lang:javascript linenos:true Create a new route called <code>todos.js</code> in the <code>routes</code> folder or rename <code>users.js</code> %}<br />
 mv routes/users.js routes/todos.js
-</pre></td>
-</tr></table>
- </figure>  </p>
+{% endcoderay %}  </p>
 
 <p>在<code>app.js</code>中，添加新的<code>todos</code>路由，或者替换<code>./routes/users</code>为<code>./routes/todos</code>  </p>
 
-<p><figure class='code'><figcaption class='code-header'><span>Adding todos routes </span></figcaption>
- <table class="CodeRay"><tr>
-  <td class="line-numbers"><pre><a href="#n1" name="n1">1</a>
-<a href="#n2" name="n2">2</a>
-<a href="#n3" name="n3">3</a>
-</pre></td>
-  <td class="code"><pre>
-<span class="keyword">var</span> todos = require(<span class="error">‘</span>.<span class="regexp"><span class="delimiter">/</span><span class="content">routes</span><span class="delimiter">/</span></span>todos<span class="error">’</span>);
-app.use(<span class="error">‘</span><span class="regexp"><span class="delimiter">/</span><span class="content">todos’, todos);
-</span></span></pre></td>
-</tr></table>
- </figure>  </p>
+<p>{% coderay lang:javascript linenos:true Adding todos routes %}
+var todos = require(‘./routes/todos’);
+app.use(‘/todos’, todos);
+{% endcoderay %}  </p>
 
 <p>搞定！现在返回编辑<code>routes/todos.js</code>。 </p>
 
 <p><strong>查询： GET /todos</strong><br />
 还记得Mongoose查询API吗？下面的例子显示如何在上下文中使用它：  </p>
 
-<p><figure class='code'><figcaption class='code-header'><span>routes/todos.js </span></figcaption>
- <table class="CodeRay"><tr>
-  <td class="line-numbers"><pre><a href="#n1" name="n1">1</a>
-<a href="#n2" name="n2">2</a>
-<a href="#n3" name="n3">3</a>
-<a href="#n4" name="n4">4</a>
-<a href="#n5" name="n5">5</a>
-<a href="#n6" name="n6">6</a>
-<a href="#n7" name="n7">7</a>
-<a href="#n8" name="n8">8</a>
-<a href="#n9" name="n9">9</a>
-<strong><a href="#n10" name="n10">10</a></strong>
-<a href="#n11" name="n11">11</a>
-<a href="#n12" name="n12">12</a>
-<a href="#n13" name="n13">13</a>
-</pre></td>
-  <td class="code"><pre>
-<span class="keyword">var</span> express = require(<span class="error">‘</span>express<span class="error">’</span>);
-<span class="keyword">var</span> router = express.Router();
-<span class="keyword">var</span> mongoose = require(<span class="error">‘</span>mongoose<span class="error">’</span>);
-<span class="keyword">var</span> Todo = require(<span class="error">‘</span>..<span class="regexp"><span class="delimiter">/</span><span class="content">models</span><span class="delimiter">/</span></span>Todo.js<span class="error">’</span>);
-<span class="comment">/* GET /todos listing. */</span>
-router.get(<span class="error">‘</span><span class="regexp"><span class="delimiter">/</span><span class="content">’, function(req, res, next) {
+<p>{% coderay lang:javascript linenos:true routes/todos.js %}
+var express = require(‘express’);
+var router = express.Router();
+var mongoose = require(‘mongoose’);
+var Todo = require(‘../models/Todo.js’);
+/* GET /todos listing. */
+router.get(‘/’, function(req, res, next) {
   Todo.find(function (err, todos) {
     if (err) return next(err);
     res.json(todos);
   });
 });
 module.exports = router;
-</span></span></pre></td>
-</tr></table>
- </figure>  </p>
+{% endcoderay %}  </p>
 
 <p>收获时间到！数据库里暂时没有任务记录，不过我们至少可以证明它能够正常工作：  </p>
 
-<p><figure class='code'><figcaption class='code-header'><span>Testing all together </span></figcaption>
- <table class="CodeRay"><tr>
-  <td class="line-numbers"><pre><a href="#n1" name="n1">1</a>
-<a href="#n2" name="n2">2</a>
-<a href="#n3" name="n3">3</a>
-<a href="#n4" name="n4">4</a>
-<a href="#n5" name="n5">5</a>
-<a href="#n6" name="n6">6</a>
-<a href="#n7" name="n7">7</a>
-<a href="#n8" name="n8">8</a>
-</pre></td>
-  <td class="code"><pre>
-<span class="error">#</span> Start database
+<p>{% coderay lang:javascript linenos:true Testing all together %}
+# Start database
 mongod
-<span class="error">#</span> Start Webserver (<span class="keyword">in</span> other terminal tab)
-DEBUG=todoApp .<span class="regexp"><span class="delimiter">/</span><span class="content">bin</span><span class="delimiter">/</span></span>www
-<span class="error">#</span> Test API (<span class="keyword">in</span> other terminal tab)
-curl localhost:<span class="integer">3000</span>/todos
-<span class="error">#</span> =&amp;gt; []% 
-</pre></td>
-</tr></table>
- </figure>  </p>
+# Start Webserver (in other terminal tab)
+DEBUG=todoApp ./bin/www
+# Test API (in other terminal tab)
+curl localhost:3000/todos
+# =&gt; []% 
+{% endcoderay %}  </p>
 
 <p><a href="https://github.com/amejiarosario/todoAPIjs/commit/54ab912ea9aa2b6633ae12816beb6e6c3d2702e6">变更</a></p>
 
@@ -1438,28 +888,15 @@ curl localhost:<span class="integer">3000</span>/todos
 <p><strong>创建： POST/ todos</strong><br />
 回到<code>routes/todos.js</code>，我们将使用mongoose create[link]来实现用于创建的API。你能够在不参照下面例子的情况下尝试实现它吗？  </p>
 
-<p><figure class='code'><figcaption class='code-header'><span>routes/todos.js (showing just create route) </span></figcaption>
- <table class="CodeRay"><tr>
-  <td class="line-numbers"><pre><a href="#n1" name="n1">1</a>
-<a href="#n2" name="n2">2</a>
-<a href="#n3" name="n3">3</a>
-<a href="#n4" name="n4">4</a>
-<a href="#n5" name="n5">5</a>
-<a href="#n6" name="n6">6</a>
-<a href="#n7" name="n7">7</a>
-<a href="#n8" name="n8">8</a>
-</pre></td>
-  <td class="code"><pre>
-<span class="comment">/* POST /todos */</span>
-router.post(<span class="error">‘</span><span class="regexp"><span class="delimiter">/</span><span class="content">’, function(req, res, next) {
+<p>{% coderay lang:javascript linenos:true routes/todos.js (showing just create route) %}
+/* POST /todos */
+router.post(‘/’, function(req, res, next) {
   Todo.create(req.body, function (err, post) {
     if (err) return next(err);
     res.json(post);
   });
 });
-</span></span></pre></td>
-</tr></table>
- </figure>  </p>
+{% endcoderay %}  </p>
 
 <p><a href="https://github.com/amejiarosario/todoAPIjs/commit/28b60c4bf9c6d8b08c3351f725e17c7f40a077be">变更</a>  </p>
 
@@ -1473,28 +910,15 @@ router.post(<span class="error">‘</span><span class="regexp"><span class="deli
 <p><strong>展示单条任务： GET /todos/:id</strong><br />
 以下是一个使用<code>Todo.findeById</code>和<code>req.params</code>的快照。请注意<code>params</code>与路径中占位符名称相匹配。这里我们用的是<code>:id</code>。  </p>
 
-<p><figure class='code'><figcaption class='code-header'><span>routes/todos.js (showing just show route) </span></figcaption>
- <table class="CodeRay"><tr>
-  <td class="line-numbers"><pre><a href="#n1" name="n1">1</a>
-<a href="#n2" name="n2">2</a>
-<a href="#n3" name="n3">3</a>
-<a href="#n4" name="n4">4</a>
-<a href="#n5" name="n5">5</a>
-<a href="#n6" name="n6">6</a>
-<a href="#n7" name="n7">7</a>
-<a href="#n8" name="n8">8</a>
-</pre></td>
-  <td class="code"><pre>
-<span class="comment">/* GET /todos/id */</span>
-router.get(<span class="error">‘</span><span class="regexp"><span class="delimiter">/</span><span class="content">:id’, function(req, res, next) {
+<p>{% coderay lang:javascript linenos:true routes/todos.js (showing just show route) %}
+/* GET /todos/id */
+router.get(‘/:id’, function(req, res, next) {
   Todo.findById(req.params.id, function (err, post) {
     if (err) return next(err);
     res.json(post);
   });
 });
-</span></span></pre></td>
-</tr></table>
- </figure>  </p>
+{% endcoderay %}  </p>
 
 <p><a href="https://github.com/amejiarosario/todoAPIjs/commit/7d8bc67178a4f162858395845c076d9223926bf8">变更</a></p>
 
@@ -1503,28 +927,15 @@ router.get(<span class="error">‘</span><span class="regexp"><span class="delim
 <p><strong>更新： PUT /todos/:id</strong><br />
 回到<code>routes/todos.js</code>，我们来实现用于更新任务的API。请回顾findByIdAndUpdate[link]方法，并尝试利用它来实现该API。  </p>
 
-<p><figure class='code'><figcaption class='code-header'><span>routes/todos.js (showing just update route) </span></figcaption>
- <table class="CodeRay"><tr>
-  <td class="line-numbers"><pre><a href="#n1" name="n1">1</a>
-<a href="#n2" name="n2">2</a>
-<a href="#n3" name="n3">3</a>
-<a href="#n4" name="n4">4</a>
-<a href="#n5" name="n5">5</a>
-<a href="#n6" name="n6">6</a>
-<a href="#n7" name="n7">7</a>
-<a href="#n8" name="n8">8</a>
-</pre></td>
-  <td class="code"><pre>
-<span class="comment">/* PUT /todos/:id */</span>
-router.put(<span class="error">‘</span><span class="regexp"><span class="delimiter">/</span><span class="content">:id’, function(req, res, next) {
+<p>{% coderay lang:javascript linenos:true routes/todos.js (showing just update route) %}
+/* PUT /todos/:id */
+router.put(‘/:id’, function(req, res, next) {
   Todo.findByIdAndUpdate(req.params.id, req.body, function (err, post) {
     if (err) return next(err);
     res.json(post);
   });
 });
-</span></span></pre></td>
-</tr></table>
- </figure>  </p>
+{% endcoderay %}  </p>
 
 <p><a href="https://github.com/amejiarosario/todoAPIjs/commit/00dafe491e0d0b59fa53e86d8c187c42d7824200">变更</a></p>
 
@@ -1533,28 +944,15 @@ router.put(<span class="error">‘</span><span class="regexp"><span class="delim
 <p><strong>删除： DELETE /todos/:id</strong><br />
 终于轮到最后一个API了！几乎与<code>update</code>完全相同，使用<code>findByIdAndRemove</code>。  </p>
 
-<p><figure class='code'><figcaption class='code-header'><span>routes/todos.js (showing just update route) </span></figcaption>
- <table class="CodeRay"><tr>
-  <td class="line-numbers"><pre><a href="#n1" name="n1">1</a>
-<a href="#n2" name="n2">2</a>
-<a href="#n3" name="n3">3</a>
-<a href="#n4" name="n4">4</a>
-<a href="#n5" name="n5">5</a>
-<a href="#n6" name="n6">6</a>
-<a href="#n7" name="n7">7</a>
-<a href="#n8" name="n8">8</a>
-</pre></td>
-  <td class="code"><pre>
-<span class="comment">/* DELETE /todos/:id */</span>
-router.<span class="keyword">delete</span>(<span class="error">‘</span><span class="regexp"><span class="delimiter">/</span><span class="content">:id’, function(req, res, next) {
+<p>{% coderay lang:javascript linenos:true routes/todos.js (showing just update route) %}
+/* DELETE /todos/:id */
+router.delete(‘/:id’, function(req, res, next) {
   Todo.findByIdAndRemove(req.params.id, req.body, function (err, post) {
     if (err) return next(err);
     res.json(post);
   });
 });
-</span></span></pre></td>
-</tr></table>
- </figure>  </p>
+{% endcoderay %}  </p>
 
 <p><a href="https://github.com/amejiarosario/todoAPIjs/commit/cbf5366e2b4e1a683ed50d2148ed6a548616d3f8">变更</a>  </p>
 
@@ -1567,7 +965,7 @@ router.<span class="keyword">delete</span>(<span class="error">‘</span><span c
   <li>第三部分 - <a href="http://gocwind.com/blog/2015/06/09/mean-stack-tutorial-mongodb-expressjs-angularjs-nodejs/">MEAN全栈开发：前后端整合</a>    </li>
 </ul>
 
-<p><img src="http://dl.iteye.com/upload/picture/pic/133685/7c4ef50f-b7cd-3334-a29e-816cfcea7eba.png">  </p>
+<p>{% img http://dl.iteye.com/upload/picture/pic/133685/7c4ef50f-b7cd-3334-a29e-816cfcea7eba.png %}  </p>
 
 <p><strong>相关教程：</strong>  </p>
 
@@ -1594,7 +992,7 @@ router.<span class="keyword">delete</span>(<span class="error">‘</span><span c
 <!--more--></p>
 
 <p><strong>Angular.js是什么？</strong><br />
-<img src="http://dl.iteye.com/upload/picture/pic/133659/9d9848ea-e94e-322c-9d73-f7d9c072146f.jpg"><br />
+{% img http://dl.iteye.com/upload/picture/pic/133659/9d9848ea-e94e-322c-9d73-f7d9c072146f.jpg %}<br />
 Angular.js是一个MVW（模型-视图-随便什么）开源的JavaScript Web框架，使得创建单页应用（SPA）和数据驱动的应用更加方便快捷。  </p>
 
 <h2 id="section">背景简介</h2>
@@ -1627,100 +1025,56 @@ AngularJS非常适用于构建可测试的单页应用（SPA），以及数据�
 
 <p>请注意，在下面的例子中有两个指令：ng-app和ng-model。  </p>
 
-<p><figure class='code'><figcaption class='code-header'><span>Hello World in AngularJS </span></figcaption>
- <table class="CodeRay"><tr>
-  <td class="line-numbers"><pre><a href="#n1" name="n1">1</a>
-<a href="#n2" name="n2">2</a>
-<a href="#n3" name="n3">3</a>
-<a href="#n4" name="n4">4</a>
-<a href="#n5" name="n5">5</a>
-<a href="#n6" name="n6">6</a>
-<a href="#n7" name="n7">7</a>
-<a href="#n8" name="n8">8</a>
-<a href="#n9" name="n9">9</a>
-<strong><a href="#n10" name="n10">10</a></strong>
-<a href="#n11" name="n11">11</a>
-<a href="#n12" name="n12">12</a>
-</pre></td>
-  <td class="code"><pre><span class="tag">&lt;br</span> <span class="tag">/&gt;</span>
-<span class="entity">&amp;lt;</span>html ng-app<span class="entity">&amp;gt;</span><span class="tag">&lt;/p&gt;</span>
-<span class="tag">&lt;head&gt;</span>
-  <span class="tag">&lt;title&gt;</span>Hello World in AngularJS<span class="tag">&lt;/title&gt;</span>
-<span class="tag">&lt;/head&gt;</span>
-<span class="tag">&lt;body&gt;</span>
+<p>{% coderay lang:HTML linenos:true Hello World in AngularJS %}<br />
+&lt;html ng-app&gt;</p>
+<head>
+  <title>Hello World in AngularJS</title>
+</head>
+<body>
 
-<span class="tag">&lt;input</span> <span class="attribute-name">ng-model</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">name</span><span class="delimiter">&quot;</span></span> <span class="tag">/&gt;</span> Hello { { name } }
+<input ng-model="name" /> Hello { { name } }
 
-<span class="tag">&lt;script</span> <span class="attribute-name">src</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">https://ajax.googleapis.com/ajax/libs/angularjs/1.2.25/angular.min.js</span><span class="delimiter">&quot;</span></span><span class="tag">&gt;</span><span class="tag">&lt;/script&gt;</span>
-<span class="tag">&lt;/body&gt;</span>
-<span class="tag">&lt;p&gt;</span><span class="entity">&amp;lt;</span>/html<span class="entity">&amp;gt;</span>
-</pre></td>
-</tr></table>
- </figure>  </p>
+<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.25/angular.min.js"></script>
+</body>
+<p>&lt;/html&gt;
+{% endcoderay %}  </p>
 
 <p>让我们了解一下主要的内嵌指令：  </p>
 
 <ul>
   <li><strong>ng-app</strong>: 是一个用于引导AngularJS的指令，它同时把调用者元素指派为根。通常置于&lt;html&gt;或&lt;body&gt;标签上  </li>
-  <li><strong>ng-model</strong>: 是一个用于绑定如input、select、checkboxes、textarea或其他定制页面元素到一个称为$scope的属性上的指令。有关$scope和数据绑定将在下一节中详细介绍。现在我们只需要记住文本框的值被绑定到 上  </li>
-  <li><strong></strong>:   是绑定模型到HTML页面元素的一种方式。在上面的示例中ng-model 名字被绑定到占位符。  </li>
+  <li><strong>ng-model</strong>: 是一个用于绑定如input、select、checkboxes、textarea或其他定制页面元素到一个称为$scope的属性上的指令。有关$scope和数据绑定将在下一节中详细介绍。现在我们只需要记住文本框的值被绑定到 {{ name }}上  </li>
+  <li><strong>{{ name }}</strong>:  {{ }} 是绑定模型到HTML页面元素的一种方式。在上面的示例中ng-model 名字被绑定到占位符{{ name }}。  </li>
 </ul>
 
 <p>你可能在猜想添加这个指令是否会使HTML验证器产生警告，提示存在未知的或非标准化的属性 —— 的确如此。然而，这可以通过在每个Angular.js指令前添加 ‘data-‘前缀并且作为属性、类或者注释而不是作为元素来使用加以解决。让我们看看下面的示例，同时来创建自己的指令：  </p>
 
-<p><figure class='code'><figcaption class='code-header'><span>Directive types: elements, attributes, comments and classes </span></figcaption>
- <table class="CodeRay"><tr>
-  <td class="line-numbers"><pre><a href="#n1" name="n1">1</a>
-<a href="#n2" name="n2">2</a>
-<a href="#n3" name="n3">3</a>
-<a href="#n4" name="n4">4</a>
-<a href="#n5" name="n5">5</a>
-<a href="#n6" name="n6">6</a>
-<a href="#n7" name="n7">7</a>
-</pre></td>
-  <td class="code"><pre>  <span class="tag">&lt;/p&gt;</span>
-<span class="tag">&lt;hello&gt;</span>Element<span class="tag">&lt;/hello&gt;</span>
-<span class="tag">&lt;p&gt;</span>Element
-  <span class="entity">&amp;lt;</span>div data-hello<span class="entity">&amp;gt;</span>Attribute<span class="entity">&amp;lt;</span>/div<span class="entity">&amp;gt;</span> data-Attribute
-  <span class="entity">&amp;lt;</span>div hello<span class="entity">&amp;gt;</span>Attribute<span class="entity">&amp;lt;</span>/div<span class="entity">&amp;gt;</span> Attribute
-  <span class="comment">&lt;!-- directive: hello --&gt;</span> Comment
-  <span class="entity">&amp;lt;</span>p class=&quot;hello&quot;<span class="entity">&amp;gt;</span><span class="entity">&amp;lt;</span>/p<span class="entity">&amp;gt;</span> Class
-</pre></td>
-</tr></table>
- </figure>  </p>
+<p>{% coderay lang:HTML linenos:true Directive types: elements, attributes, comments and classes %}  </p>
+<hello>Element</hello>
+<p>Element
+  &lt;div data-hello&gt;Attribute&lt;/div&gt; data-Attribute
+  &lt;div hello&gt;Attribute&lt;/div&gt; Attribute
+  <!-- directive: hello --> Comment
+  &lt;p class=&#8221;hello&#8221;&gt;&lt;/p&gt; Class
+{% endcoderay %}  </p>
 
-<p><figure class='code'><figcaption class='code-header'><span>Custom AngularJS directives </span></figcaption>
- <table class="CodeRay"><tr>
-  <td class="line-numbers"><pre><a href="#n1" name="n1">1</a>
-<a href="#n2" name="n2">2</a>
-<a href="#n3" name="n3">3</a>
-<a href="#n4" name="n4">4</a>
-<a href="#n5" name="n5">5</a>
-<a href="#n6" name="n6">6</a>
-<a href="#n7" name="n7">7</a>
-<a href="#n8" name="n8">8</a>
-<a href="#n9" name="n9">9</a>
-<strong><a href="#n10" name="n10">10</a></strong>
-</pre></td>
-  <td class="code"><pre><span class="tag">&lt;br</span> <span class="tag">/&gt;</span>
-<span class="keyword">var</span> app = angular.module(<span class="error">‘</span>app<span class="error">’</span>, []);&lt;<span class="regexp"><span class="delimiter">/</span><span class="content">p&gt;
+<p>{% coderay lang:JavaScript linenos:true Custom AngularJS directives %}<br />
+var app = angular.module(‘app’, []);</p>
 
-&lt;p&gt;app.directive(‘hello’, [function () {
+<p>app.directive(‘hello’, [function () {
   return {
-    restrict: ‘CEMA’, </span><span class="delimiter">/</span></span>/ C: <span class="reserved">class</span>, <span class="key">E</span>: element, <span class="key">M</span>: comments, <span class="key">A</span>: attributes
-    replace: <span class="predefined-constant">true</span>, <span class="comment">// replaces original content with template</span>
-    <span class="key">template</span>: <span class="error">‘</span><span class="tag">&lt;span&gt;</span><span class="tag">&lt;br</span> <span class="tag">/&gt;</span>Hello<span class="tag">&lt;/span&gt;</span><span class="error">’</span>
+    restrict: ‘CEMA’, // C: class, E: element, M: comments, A: attributes
+    replace: true, // replaces original content with template
+    template: ‘<span><br />Hello</span>’
   }
 }]);
-</pre></td>
-</tr></table>
- </figure>  </p>
+{% endcoderay %}  </p>
 
 <p>如果你对指令的其他选项感兴趣，可以阅读 <a href="http://www.sitepoint.com/practical-guide-angularjs-directives/">A Practical Guide to AngularJS Directives</a></p>
 
 <h3 id="angularjs-3">AngularJS数据绑定</h3>
 <p>数据绑定是AngularJS的特性之一，它使得模型数据可以与HTML自动同步。这非常了不起因为模型是“唯一的真相来源”同时你不需要关心如何去更新它。这里有一张来自docs.angularjs.org的图：<br />
-<img src="http://dl.iteye.com/upload/picture/pic/133665/3d238e26-a15f-3865-b217-1e8723407f67.png">  </p>
+{% img http://dl.iteye.com/upload/picture/pic/133665/3d238e26-a15f-3865-b217-1e8723407f67.png %}  </p>
 
 <p>无论什么时候HTML发生变化时，模型将会被更新；同时无论什么时候模型被更新时，它将会反映到HTML上。  </p>
 
@@ -1732,58 +1086,30 @@ AngularJS非常适用于构建可测试的单页应用（SPA），以及数据�
 <h3 id="angularjs-5">AngularJS控制器</h3>
 <p>AngularJS控制器是用于”控制”包含了特定DOM元素的区域的代码段。它们封装了行为、回调函数并且把$scope模型和视图粘合起来。让我们通过下面示例代码来加深对此概念的理解：  </p>
 
-<p><figure class='code'><figcaption class='code-header'><span>AngularJS Controller Example </span></figcaption>
- <table class="CodeRay"><tr>
-  <td class="line-numbers"><pre><a href="#n1" name="n1">1</a>
-<a href="#n2" name="n2">2</a>
-<a href="#n3" name="n3">3</a>
-<a href="#n4" name="n4">4</a>
-<a href="#n5" name="n5">5</a>
-<a href="#n6" name="n6">6</a>
-<a href="#n7" name="n7">7</a>
-<a href="#n8" name="n8">8</a>
-<a href="#n9" name="n9">9</a>
-<strong><a href="#n10" name="n10">10</a></strong>
-<a href="#n11" name="n11">11</a>
-<a href="#n12" name="n12">12</a>
-<a href="#n13" name="n13">13</a>
-<a href="#n14" name="n14">14</a>
-<a href="#n15" name="n15">15</a>
-<a href="#n16" name="n16">16</a>
-<a href="#n17" name="n17">17</a>
-<a href="#n18" name="n18">18</a>
-<a href="#n19" name="n19">19</a>
-<strong><a href="#n20" name="n20">20</a></strong>
-<a href="#n21" name="n21">21</a>
-<a href="#n22" name="n22">22</a>
-<a href="#n23" name="n23">23</a>
-</pre></td>
-  <td class="code"><pre><span class="tag">&lt;br</span> <span class="tag">/&gt;</span>
-<span class="entity">&amp;lt;</span>body ng-controller=&quot;TodoController&quot;<span class="entity">&amp;gt;</span><span class="tag">&lt;/p&gt;</span>
-<span class="tag">&lt;ul&gt;</span>
-    <span class="tag">&lt;li</span> <span class="attribute-name">ng-repeat</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">todo in todos</span><span class="delimiter">&quot;</span></span><span class="tag">&gt;</span>
-      <span class="tag">&lt;input</span> <span class="attribute-name">type</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">checkbox</span><span class="delimiter">&quot;</span></span> <span class="attribute-name">ng-model</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">todo.completed</span><span class="delimiter">&quot;</span></span> <span class="tag">/&gt;</span>
+<p>{% coderay lang:HTML linenos:true AngularJS Controller Example %}<br />
+&lt;body ng-controller=&#8221;TodoController&#8221;&gt;</p>
+<ul>
+    <li ng-repeat="todo in todos">
+      <input type="checkbox" ng-model="todo.completed" />
       { { todo.name } }
-    <span class="tag">&lt;/li&gt;</span>
-  <span class="tag">&lt;/ul&gt;</span>
+    </li>
+  </ul>
 
-<span class="tag">&lt;script&gt;</span>
-<span class="inline">    <span class="keyword">function</span> <span class="function">TodoController</span>(<span class="predefined">$scope</span>){
-      <span class="predefined">$scope</span>.todos = [
-        { <span class="key">name</span>: <span class="string"><span class="delimiter">'</span><span class="content">Master HTML/CSS/Javascript</span><span class="delimiter">'</span></span>, <span class="key">completed</span>: <span class="predefined-constant">true</span> },
-        { <span class="key">name</span>: <span class="string"><span class="delimiter">'</span><span class="content">Learn AngularJS</span><span class="delimiter">'</span></span>, <span class="key">completed</span>: <span class="predefined-constant">false</span> },
-        { <span class="key">name</span>: <span class="string"><span class="delimiter">'</span><span class="content">Build NodeJS backend</span><span class="delimiter">'</span></span>, <span class="key">completed</span>: <span class="predefined-constant">false</span> },
-        { <span class="key">name</span>: <span class="string"><span class="delimiter">'</span><span class="content">Get started with ExpressJS</span><span class="delimiter">'</span></span>, <span class="key">completed</span>: <span class="predefined-constant">false</span> },
-        { <span class="key">name</span>: <span class="string"><span class="delimiter">'</span><span class="content">Setup MongoDB database</span><span class="delimiter">'</span></span>, <span class="key">completed</span>: <span class="predefined-constant">false</span> },
-        { <span class="key">name</span>: <span class="string"><span class="delimiter">'</span><span class="content">Be awesome!</span><span class="delimiter">'</span></span>, <span class="key">completed</span>: <span class="predefined-constant">false</span> },
+<script>
+    function TodoController($scope){
+      $scope.todos = [
+        { name: 'Master HTML/CSS/Javascript', completed: true },
+        { name: 'Learn AngularJS', completed: false },
+        { name: 'Build NodeJS backend', completed: false },
+        { name: 'Get started with ExpressJS', completed: false },
+        { name: 'Setup MongoDB database', completed: false },
+        { name: 'Be awesome!', completed: false },
       ]
-    }</span>
-  <span class="tag">&lt;/script&gt;</span>
+    }
+  </script>
 
-<span class="tag">&lt;p&gt;</span><span class="entity">&amp;lt;</span>/body<span class="entity">&amp;gt;</span>
-</pre></td>
-</tr></table>
- </figure> </p>
+<p>&lt;/body&gt;
+{% endcoderay %} </p>
 
 <p>你可能会注意到这些新朋友：ng-controller, ng-repeat和$scope  </p>
 
@@ -1797,34 +1123,18 @@ AngularJS非常适用于构建可测试的单页应用（SPA），以及数据�
 <h3 id="angularjs-6">AngularJS模块</h3>
 <p>模块是用来封装应用中不同部分（指令、控制器、工厂……）的一种方式，可以方便地在其他地方重用。这里有一个通过模块来重写我们之前的控制器的实例：  </p>
 
-<p><figure class='code'><figcaption class='code-header'><span>Custom AngularJS directives </span></figcaption>
- <table class="CodeRay"><tr>
-  <td class="line-numbers"><pre><a href="#n1" name="n1">1</a>
-<a href="#n2" name="n2">2</a>
-<a href="#n3" name="n3">3</a>
-<a href="#n4" name="n4">4</a>
-<a href="#n5" name="n5">5</a>
-<a href="#n6" name="n6">6</a>
-<a href="#n7" name="n7">7</a>
-<a href="#n8" name="n8">8</a>
-<a href="#n9" name="n9">9</a>
-<strong><a href="#n10" name="n10">10</a></strong>
-<a href="#n11" name="n11">11</a>
-</pre></td>
-  <td class="code"><pre><span class="tag">&lt;br</span> <span class="tag">/&gt;</span>
-angular.module(<span class="error">‘</span>app<span class="error">’</span>, [])
-  .controller(<span class="error">‘</span>TodoController<span class="error">’</span>, [<span class="error">‘</span><span class="predefined">$scope</span><span class="error">’</span>, <span class="keyword">function</span> (<span class="predefined">$scope</span>) {
-    <span class="predefined">$scope</span>.todos = [
-      { <span class="key">title</span>: <span class="error">‘</span>Learn Javascript<span class="error">’</span>, <span class="key">completed</span>: <span class="predefined-constant">true</span> },
-      { <span class="key">title</span>: <span class="error">‘</span>Learn Angular.js<span class="error">’</span>, <span class="key">completed</span>: <span class="predefined-constant">false</span> },
-      { <span class="key">title</span>: <span class="error">‘</span>Love <span class="local-variable">this</span> tutorial<span class="error">’</span>, <span class="key">completed</span>: <span class="predefined-constant">true</span> },
-      { <span class="key">title</span>: <span class="error">‘</span>Learn Javascript design patterns<span class="error">’</span>, <span class="key">completed</span>: <span class="predefined-constant">false</span> },
-      { <span class="key">title</span>: <span class="error">‘</span>Build Node.js backend<span class="error">’</span>, <span class="key">completed</span>: <span class="predefined-constant">false</span> },
+<p>{% coderay lang:JavaScript linenos:true Custom AngularJS directives %}<br />
+angular.module(‘app’, [])
+  .controller(‘TodoController’, [‘$scope’, function ($scope) {
+    $scope.todos = [
+      { title: ‘Learn Javascript’, completed: true },
+      { title: ‘Learn Angular.js’, completed: false },
+      { title: ‘Love this tutorial’, completed: true },
+      { title: ‘Learn Javascript design patterns’, completed: false },
+      { title: ‘Build Node.js backend’, completed: false },
     ];
   }]);
-</pre></td>
-</tr></table>
- </figure>  </p>
+{% endcoderay %}  </p>
 
 <p>使用模块可以带来许多好处，比如可以以任意顺序加载模块，并行加载依赖，测试可以只加载需要的模块以加快速度，使得依赖关系更加清晰。  </p>
 
@@ -1833,26 +1143,14 @@ angular.module(<span class="error">‘</span>app<span class="error">’</span>, 
 
 <p>这里有一个示例：  </p>
 
-<p><figure class='code'> <table class="CodeRay"><tr>
-  <td class="line-numbers"><pre><a href="#n1" name="n1">1</a>
-<a href="#n2" name="n2">2</a>
-<a href="#n3" name="n3">3</a>
-<a href="#n4" name="n4">4</a>
-<a href="#n5" name="n5">5</a>
-<a href="#n6" name="n6">6</a>
-<a href="#n7" name="n7">7</a>
-<a href="#n8" name="n8">8</a>
-</pre></td>
-  <td class="code"><pre><span class="tag">&lt;br</span> <span class="tag">/&gt;</span>
-  <span class="tag">&lt;script</span> <span class="attribute-name">type</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">text/ng-template</span><span class="delimiter">&quot;</span></span> <span class="attribute-name">id</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">/todos.html</span><span class="delimiter">&quot;</span></span><span class="tag">&gt;</span>
-<span class="inline">    &amp;lt;ul&amp;gt;
-      &amp;lt;li ng-repeat=<span class="string"><span class="delimiter">&quot;</span><span class="content">todo in todos</span><span class="delimiter">&quot;</span></span>&amp;gt;
-        <span class="tag">&lt;input</span> <span class="attribute-name">type</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">checkbox</span><span class="delimiter">&quot;</span></span> <span class="attribute-name">ng-model</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">todo.completed</span><span class="delimiter">&quot;</span></span> <span class="tag">/&gt;</span></span><span class="tag">&lt;/script&gt;</span><span class="tag">&lt;/p&gt;</span>
+<p>{% coderay lang:HTML linenos:true %}<br />
+  <script type="text/ng-template" id="/todos.html">
+    &lt;ul&gt;
+      &lt;li ng-repeat="todo in todos"&gt;
+        <input type="checkbox" ng-model="todo.completed" /></script></p>
 
-<span class="tag">&lt;pre&gt;</span><span class="tag">&lt;code&gt;</span>  <span class="entity">&amp;lt;</span>/li<span class="entity">&amp;gt;</span>
-<span class="entity">&amp;lt;</span>/ul<span class="entity">&amp;gt;</span>   <span class="entity">&amp;lt;</span>/script<span class="entity">&amp;gt;</span> </pre></td>
-</tr></table>
- </figure> 
+<pre><code>  &lt;/li&gt;
+&lt;/ul&gt;   &lt;/script&gt; {% endcoderay %} 
 </code></pre>
 
 <p>代码看起来眼熟吗？；）</p>
@@ -1868,35 +1166,18 @@ angular.module(<span class="error">‘</span>app<span class="error">’</span>, 
 
 <p><strong>新功能</strong>：向todo任务中添加记录。让我们从路由开始。  </p>
 
-<p><figure class='code'><figcaption class='code-header'><span>Custom AngularJS directives </span></figcaption>
- <table class="CodeRay"><tr>
-  <td class="line-numbers"><pre><a href="#n1" name="n1">1</a>
-<a href="#n2" name="n2">2</a>
-<a href="#n3" name="n3">3</a>
-<a href="#n4" name="n4">4</a>
-<a href="#n5" name="n5">5</a>
-<a href="#n6" name="n6">6</a>
-<a href="#n7" name="n7">7</a>
-<a href="#n8" name="n8">8</a>
-<a href="#n9" name="n9">9</a>
-<strong><a href="#n10" name="n10">10</a></strong>
-<a href="#n11" name="n11">11</a>
-<a href="#n12" name="n12">12</a>
-</pre></td>
-  <td class="code"><pre>  &lt;<span class="regexp"><span class="delimiter">/</span><span class="content">p&gt;
+<p>{% coderay lang:JavaScript linenos:true Custom AngularJS directives %}  </p>
 
-&lt;p&gt;angular.module(‘app’, [‘ngRoute’])
+<p>angular.module(‘app’, [‘ngRoute’])
   .config([‘$routeProvider’, function ($routeProvider) {
     $routeProvider
-      .when(‘</span><span class="delimiter">/</span></span><span class="error">’</span>, {
-        <span class="key">templateUrl</span>: <span class="error">‘</span><span class="regexp"><span class="delimiter">/</span><span class="content">todos.html’,
+      .when(‘/’, {
+        templateUrl: ‘/todos.html’,
         controller: ‘TodoController’
       });
-  }]);&lt;</span><span class="delimiter">/</span></span>p&gt;
+  }]);</p>
 
-&lt;p&gt;</pre></td>
-</tr></table>
- </figure>  </p>
+<p>{% endcoderay %}  </p>
 
 <ul>
   <li>首先请注意我们将ng-controller=”TodoController”从body标签移除了。现在控制器将通过路由被调用。</li>
@@ -1906,33 +1187,10 @@ angular.module(<span class="error">‘</span>app<span class="error">’</span>, 
 <h3 id="angularjs-8">AngularJS服务（工厂）</h3>
 <p>请注意目前暂时无法创建第二个控制器并共享$scope.todos。当我们使用服务时，就方便了许多。服务是我们将数据依赖注入到控制器中的一种方式，他们通过工厂生成。我们看实例：</p>
 
-<p><figure class='code'><figcaption class='code-header'><span>Custom AngularJS directives </span></figcaption>
- <table class="CodeRay"><tr>
-  <td class="line-numbers"><pre><a href="#n1" name="n1">1</a>
-<a href="#n2" name="n2">2</a>
-<a href="#n3" name="n3">3</a>
-<a href="#n4" name="n4">4</a>
-<a href="#n5" name="n5">5</a>
-<a href="#n6" name="n6">6</a>
-<a href="#n7" name="n7">7</a>
-<a href="#n8" name="n8">8</a>
-<a href="#n9" name="n9">9</a>
-<strong><a href="#n10" name="n10">10</a></strong>
-<a href="#n11" name="n11">11</a>
-<a href="#n12" name="n12">12</a>
-<a href="#n13" name="n13">13</a>
-<a href="#n14" name="n14">14</a>
-<a href="#n15" name="n15">15</a>
-<a href="#n16" name="n16">16</a>
-<a href="#n17" name="n17">17</a>
-<a href="#n18" name="n18">18</a>
-<a href="#n19" name="n19">19</a>
-<strong><a href="#n20" name="n20">20</a></strong>
-</pre></td>
-  <td class="code"><pre><span class="tag">&lt;br</span> <span class="tag">/&gt;</span>
- angular.module(<span class="error">‘</span>app<span class="error">’</span>, [<span class="error">‘</span>ngRoute<span class="error">’</span>])&lt;<span class="regexp"><span class="delimiter">/</span><span class="content">p&gt;
+<p>{% coderay lang:JavaScript linenos:true Custom AngularJS directives %}<br />
+ angular.module(‘app’, [‘ngRoute’])</p>
 
-&lt;pre&gt;&lt;code&gt;.factory('Todos', function(){
+<pre><code>.factory('Todos', function(){
   return [
     { name: 'AngularJS Directives', completed: true },
     { name: 'Data binding', completed: true },
@@ -1940,17 +1198,15 @@ angular.module(<span class="error">‘</span>app<span class="error">’</span>, 
     { name: 'Controllers and Modules', completed: true },
     { name: 'Templates and routes', completed: true },
     { name: 'Filters and Services', completed: false },
-    { name: 'Get started with Node</span><span class="delimiter">/</span></span>ExpressJS<span class="string"><span class="delimiter">'</span><span class="content">, completed: false },
-    { name: </span><span class="delimiter">'</span></span>Setup MongoDB database<span class="string"><span class="delimiter">'</span><span class="content">, completed: false },
-    { name: </span><span class="delimiter">'</span></span>Be awesome!<span class="string"><span class="delimiter">'</span><span class="content">, completed: false },
+    { name: 'Get started with Node/ExpressJS', completed: false },
+    { name: 'Setup MongoDB database', completed: false },
+    { name: 'Be awesome!', completed: false },
   ];
 })
 
-.controller(</span><span class="delimiter">'</span></span>TodoController<span class="string"><span class="delimiter">'</span><span class="content">, [</span><span class="delimiter">'</span></span><span class="predefined">$scope</span><span class="string"><span class="delimiter">'</span><span class="content">, </span><span class="delimiter">'</span></span>Todos<span class="string"><span class="delimiter">'</span><span class="content">, function ($scope, Todos) {
+.controller('TodoController', ['$scope', 'Todos', function ($scope, Todos) {
   $scope.todos = Todos;
-}]) </span></span></pre></td>
-</tr></table>
- </figure>  
+}]) {% endcoderay %}  
 </code></pre>
 
 <p>我们现在把数据依赖“Todo”注入到控制器中。通过这种方式我们可以在需要的任何控制器或模块中重用这些数据。不仅可用于静态数据（如上例中的数组），也可以用于通过$http或$resource从服务器获得的数据。  </p>
@@ -1987,31 +1243,17 @@ angular.module(<span class="error">‘</span>app<span class="error">’</span>, 
 
 <p><strong>新功能</strong>：通过名字搜索代办任务。让我们使用过滤器来解决这个问题。</p>
 
-<p><figure class='code'> <table class="CodeRay"><tr>
-  <td class="line-numbers"><pre><a href="#n1" name="n1">1</a>
-<a href="#n2" name="n2">2</a>
-<a href="#n3" name="n3">3</a>
-<a href="#n4" name="n4">4</a>
-<a href="#n5" name="n5">5</a>
-<a href="#n6" name="n6">6</a>
-<a href="#n7" name="n7">7</a>
-<a href="#n8" name="n8">8</a>
-<a href="#n9" name="n9">9</a>
-<strong><a href="#n10" name="n10">10</a></strong>
-</pre></td>
-  <td class="code"><pre><span class="tag">&lt;br</span> <span class="tag">/&gt;</span>
-  <span class="tag">&lt;script</span> <span class="attribute-name">type</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">text/ng-template</span><span class="delimiter">&quot;</span></span> <span class="attribute-name">id</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">/todos.html</span><span class="delimiter">&quot;</span></span><span class="tag">&gt;</span>
-<span class="inline">    Search: <span class="tag">&lt;input</span> <span class="attribute-name">type</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">text</span><span class="delimiter">&quot;</span></span> <span class="attribute-name">ng-model</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">search.name</span><span class="delimiter">&quot;</span></span> <span class="tag">/&gt;</span>
-    &amp;lt;ul&amp;gt;
-      &amp;lt;li ng-repeat=<span class="string"><span class="delimiter">&quot;</span><span class="content">todo in todos | filter: search</span><span class="delimiter">&quot;</span></span>&amp;gt;
-        <span class="tag">&lt;input</span> <span class="attribute-name">type</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">checkbox</span><span class="delimiter">&quot;</span></span> <span class="attribute-name">ng-model</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">todo.completed</span><span class="delimiter">&quot;</span></span> <span class="tag">/&gt;</span>
-        <span class="tag">&lt;a</span> <span class="attribute-name">href</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">#/</span><span class="delimiter">&quot;</span></span><span class="tag">&gt;</span><span class="tag">&lt;/a&gt;</span>
-      &amp;lt;<span class="regexp"><span class="delimiter">/</span><span class="content">li&amp;gt;
-    &amp;lt;</span><span class="delimiter">/</span></span>ul&amp;gt;</span>
-  <span class="tag">&lt;/script&gt;</span>
-</pre></td>
-</tr></table>
- </figure>  </p>
+<p>{% coderay lang:HTML linenos:true %}<br />
+  <script type="text/ng-template" id="/todos.html">
+    Search: <input type="text" ng-model="search.name" />
+    &lt;ul&gt;
+      &lt;li ng-repeat="todo in todos | filter: search"&gt;
+        <input type="checkbox" ng-model="todo.completed" />
+        <a href="#/"></a>
+      &lt;/li&gt;
+    &lt;/ul&gt;
+  </script>
+{% endcoderay %}  </p>
 
 <p>请注意我们在ng-model中使用search.name用于搜索。这将会把搜索限制在’name’属性，search.notes将会只在notes里搜索。猜猜不指定属性只使用‘search’将会做些什么？没错！它会在所有的属性中搜索。  </p>
 
@@ -2020,8 +1262,8 @@ angular.module(<span class="error">‘</span>app<span class="error">’</span>, 
 
 <p>第二部分 - <a href="http://gocwind.com/blog/2015/06/09/creating-a-restful-api-tutorial-with-nodejs-and-mongodb/">MEAN全栈开发：使用NodeJS和MongoDB创建REST服务</a>  </p>
 
-<p><img class="left" src="http://dl.iteye.com/upload/picture/pic/133663/abf21050-a55a-347e-9e0f-501586af10c7.png"><br />
-<img src="http://dl.iteye.com/upload/picture/pic/133661/636d3c41-5c03-33a4-af9f-a539fc997fcd.png">  </p>
+<p>{% img left http://dl.iteye.com/upload/picture/pic/133663/abf21050-a55a-347e-9e0f-501586af10c7.png %}<br />
+{% img http://dl.iteye.com/upload/picture/pic/133661/636d3c41-5c03-33a4-af9f-a539fc997fcd.png %}  </p>
 
 <p>第三部分 - <a href="http://gocwind.com/blog/2015/06/09/mean-stack-tutorial-mongodb-expressjs-angularjs-nodejs/">MEAN全栈开发： 前后端整合</a>  </p>
 
