@@ -7,11 +7,11 @@ footer: true
 
 {% img left /images/head.jpg #2 %}  
 
-辰风君 (Cwind)，85后，生于烟台，求学于南京，现居杭州
+辰风君 (Cwind)  
+软件工程师，项目管理者，专注电商领域建模和分布式架构  
 
-学习中的全栈开发者，理想化的实用主义者，热爱美景与美食，对各种事物的来龙去脉和运行原理有浓厚兴趣  
-
-目前从事JavaEE开发，关注电商领域相关技术
+Alibaba Group  
+Nanjing University  
 
 Email: billchen01 # 163.com  
-Github: [cwind001](https://github.com/cwind001) 
+Github: [cwind001](https://github.com/cwind001)   
