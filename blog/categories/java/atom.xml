@@ -4,7 +4,7 @@
   <title><![CDATA[Category: Java | 辰风君的笔记本]]></title>
   <link href="http://cwind001.github.io/blog/categories/java/atom.xml" rel="self"/>
   <link href="http://cwind001.github.io/"/>
-  <updated>2017-03-20T01:18:48+08:00</updated>
+  <updated>2017-08-31T00:32:12+08:00</updated>
   <id>http://cwind001.github.io/</id>
   <author>
     <name><![CDATA[辰风君]]></name>
@@ -48,40 +48,46 @@ Java Stream提供串行和并行两种模式进行汇聚操作，能够充分利
 <p><a href="https://github.com/cwind001/CwindJavaLab/blob/8cc89129a5ef3d288b59e02e4924ba2d7a597838/AdvancedJava/src/main/java/com/cwind/java8/stream/StreamAPIDemo.java">StreamAPIDemo</a><br />
 定义商品对象并初始化购物清单如下：  </p>
 
-<p>{% coderay lang:java %}
-public class StreamAPIDemo {</p>
+<p><figure class='code'> <div class="CodeRay">
+  <div class="code"><pre>
+<span class="directive">public</span> <span class="type">class</span> <span class="class">StreamAPIDemo</span> {&lt;/p&gt;
 
-<pre><code>private List&lt;Item&gt; shoppingList;
+&lt;pre&gt;&lt;code&gt;<span class="directive">private</span> <span class="predefined-type">List</span>&amp;lt;Item&amp;gt; shoppingList;
 
-@Before
-public void setUp() throws Exception {
+<span class="annotation">@Before</span>
+<span class="directive">public</span> <span class="type">void</span> setUp() <span class="directive">throws</span> <span class="exception">Exception</span> {
     shoppingList = Lists.newArrayList();
-    shoppingList.add(new Item("iPhone 7", 7250L));
-    shoppingList.add(new Item("Rolex Watch", 28888L));
-    shoppingList.add(new Item("Electric Toothbrush", 388L));
-    shoppingList.add(new Item("Kindle Paperwhite", 1098L));
-    shoppingList.add(new Item("Coca Cola", 3L));
+    shoppingList.add(<span class="keyword">new</span> Item(<span class="string"><span class="delimiter">&quot;</span><span class="content">iPhone 7</span><span class="delimiter">&quot;</span></span>, <span class="integer">7250L</span>));
+    shoppingList.add(<span class="keyword">new</span> Item(<span class="string"><span class="delimiter">&quot;</span><span class="content">Rolex Watch</span><span class="delimiter">&quot;</span></span>, <span class="integer">28888L</span>));
+    shoppingList.add(<span class="keyword">new</span> Item(<span class="string"><span class="delimiter">&quot;</span><span class="content">Electric Toothbrush</span><span class="delimiter">&quot;</span></span>, <span class="integer">388L</span>));
+    shoppingList.add(<span class="keyword">new</span> Item(<span class="string"><span class="delimiter">&quot;</span><span class="content">Kindle Paperwhite</span><span class="delimiter">&quot;</span></span>, <span class="integer">1098L</span>));
+    shoppingList.add(<span class="keyword">new</span> Item(<span class="string"><span class="delimiter">&quot;</span><span class="content">Coca Cola</span><span class="delimiter">&quot;</span></span>, <span class="integer">3L</span>));
 }
-class Item {
-    String itemName;
-    long price;
+<span class="type">class</span> <span class="class">Item</span> {
+    <span class="predefined-type">String</span> itemName;
+    <span class="type">long</span> price;
 
-    public Item(String itemName, long price) {
-        this.itemName = itemName;
-        this.price = price;
+    <span class="directive">public</span> Item(<span class="predefined-type">String</span> itemName, <span class="type">long</span> price) {
+        <span class="local-variable">this</span>.itemName = itemName;
+        <span class="local-variable">this</span>.price = price;
     }
-} } {% endcoderay %}  
+} } </pre></div>
+</div>
+ </figure>  
 </code></pre>
 
 <h3 id="section-5">集合遍历</h3>
 
-<p>{% coderay lang:java %}
-    // 打印购物清单
-    @Test
-    public void printShoppingList(){
-        shoppingList.stream().forEach(System.out::println);
+<p><figure class='code'> <div class="CodeRay">
+  <div class="code"><pre>
+    <span class="comment">// 打印购物清单</span>
+    <span class="annotation">@Test</span>
+    <span class="directive">public</span> <span class="type">void</span> printShoppingList(){
+        shoppingList.stream().forEach(<span class="predefined-type">System</span>.out::println);
     }
-{% endcoderay %}<br />
+</pre></div>
+</div>
+ </figure><br />
 输出：  </p>
 
 <p><code>
@@ -94,16 +100,19 @@ Item{itemName='Coca Cola', price=3}
 
 <h3 id="section-6">数学统计</h3>
 
-<p>{% coderay lang:java %}
-    // 统计购物清单总数与总价
-    @Test
-    public void printTotalPrice() {
-        long itemNum = shoppingList.stream().count();
-        System.out.println(“Sum of items in the shopping list: “ + itemNum);</p>
+<p><figure class='code'> <div class="CodeRay">
+  <div class="code"><pre>
+    <span class="comment">// 统计购物清单总数与总价</span>
+    <span class="annotation">@Test</span>
+    <span class="directive">public</span> <span class="type">void</span> printTotalPrice() {
+        <span class="type">long</span> itemNum = shoppingList.stream().count();
+        <span class="predefined-type">System</span>.out.println(<span class="error">“</span>Sum of items in the shopping list: <span class="error">“</span> + itemNum);&lt;/p&gt;
 
-<pre><code>    long totalPrice = shoppingList.stream().collect(Collectors.summingLong(Item::getPrice));
-    System.out.println("Total price: " + totalPrice);
-} {% endcoderay %}   输出：  
+&lt;pre&gt;&lt;code&gt;    <span class="type">long</span> totalPrice = shoppingList.stream().collect(Collectors.summingLong(Item::getPrice));
+    <span class="predefined-type">System</span>.out.println(<span class="string"><span class="delimiter">&quot;</span><span class="content">Total price: </span><span class="delimiter">&quot;</span></span> + totalPrice);
+} </pre></div>
+</div>
+ </figure>   输出：  
 </code></pre>
 
 <p><code>
@@ -113,39 +122,48 @@ Total price: 37627
 
 <h3 id="section-7">过滤与排序</h3>
 
-<p>{% coderay lang:java %}
-    // 过滤价格小于1000的商品
-    @Test
-    public void filterItems(){
-        shoppingList.stream().filter(p -&gt; p.getPrice() &gt;= 1000L).forEach(System.out::println);
-    }</p>
+<p><figure class='code'> <div class="CodeRay">
+  <div class="code"><pre>
+    <span class="comment">// 过滤价格小于1000的商品</span>
+    <span class="annotation">@Test</span>
+    <span class="directive">public</span> <span class="type">void</span> filterItems(){
+        shoppingList.stream().filter(p -&amp;gt; p.getPrice() &amp;gt;= <span class="integer">1000L</span>).forEach(<span class="predefined-type">System</span>.out::println);
+    }&lt;/p&gt;
 
-<pre><code>// 按价格排序
-@Test
-public void sortItemsByPrice(){
-    shoppingList.stream().sorted(Comparator.comparingLong(Item::getPrice)).forEach(System.out::println);
-} {% endcoderay %}  
+&lt;pre&gt;&lt;code&gt;<span class="comment">// 按价格排序</span>
+<span class="annotation">@Test</span>
+<span class="directive">public</span> <span class="type">void</span> sortItemsByPrice(){
+    shoppingList.stream().sorted(<span class="predefined-type">Comparator</span>.comparingLong(Item::getPrice)).forEach(<span class="predefined-type">System</span>.out::println);
+} </pre></div>
+</div>
+ </figure>  
 </code></pre>
 
 <h3 id="mapreduce">MapReduce(映射与规约)</h3>
 
-<p>{% coderay lang:java %}
-    // 所有商品价格减100 - Map
-    @Test
-    public void streamMap(){
-        shoppingList.stream().map(p -&gt; new Item(p.getItemName(), p.getPrice()-100)).forEach(System.out::println);
+<p><figure class='code'> <div class="CodeRay">
+  <div class="code"><pre>
+    <span class="comment">// 所有商品价格减100 - Map</span>
+    <span class="annotation">@Test</span>
+    <span class="directive">public</span> <span class="type">void</span> streamMap(){
+        shoppingList.stream().map(p -&amp;gt; <span class="keyword">new</span> Item(p.getItemName(), p.getPrice()-<span class="integer">100</span>)).forEach(<span class="predefined-type">System</span>.out::println);
     }
-{% endcoderay %}  </p>
+</pre></div>
+</div>
+ </figure>  </p>
 
-<p>{% coderay lang:java %}
-    // 取出如上优惠之后金额超过1000元的商品中，价格最低的商品（最便宜的奢侈品）
-    @Test
-    public void streamReduce(){
-        Item cheapestLuxury = shoppingList.stream().map(p -&gt; new Item(p.getItemName(), p.getPrice()-100))
-            .filter(p -&gt; p.getPrice() &gt; 1000).reduce((a, b) -&gt; a.getPrice()&lt;b.getPrice()?a:b).get();
-        System.out.println(cheapestLuxury);
+<p><figure class='code'> <div class="CodeRay">
+  <div class="code"><pre>
+    <span class="comment">// 取出如上优惠之后金额超过1000元的商品中，价格最低的商品（最便宜的奢侈品）</span>
+    <span class="annotation">@Test</span>
+    <span class="directive">public</span> <span class="type">void</span> streamReduce(){
+        Item cheapestLuxury = shoppingList.stream().map(p -&amp;gt; <span class="keyword">new</span> Item(p.getItemName(), p.getPrice()-<span class="integer">100</span>))
+            .filter(p -&amp;gt; p.getPrice() &amp;gt; <span class="integer">1000</span>).reduce((a, b) -&amp;gt; a.getPrice()&amp;lt;b.getPrice()?a:b).get();
+        <span class="predefined-type">System</span>.out.println(cheapestLuxury);
     }
-{% endcoderay %}  </p>
+</pre></div>
+</div>
+ </figure>  </p>
 
 <h2 id="section-8">参考</h2>
 <ul>
@@ -217,22 +235,25 @@ Spring相比EJB2.x确实是轻量级，最主要的卖点是POJO的使用。  </
 
 <p>不同版本Excel的行列数限制：  </p>
 
-<p>{% coderay lang:java linenos:false %} <br />
-+—————–+———–+————–+———————+
+<p><figure class='code'> <div class="CodeRay">
+  <div class="code"><pre> &lt;br /&gt;
++<span class="error">—</span><span class="error">—</span><span class="error">—</span><span class="error">—</span><span class="error">—</span><span class="error">–</span>+<span class="error">—</span><span class="error">—</span><span class="error">—</span><span class="error">–</span>+<span class="error">—</span><span class="error">—</span><span class="error">—</span><span class="error">—</span><span class="error">–</span>+<span class="error">—</span><span class="error">—</span><span class="error">—</span><span class="error">—</span><span class="error">—</span><span class="error">—</span><span class="error">—</span>+
 |                 | Max. Rows | Max. Columns | Max. Cols by letter |
-+—————–+———–+————–+———————+
-| Excel 365*      | 1,048,576 | 16,384       | XFD                 |
-| Excel 2013      | 1,048,576 | 16,384       | XFD                 |
-| Excel 2010      | 1,048,576 | 16,384       | XFD                 |
-| Excel 2007      | 1,048,576 | 16,384       | XFD                 |
-| Excel 2003      | 65,536    | 256          | IV                  |
-| Excel 2002 (XP) | 65,536    | 256          | IV                  |
-| Excel 2000      | 65,536    | 256          | IV                  |
-| Excel 97        | 65,536    | 256          | IV                  |
-| Excel 95        | 16,384    | 256          | IV                  |
-| Excel 5         | 16,384    | 256          | IV                  |
-+—————–+———–+————–+———————+<br />
-{% endcoderay %} </p>
++<span class="error">—</span><span class="error">—</span><span class="error">—</span><span class="error">—</span><span class="error">—</span><span class="error">–</span>+<span class="error">—</span><span class="error">—</span><span class="error">—</span><span class="error">–</span>+<span class="error">—</span><span class="error">—</span><span class="error">—</span><span class="error">—</span><span class="error">–</span>+<span class="error">—</span><span class="error">—</span><span class="error">—</span><span class="error">—</span><span class="error">—</span><span class="error">—</span><span class="error">—</span>+
+| Excel <span class="integer">365</span>*      | <span class="integer">1</span>,<span class="integer">048</span>,<span class="integer">576</span> | <span class="integer">16</span>,<span class="integer">384</span>       | XFD                 |
+| Excel <span class="integer">2013</span>      | <span class="integer">1</span>,<span class="integer">048</span>,<span class="integer">576</span> | <span class="integer">16</span>,<span class="integer">384</span>       | XFD                 |
+| Excel <span class="integer">2010</span>      | <span class="integer">1</span>,<span class="integer">048</span>,<span class="integer">576</span> | <span class="integer">16</span>,<span class="integer">384</span>       | XFD                 |
+| Excel <span class="integer">2007</span>      | <span class="integer">1</span>,<span class="integer">048</span>,<span class="integer">576</span> | <span class="integer">16</span>,<span class="integer">384</span>       | XFD                 |
+| Excel <span class="integer">2003</span>      | <span class="integer">65</span>,<span class="integer">536</span>    | <span class="integer">256</span>          | IV                  |
+| Excel <span class="integer">2002</span> (XP) | <span class="integer">65</span>,<span class="integer">536</span>    | <span class="integer">256</span>          | IV                  |
+| Excel <span class="integer">2000</span>      | <span class="integer">65</span>,<span class="integer">536</span>    | <span class="integer">256</span>          | IV                  |
+| Excel <span class="integer">97</span>        | <span class="integer">65</span>,<span class="integer">536</span>    | <span class="integer">256</span>          | IV                  |
+| Excel <span class="integer">95</span>        | <span class="integer">16</span>,<span class="integer">384</span>    | <span class="integer">256</span>          | IV                  |
+| Excel <span class="integer">5</span>         | <span class="integer">16</span>,<span class="integer">384</span>    | <span class="integer">256</span>          | IV                  |
++<span class="error">—</span><span class="error">—</span><span class="error">—</span><span class="error">—</span><span class="error">—</span><span class="error">–</span>+<span class="error">—</span><span class="error">—</span><span class="error">—</span><span class="error">–</span>+<span class="error">—</span><span class="error">—</span><span class="error">—</span><span class="error">—</span><span class="error">–</span>+<span class="error">—</span><span class="error">—</span><span class="error">—</span><span class="error">—</span><span class="error">—</span><span class="error">—</span><span class="error">—</span>+&lt;br /&gt;
+</pre></div>
+</div>
+ </figure> </p>
 
 <p><em>*Excel 365 unverified.</em></p>
 
@@ -241,35 +262,58 @@ Spring相比EJB2.x确实是轻量级，最主要的卖点是POJO的使用。  </
 <a href="http://www.andykhan.com/jexcelapi/index.html">官方网站</a><br />
 最近更新：Oct 24，2009</p>
 
-<p>{% coderay lang:java linenos:false %}   </p>
-<dependency>
- <groupid>net.sourceforge.jexcelapi</groupid>
- <artifactid>jxl</artifactid>
- <version>2.6.12</version>
-</dependency>
-<p>{% endcoderay %}   </p>
+<p><figure class='code'> <div class="CodeRay">
+  <div class="code"><pre>   &lt;/p&gt;
+&lt;dependency&gt;
+ &lt;groupid&gt;net.sourceforge.jexcelapi&lt;/groupid&gt;
+ &lt;artifactid&gt;jxl&lt;/artifactid&gt;
+ &lt;version&gt;<span class="float">2.6</span><span class="float">.12</span>&lt;/version&gt;
+&lt;/dependency&gt;
+&lt;p&gt;</pre></div>
+</div>
+ </figure>   </p>
 
 <p>JXL是一个日本人写的简单类库。<a href="http://www.jexcelapi.org/">作者主页</a>。<a href="http://blog.csdn.net/jarvis_java/article/details/4924099">POI和jxl.jar性能比较</a>一贴中提到其性能较poi更高，内存消耗更少。当且仅当目标文档是行数接近但不超过65536的xls格式时成立。  </p>
 
 <p>类图：<br />
-{% img http://dl.iteye.com/upload/picture/pic/132574/73b48deb-3ba5-396c-b01c-5546b1aecba0.jpg %}  </p>
+<img src="http://dl.iteye.com/upload/picture/pic/132574/73b48deb-3ba5-396c-b01c-5546b1aecba0.jpg">  </p>
 
-<p>{% coderay lang:java linenos:true JXL Demo https://github.com/cwind001/CwindJavaLab/blob/master/POITest/src/main/java/com/cwind/jxl/JXLDataSheetWriter.java %} <br />
- public static void main(String[] args) {
-  try {
-   // create writable wookbook
+<p><figure class='code'><figcaption class='code-header'><span>JXL Demo</span> &mdash; <a href='https://github.com/cwind001/CwindJavaLab/blob/master/POITest/src/main/java/com/cwind/jxl/JXLDataSheetWriter.java'>link</a></figcaption> <table class="CodeRay"><tr>
+  <td class="line-numbers"><pre><a href="#n1" name="n1">1</a>
+<a href="#n2" name="n2">2</a>
+<a href="#n3" name="n3">3</a>
+<a href="#n4" name="n4">4</a>
+<a href="#n5" name="n5">5</a>
+<a href="#n6" name="n6">6</a>
+<a href="#n7" name="n7">7</a>
+<a href="#n8" name="n8">8</a>
+<a href="#n9" name="n9">9</a>
+<strong><a href="#n10" name="n10">10</a></strong>
+<a href="#n11" name="n11">11</a>
+<a href="#n12" name="n12">12</a>
+<a href="#n13" name="n13">13</a>
+<a href="#n14" name="n14">14</a>
+<a href="#n15" name="n15">15</a>
+<a href="#n16" name="n16">16</a>
+</pre></td>
+  <td class="code"><pre> &lt;br /&gt;
+ <span class="directive">public</span> <span class="directive">static</span> <span class="type">void</span> main(<span class="predefined-type">String</span><span class="type">[]</span> args) {
+  <span class="keyword">try</span> {
+   <span class="comment">// create writable wookbook</span>
    WritableWorkbook workbook 
-	= Workbook.createWorkbook(new File(“jxlOutput.xls”));</p>
+    = Workbook.createWorkbook(<span class="keyword">new</span> <span class="predefined-type">File</span>(<span class="error">“</span>jxlOutput.xls<span class="error">”</span>));&lt;/p&gt;
 
-<p>// create writable sheet
-   WritableSheet sheet = workbook.createSheet(“First Sheet”, 0);
-   for(int i = 0; i &lt; data.length; i++) {
-    for(int j = 0; j &lt; data[i].length; j++){</p>
+&lt;p&gt;<span class="comment">// create writable sheet</span>
+   WritableSheet sheet = workbook.createSheet(<span class="error">“</span>First Sheet<span class="error">”</span>, <span class="integer">0</span>);
+   <span class="keyword">for</span>(<span class="type">int</span> i = <span class="integer">0</span>; i &amp;lt; data.length; i++) {
+    <span class="keyword">for</span>(<span class="type">int</span> j = <span class="integer">0</span>; j &amp;lt; data[i].length; j++){&lt;/p&gt;
 
-<pre><code> // create a cell at position (i, j) and add to the sheet
- Label label = new Label(i, j, data[i][j]);
+&lt;pre&gt;&lt;code&gt; <span class="comment">// create a cell at position (i, j) and add to the sheet</span>
+ <span class="predefined-type">Label</span> label = <span class="keyword">new</span> <span class="predefined-type">Label</span>(i, j, data[i][j]);
  sheet.addCell(label);
-}    }    workbook.write();    workbook.close();   } catch (IOException | WriteException e) {    e.printStackTrace();   }  } {% endcoderay %} 
+}    }    workbook.write();    workbook.close();   } <span class="keyword">catch</span> (<span class="exception">IOException</span> | WriteException e) {    e.printStackTrace();   }  } </pre></td>
+</tr></table>
+ </figure> 
 </code></pre>
 
 <p><strong>Apache POI</strong><br />
@@ -278,21 +322,24 @@ Spring相比EJB2.x确实是轻量级，最主要的卖点是POJO的使用。  </
 最近更新：Dec 17，2014  </p>
 
 <p>类图：<br />
-{% img http://dl.iteye.com/upload/picture/pic/132576/6230920a-edc2-3e7c-ac23-d4590f095048.jpg %} </p>
+<img src="http://dl.iteye.com/upload/picture/pic/132576/6230920a-edc2-3e7c-ac23-d4590f095048.jpg"> </p>
 
-<p>{% coderay lang:java linenos:false %}   </p>
-<dependency> 
-  <groupid>org.apache.poi</groupid>
-  <artifactid>poi</artifactid>
-  <version>3.10.1</version>
-</dependency>
+<p><figure class='code'> <div class="CodeRay">
+  <div class="code"><pre>   &lt;/p&gt;
+&lt;dependency&gt; 
+  &lt;groupid&gt;org.apache.poi&lt;/groupid&gt;
+  &lt;artifactid&gt;poi&lt;/artifactid&gt;
+  &lt;version&gt;<span class="float">3.10</span><span class="float">.1</span>&lt;/version&gt;
+&lt;/dependency&gt;
 
-<dependency>
-     <groupid>org.apache.poi</groupid>
-     <artifactid>poi-ooxml</artifactid>
-     <version>3.9</version>
- </dependency>
-<p>{% endcoderay %}   </p>
+&lt;dependency&gt;
+     &lt;groupid&gt;org.apache.poi&lt;/groupid&gt;
+     &lt;artifactid&gt;poi-ooxml&lt;/artifactid&gt;
+     &lt;version&gt;<span class="float">3.9</span>&lt;/version&gt;
+ &lt;/dependency&gt;
+&lt;p&gt;</pre></div>
+</div>
+ </figure>   </p>
 
 <p><strong>Apache POI API的一些重点：</strong></p>
 
@@ -306,7 +353,7 @@ Spring相比EJB2.x确实是轻量级，最主要的卖点是POJO的使用。  </
 </ul>
 
 <p>SpreadSheet API 功能摘要：<br />
-{% img http://dl.iteye.com/upload/picture/pic/132578/9b044f00-622e-3a07-9471-3ee912e42819.jpg %} <br />
+<img src="http://dl.iteye.com/upload/picture/pic/132578/9b044f00-622e-3a07-9471-3ee912e42819.jpg"> <br />
 以下是两个基于XSSF读写xlsx文件的例子：<br />
 <a href="https://github.com/cwind001/CwindJavaLab/blob/master/POITest/src/main/java/com/cwind/poi/SimpleDatasheetReader.java">读取xlsx文件</a><br />
 <a href="https://github.com/cwind001/CwindJavaLab/blob/master/POITest/src/main/java/com/cwind/poi/SimpleDatasheetWriter.java">写入xlsx文件</a>  </p>
@@ -317,13 +364,16 @@ CSV文件以纯文本形式存储表格数据（数字和文本）。OpenCSV是�
 <a href="http://opencsv.sf.net">官方网站</a><br />
 最近更新：Jul 28，2011</p>
 
-<p>{% coderay lang:java linenos:false %}  </p>
-<dependency>
- <groupid>net.sf.opencsv</groupid>
- <artifactid>opencsv</artifactid>
- <version>2.3</version>
-</dependency>
-<p>{% endcoderay %}</p>
+<p><figure class='code'> <div class="CodeRay">
+  <div class="code"><pre>  &lt;/p&gt;
+&lt;dependency&gt;
+ &lt;groupid&gt;net.sf.opencsv&lt;/groupid&gt;
+ &lt;artifactid&gt;opencsv&lt;/artifactid&gt;
+ &lt;version&gt;<span class="float">2.3</span>&lt;/version&gt;
+&lt;/dependency&gt;
+&lt;p&gt;</pre></div>
+</div>
+ </figure></p>
 
 <p>OpenCSV将CSV文件中的每一行读取为一个String数组。相应地，写文件时通过<code>csvWriter.writeNext(array)</code>把String数组内容作为一行写入CSV文件</p>
 
@@ -365,7 +415,7 @@ CSV文件以纯文本形式存储表格数据（数字和文本）。OpenCSV是�
 </ul>
 
 <p>Timertask是由Timer执行的实际任务，实现了Rannable接口。通过重写run()方法来指定具体任务细节。<br />
-{% img http://dl2.iteye.com/upload/attachment/0105/5397/ddf9a7c5-f08a-3fd3-b1f8-6859e1054bd8.jpg %}</p>
+<img src="http://dl2.iteye.com/upload/attachment/0105/5397/ddf9a7c5-f08a-3fd3-b1f8-6859e1054bd8.jpg"></p>
 
 <p><strong>Timer工作原理：</strong><br />
 Timer是用于调度一次性执行或重复执行的工具类。通过TaskQueue保存需要调度的TimerTask，当某个Task被废弃时（一次性任务结束或TimerTask.cancel()），将其从该队列中移除。<br />
@@ -374,96 +424,185 @@ Timer类维护一个后台线程（守护线程或用户线程，取决于如何
 更多可参见：<a href="http://javarevisited.blogspot.com/2013/02/what-is-timer-and-timertask-in-java-example-tutorial.html">What is Timer and TimerTask in Java</a></p>
 
 <p><strong>基于Timer的FileMonitor的实现：</strong><br />
-{% img http://dl2.iteye.com/upload/attachment/0105/5399/4b7c54fa-cac9-3d7b-85c7-6e655ff8bbcb.jpg %}</p>
+<img src="http://dl2.iteye.com/upload/attachment/0105/5399/4b7c54fa-cac9-3d7b-85c7-6e655ff8bbcb.jpg"></p>
 
 <p>通过实现FileChangeObserver接口，该FileMonitor允许对任意文件添加任意多个Observer。<br />
 <a href="https://github.com/cwind001/CwindJavaLab/blob/master/FileMonitor/src/main/java/com/cwind/file/FileChangeMonitor.java">FileChangeMonitor及FileChangeTask源码</a><br />
 FileChangeMonitor本身是一个单例。fileObservers由Collections.synchronizedMap()初始化，保证在该map上的每一个原子操作都将被同步。在其addObserver方法中为每一个fileChangeObserver创建一个FileChangeTask，将其加入fileObservers中。FileChangeTask扩展了TimerTask，由Timer调度执行。</p>
 
-<p>{% coderay lang:java linenos:true FileChangeMonitor.addObserver() https://github.com/cwind001/CwindJavaLab/blob/master/FileMonitor/src/main/java/com/cwind/file/FileChangeMonitor.java %}
-	public void addObserver(FileChangeObserver observer, 
-	  String filename, long delay) throws FileNotFoundException {<br />
-    	TimerTask task = new FileChangeTask(observer , filename );<br />
-    	List<timertask> tasks = fileObservers.get(filename );  
-    	if(tasks ==null){  
-        	tasks = new ArrayList<timertask>();  
-   		}  
-    	tasks.add( task);  
-    	fileObservers.put(filename , tasks );  
-    	timer.schedule( task, delay, delay);  
-	}  
-{% endcoderay %}  
+<p><figure class='code'><figcaption class='code-header'><span>FileChangeMonitor.addObserver()</span> &mdash; <a href='https://github.com/cwind001/CwindJavaLab/blob/master/FileMonitor/src/main/java/com/cwind/file/FileChangeMonitor.java'>link</a></figcaption> <table class="CodeRay"><tr>
+  <td class="line-numbers"><pre><a href="#n1" name="n1">1</a>
+<a href="#n2" name="n2">2</a>
+<a href="#n3" name="n3">3</a>
+<a href="#n4" name="n4">4</a>
+<a href="#n5" name="n5">5</a>
+<a href="#n6" name="n6">6</a>
+<a href="#n7" name="n7">7</a>
+<a href="#n8" name="n8">8</a>
+<a href="#n9" name="n9">9</a>
+<strong><a href="#n10" name="n10">10</a></strong>
+<a href="#n11" name="n11">11</a>
+<a href="#n12" name="n12">12</a>
+</pre></td>
+  <td class="code"><pre>
+    <span class="directive">public</span> <span class="type">void</span> addObserver(FileChangeObserver observer, 
+      <span class="predefined-type">String</span> filename, <span class="type">long</span> delay) <span class="directive">throws</span> <span class="exception">FileNotFoundException</span> {&lt;br /&gt;
+        <span class="predefined-type">TimerTask</span> task = <span class="keyword">new</span> FileChangeTask(observer , filename );&lt;br /&gt;
+        <span class="predefined-type">List</span>&lt;timertask&gt; tasks = fileObservers.get(filename );  
+        <span class="keyword">if</span>(tasks ==<span class="predefined-constant">null</span>){  
+            tasks = <span class="keyword">new</span> <span class="predefined-type">ArrayList</span>&lt;timertask&gt;();  
+           }  
+        tasks.add( task);  
+        fileObservers.put(filename , tasks );  
+        timer.schedule( task, delay, delay);  
+    }  
+</pre></td>
+</tr></table>
+ </figure>  
 在FileChangeTask的run()函数中，通过比对时间戳来判断文件是否修改，若发生改动，则通知其Observer进行相应处理。 </timertask></timertask></p>
 
-<p>{% coderay lang:java linenos:true FileChangeTask.run() https://github.com/cwind001/CwindJavaLab/blob/master/FileMonitor/src/main/java/com/cwind/file/FileChangeMonitor.java %}<br />
-public void run() {
-		try	{
-			long newLastModified = file.lastModified();
-			if (newLastModified &gt; lastModified) {
-				lastModified = newLastModified;
-				observer.fileChanged(file.getPath());
-			}
-		}
-		catch (Exception e)	{
-			System.err.println(e.getMessage());
-		}
-	} 
-{% endcoderay %} </p>
+<p><figure class='code'><figcaption class='code-header'><span>FileChangeTask.run()</span> &mdash; <a href='https://github.com/cwind001/CwindJavaLab/blob/master/FileMonitor/src/main/java/com/cwind/file/FileChangeMonitor.java'>link</a></figcaption> <table class="CodeRay"><tr>
+  <td class="line-numbers"><pre><a href="#n1" name="n1">1</a>
+<a href="#n2" name="n2">2</a>
+<a href="#n3" name="n3">3</a>
+<a href="#n4" name="n4">4</a>
+<a href="#n5" name="n5">5</a>
+<a href="#n6" name="n6">6</a>
+<a href="#n7" name="n7">7</a>
+<a href="#n8" name="n8">8</a>
+<a href="#n9" name="n9">9</a>
+<strong><a href="#n10" name="n10">10</a></strong>
+<a href="#n11" name="n11">11</a>
+<a href="#n12" name="n12">12</a>
+<a href="#n13" name="n13">13</a>
+</pre></td>
+  <td class="code"><pre>&lt;br /&gt;
+<span class="directive">public</span> <span class="type">void</span> run() {
+        <span class="keyword">try</span>    {
+            <span class="type">long</span> newLastModified = file.lastModified();
+            <span class="keyword">if</span> (newLastModified &amp;gt; lastModified) {
+                lastModified = newLastModified;
+                observer.fileChanged(file.getPath());
+            }
+        }
+        <span class="keyword">catch</span> (<span class="exception">Exception</span> e)    {
+            <span class="predefined-type">System</span>.err.println(e.getMessage());
+        }
+    } 
+</pre></td>
+</tr></table>
+ </figure> </p>
 
 <p>测试用例<a href="https://github.com/cwind001/CwindJavaLab/blob/163448ce07ecca1738b306bed9bf1b39464d345c/FileMonitor/src/test/java/com/cwind/file/FileMonitorTest.java">FileMonitorTest</a>中为sample1.txt添加了consoleObserver和emailObserver，为sample2.txt添加了consoleObserver。然后对这两个文件分别进行修改。</p>
 
-<p>{% coderay lang:java linenos:true FileMonitorTest https://github.com/cwind001/CwindJavaLab/blob/163448ce07ecca1738b306bed9bf1b39464d345c/FileMonitor/src/test/java/com/cwind/file/FileMonitorTest.java %}
-package com.cwind.file;</p>
+<p><figure class='code'><figcaption class='code-header'><span>FileMonitorTest</span> &mdash; <a href='https://github.com/cwind001/CwindJavaLab/blob/163448ce07ecca1738b306bed9bf1b39464d345c/FileMonitor/src/test/java/com/cwind/file/FileMonitorTest.java'>link</a></figcaption> <table class="CodeRay"><tr>
+  <td class="line-numbers"><pre><a href="#n1" name="n1">1</a>
+<a href="#n2" name="n2">2</a>
+<a href="#n3" name="n3">3</a>
+<a href="#n4" name="n4">4</a>
+<a href="#n5" name="n5">5</a>
+<a href="#n6" name="n6">6</a>
+<a href="#n7" name="n7">7</a>
+<a href="#n8" name="n8">8</a>
+<a href="#n9" name="n9">9</a>
+<strong><a href="#n10" name="n10">10</a></strong>
+<a href="#n11" name="n11">11</a>
+<a href="#n12" name="n12">12</a>
+<a href="#n13" name="n13">13</a>
+<a href="#n14" name="n14">14</a>
+<a href="#n15" name="n15">15</a>
+<a href="#n16" name="n16">16</a>
+<a href="#n17" name="n17">17</a>
+<a href="#n18" name="n18">18</a>
+<a href="#n19" name="n19">19</a>
+<strong><a href="#n20" name="n20">20</a></strong>
+<a href="#n21" name="n21">21</a>
+<a href="#n22" name="n22">22</a>
+<a href="#n23" name="n23">23</a>
+<a href="#n24" name="n24">24</a>
+<a href="#n25" name="n25">25</a>
+<a href="#n26" name="n26">26</a>
+<a href="#n27" name="n27">27</a>
+<a href="#n28" name="n28">28</a>
+<a href="#n29" name="n29">29</a>
+<strong><a href="#n30" name="n30">30</a></strong>
+<a href="#n31" name="n31">31</a>
+<a href="#n32" name="n32">32</a>
+<a href="#n33" name="n33">33</a>
+<a href="#n34" name="n34">34</a>
+<a href="#n35" name="n35">35</a>
+<a href="#n36" name="n36">36</a>
+<a href="#n37" name="n37">37</a>
+<a href="#n38" name="n38">38</a>
+<a href="#n39" name="n39">39</a>
+<strong><a href="#n40" name="n40">40</a></strong>
+<a href="#n41" name="n41">41</a>
+<a href="#n42" name="n42">42</a>
+<a href="#n43" name="n43">43</a>
+<a href="#n44" name="n44">44</a>
+<a href="#n45" name="n45">45</a>
+<a href="#n46" name="n46">46</a>
+<a href="#n47" name="n47">47</a>
+<a href="#n48" name="n48">48</a>
+<a href="#n49" name="n49">49</a>
+<strong><a href="#n50" name="n50">50</a></strong>
+<a href="#n51" name="n51">51</a>
+<a href="#n52" name="n52">52</a>
+</pre></td>
+  <td class="code"><pre>
+<span class="keyword">package</span> <span class="namespace">com.cwind.file</span>;&lt;/p&gt;
 
-<p>import java.io.File;
-import java.io.FileOutputStream;
-import java.io.IOException;</p>
+&lt;p&gt;<span class="keyword">import</span> <span class="include">java.io.File</span>;
+<span class="keyword">import</span> <span class="include">java.io.FileOutputStream</span>;
+<span class="keyword">import</span> <span class="include">java.io.IOException</span>;&lt;/p&gt;
 
-<p>import org.junit.After;
-import org.junit.Before;
-import org.junit.Test;</p>
+&lt;p&gt;<span class="keyword">import</span> <span class="include">org.junit.After</span>;
+<span class="keyword">import</span> <span class="include">org.junit.Before</span>;
+<span class="keyword">import</span> <span class="include">org.junit.Test</span>;&lt;/p&gt;
 
-<p>public class FileMonitorTest {</p>
+&lt;p&gt;<span class="directive">public</span> <span class="type">class</span> <span class="class">FileMonitorTest</span> {&lt;/p&gt;
 
-<pre><code>File sampleFile1, sampleFile2;
+&lt;pre&gt;&lt;code&gt;<span class="predefined-type">File</span> sampleFile1, sampleFile2;
 FileChangeMonitor monitor;
 ConsoleFileChangeObserver consoleObserver;
 EmailFileChangeObserver emailObserver;
 
-@Before
-public void setUp() throws Exception {
-	sampleFile1 = new File("sample1.txt"); 
-	sampleFile2 = new File("sample2.txt");
-	monitor = FileChangeMonitor.getInstance();
-	consoleObserver = new ConsoleFileChangeObserver();
-	emailObserver = new EmailFileChangeObserver("billchen01@163.com");
+<span class="annotation">@Before</span>
+<span class="directive">public</span> <span class="type">void</span> setUp() <span class="directive">throws</span> <span class="exception">Exception</span> {
+    sampleFile1 = <span class="keyword">new</span> <span class="predefined-type">File</span>(<span class="string"><span class="delimiter">&quot;</span><span class="content">sample1.txt</span><span class="delimiter">&quot;</span></span>); 
+    sampleFile2 = <span class="keyword">new</span> <span class="predefined-type">File</span>(<span class="string"><span class="delimiter">&quot;</span><span class="content">sample2.txt</span><span class="delimiter">&quot;</span></span>);
+    monitor = FileChangeMonitor.getInstance();
+    consoleObserver = <span class="keyword">new</span> ConsoleFileChangeObserver();
+    emailObserver = <span class="keyword">new</span> EmailFileChangeObserver(<span class="string"><span class="delimiter">&quot;</span><span class="content">billchen01@163.com</span><span class="delimiter">&quot;</span></span>);
 }
 
-@After
-public void tearDown() throws Exception	{
-	
+<span class="annotation">@After</span>
+<span class="directive">public</span> <span class="type">void</span> tearDown() <span class="directive">throws</span> <span class="exception">Exception</span>    {
+    
 }
 
-@Test
-public void testMonitorSampleFile() throws InterruptedException, 
-	IOException{
-	monitor.addObserver(consoleObserver, sampleFile1.getPath(), 
-		FileChangeMonitor.DELAY_TIME);
-	monitor.addObserver(emailObserver, sampleFile1.getPath(), 
-		FileChangeMonitor.DELAY_TIME);
-	monitor.addObserver(consoleObserver, sampleFile2.getPath(), 
-		FileChangeMonitor.DELAY_TIME);
-	
-	FileOutputStream fos1 = new FileOutputStream(sampleFile1);
-	FileOutputStream fos2 = new FileOutputStream(sampleFile2);
-	fos1.write(0);
-	fos2.write(0);
-	fos1.flush();
-	fos2.flush();
-	fos1.close();
-	fos2.close();
-	Thread.sleep(3000);
-} } {% endcoderay %} 
+<span class="annotation">@Test</span>
+<span class="directive">public</span> <span class="type">void</span> testMonitorSampleFile() <span class="directive">throws</span> <span class="exception">InterruptedException</span>, 
+    <span class="exception">IOException</span>{
+    monitor.addObserver(consoleObserver, sampleFile1.getPath(), 
+        FileChangeMonitor.DELAY_TIME);
+    monitor.addObserver(emailObserver, sampleFile1.getPath(), 
+        FileChangeMonitor.DELAY_TIME);
+    monitor.addObserver(consoleObserver, sampleFile2.getPath(), 
+        FileChangeMonitor.DELAY_TIME);
+    
+    <span class="predefined-type">FileOutputStream</span> fos1 = <span class="keyword">new</span> <span class="predefined-type">FileOutputStream</span>(sampleFile1);
+    <span class="predefined-type">FileOutputStream</span> fos2 = <span class="keyword">new</span> <span class="predefined-type">FileOutputStream</span>(sampleFile2);
+    fos1.write(<span class="integer">0</span>);
+    fos2.write(<span class="integer">0</span>);
+    fos1.flush();
+    fos2.flush();
+    fos1.close();
+    fos2.close();
+    <span class="predefined-type">Thread</span>.sleep(<span class="integer">3000</span>);
+} } </pre></td>
+</tr></table>
+ </figure> 
 </code></pre>
 
 <p>输出结果如下：<br />
@@ -475,7 +614,7 @@ public void testMonitorSampleFile() throws InterruptedException,
 Java 7 的新IO - NIO.2提供了一组新的类和方法，主要存在于java.nio包内。它完全取代了java.io.File与文件系统的交互，并提供了新的异步处理类，无需手动配置线程池和其他底层并发控制，便可在后台线程中执行文件和网络IO操作。<br />
 其中Path是新文件IO的基石。为与之前版本兼容，java.io.File类中新增了toPath()方法，Path类中提供了toFile()方法。
 Watch Service API可用于将指定目录注册到监视服务上。注册时须指定事件类型，如文件创建、修改、删除等。相关类图如下：<br />
-{% img http://dl2.iteye.com/upload/attachment/0105/5403/f20e959b-2ded-3a35-b984-61f5010f7efb.jpg %}  </p>
+<img src="http://dl2.iteye.com/upload/attachment/0105/5403/f20e959b-2ded-3a35-b984-61f5010f7efb.jpg">  </p>
 
 <p>WatchService是监视服务接口，在不同系统上有不同的实现类。实现了Watchable接口的对象方可注册监视服务，java.nio.file.Path实现了此接口。WatchKey表示Watchable对象和WatchService的关联关系，在注册时被创建。注册完成后，WatchKey将被置为’ready’状态，直到下列三种情况之一发生：  </p>
 
@@ -503,50 +642,97 @@ Watch Service API可用于将指定目录注册到监视服务上。注册时须
   <li>当该key的所有事件处理完成后，需要调用WatchKey.reset()方法把该key重置为ready状态。若不重置，该key将无法接收后续的改动。若reset返回false，表示该WatchKey不再合法，主循环可以退出。</li>
 </ol>
 
-<p>{% coderay lang:java linenos:true WatchServiceTest https://github.com/cwind001/CwindJavaLab/blob/163448ce07ecca1738b306bed9bf1b39464d345c/FileMonitor/src/test/java/com/cwind/file/WatchServerTest.java %}
-package com.cwind.file;</p>
+<p><figure class='code'><figcaption class='code-header'><span>WatchServiceTest</span> &mdash; <a href='https://github.com/cwind001/CwindJavaLab/blob/163448ce07ecca1738b306bed9bf1b39464d345c/FileMonitor/src/test/java/com/cwind/file/WatchServerTest.java'>link</a></figcaption> <table class="CodeRay"><tr>
+  <td class="line-numbers"><pre><a href="#n1" name="n1">1</a>
+<a href="#n2" name="n2">2</a>
+<a href="#n3" name="n3">3</a>
+<a href="#n4" name="n4">4</a>
+<a href="#n5" name="n5">5</a>
+<a href="#n6" name="n6">6</a>
+<a href="#n7" name="n7">7</a>
+<a href="#n8" name="n8">8</a>
+<a href="#n9" name="n9">9</a>
+<strong><a href="#n10" name="n10">10</a></strong>
+<a href="#n11" name="n11">11</a>
+<a href="#n12" name="n12">12</a>
+<a href="#n13" name="n13">13</a>
+<a href="#n14" name="n14">14</a>
+<a href="#n15" name="n15">15</a>
+<a href="#n16" name="n16">16</a>
+<a href="#n17" name="n17">17</a>
+<a href="#n18" name="n18">18</a>
+<a href="#n19" name="n19">19</a>
+<strong><a href="#n20" name="n20">20</a></strong>
+<a href="#n21" name="n21">21</a>
+<a href="#n22" name="n22">22</a>
+<a href="#n23" name="n23">23</a>
+<a href="#n24" name="n24">24</a>
+<a href="#n25" name="n25">25</a>
+<a href="#n26" name="n26">26</a>
+<a href="#n27" name="n27">27</a>
+<a href="#n28" name="n28">28</a>
+<a href="#n29" name="n29">29</a>
+<strong><a href="#n30" name="n30">30</a></strong>
+<a href="#n31" name="n31">31</a>
+<a href="#n32" name="n32">32</a>
+<a href="#n33" name="n33">33</a>
+<a href="#n34" name="n34">34</a>
+<a href="#n35" name="n35">35</a>
+<a href="#n36" name="n36">36</a>
+<a href="#n37" name="n37">37</a>
+<a href="#n38" name="n38">38</a>
+<a href="#n39" name="n39">39</a>
+<strong><a href="#n40" name="n40">40</a></strong>
+<a href="#n41" name="n41">41</a>
+<a href="#n42" name="n42">42</a>
+<a href="#n43" name="n43">43</a>
+</pre></td>
+  <td class="code"><pre>
+<span class="keyword">package</span> <span class="namespace">com.cwind.file</span>;&lt;/p&gt;
 
-<p>import java.io.IOException;
-import java.nio.file.FileSystems;
-import java.nio.file.Path;
-import java.nio.file.Paths;
-import java.nio.file.StandardWatchEventKinds;
-import java.nio.file.WatchEvent;
-import java.nio.file.WatchKey;
-import java.nio.file.WatchService;</p>
+&lt;p&gt;<span class="keyword">import</span> <span class="include">java.io.IOException</span>;
+<span class="keyword">import</span> <span class="include">java.nio.file.FileSystems</span>;
+<span class="keyword">import</span> <span class="include">java.nio.file.Path</span>;
+<span class="keyword">import</span> <span class="include">java.nio.file.Paths</span>;
+<span class="keyword">import</span> <span class="include">java.nio.file.StandardWatchEventKinds</span>;
+<span class="keyword">import</span> <span class="include">java.nio.file.WatchEvent</span>;
+<span class="keyword">import</span> <span class="include">java.nio.file.WatchKey</span>;
+<span class="keyword">import</span> <span class="include">java.nio.file.WatchService</span>;&lt;/p&gt;
 
-<p>public class WatchServerTest {
-	public static void main(String[] args) throws InterruptedException, 
-		IOException {
-		WatchService watchService 
-			= FileSystems.getDefault().newWatchService();
-		final Path path = Paths.get(“.”);
-		final WatchKey watchKey = path.register(watchService, 
-			StandardWatchEventKinds.ENTRY_MODIFY,
-			StandardWatchEventKinds.ENTRY_CREATE,
-			StandardWatchEventKinds.ENTRY_DELETE);
-		boolean fileNotChanged = true;
-		int count = 0;
-		while (fileNotChanged) {
-			final WatchKey wk = watchService.take();
-		    System.out.println(“Loop count: “ + count);
-		    for (WatchEvent&lt;?&gt; event : wk.pollEvents()) {
-		        final Path changed = (Path) event.context();
-		        System.out.println(changed + “, “ + event.kind());
-		        if (changed.endsWith(“sample1.txt”)) {
-		            System.out.println(“Sample file has changed”);
-		        }
-		    }
-		    // reset the key
-		    boolean valid = wk.reset();
-		    if (!valid) {
-		        System.out.println(“Key has been unregisterede”);
-		    }
-		    count++;
-		}
-	}
+&lt;p&gt;<span class="directive">public</span> <span class="type">class</span> <span class="class">WatchServerTest</span> {
+    <span class="directive">public</span> <span class="directive">static</span> <span class="type">void</span> main(<span class="predefined-type">String</span><span class="type">[]</span> args) <span class="directive">throws</span> <span class="exception">InterruptedException</span>, 
+        <span class="exception">IOException</span> {
+        WatchService watchService 
+            = FileSystems.getDefault().newWatchService();
+        <span class="directive">final</span> Path path = Paths.get(<span class="error">“</span>.<span class="error">”</span>);
+        <span class="directive">final</span> WatchKey watchKey = path.register(watchService, 
+            StandardWatchEventKinds.ENTRY_MODIFY,
+            StandardWatchEventKinds.ENTRY_CREATE,
+            StandardWatchEventKinds.ENTRY_DELETE);
+        <span class="type">boolean</span> fileNotChanged = <span class="predefined-constant">true</span>;
+        <span class="type">int</span> count = <span class="integer">0</span>;
+        <span class="keyword">while</span> (fileNotChanged) {
+            <span class="directive">final</span> WatchKey wk = watchService.take();
+            <span class="predefined-type">System</span>.out.println(<span class="error">“</span>Loop count: <span class="error">“</span> + count);
+            <span class="keyword">for</span> (WatchEvent&amp;lt;?&amp;gt; event : wk.pollEvents()) {
+                <span class="directive">final</span> Path changed = (Path) event.context();
+                <span class="predefined-type">System</span>.out.println(changed + <span class="error">“</span>, <span class="error">“</span> + event.kind());
+                <span class="keyword">if</span> (changed.endsWith(<span class="error">“</span>sample1.txt<span class="error">”</span>)) {
+                    <span class="predefined-type">System</span>.out.println(<span class="error">“</span>Sample file has changed<span class="error">”</span>);
+                }
+            }
+            <span class="comment">// reset the key</span>
+            <span class="type">boolean</span> valid = wk.reset();
+            <span class="keyword">if</span> (!valid) {
+                <span class="predefined-type">System</span>.out.println(<span class="error">“</span><span class="predefined-type">Key</span> has been unregisterede<span class="error">”</span>);
+            }
+            count++;
+        }
+    }
 }
-{% endcoderay %}<br />
+</pre></td>
+</tr></table>
+ </figure><br />
 总结，使用WatchService步骤如下：  </p>
 
 <ol>
@@ -578,119 +764,224 @@ import java.nio.file.WatchService;</p>
 <!--more-->
 <strong>1. 概述</strong><br />
 PropertyDescriptor描述Java Bean中通过一对存储器方法（getter / setter）导出的一个属性。我们可以通过该PropertyDescriptor对bean中的该属性进行读取和写入操作，也可以设置其getter / setter。<br />
-{% img http://dl2.iteye.com/upload/attachment/0094/6177/5c9f92d1-c105-38f0-88e5-18f00e4d5531.jpg %} <br />
+<img src="http://dl2.iteye.com/upload/attachment/0094/6177/5c9f92d1-c105-38f0-88e5-18f00e4d5531.jpg"> <br />
 <a href="http://www.oschina.net/code/explore/gcc-4.5.2/libjava/classpath/java/beans/PropertyDescriptor.java">PropertyDescriptor源码见此</a><br />
 <strong>2. 关键接口及内部属性</strong>  </p>
 
-<p>{% coderay lang:java linenos:true %} 
-public PropertyDescriptor(String name, 
-	Class<?> beanClass) throws IntrospectionException  
-public PropertyDescriptor(String name, Class<?> beanClass, 
-String getMethodName, String setMethodName) throws IntrospectionException<br />
-public PropertyDescriptor(String name, 
-Method readMethod, Method writeMethod) throws IntrospectionException  </p>
+<p><figure class='code'> <table class="CodeRay"><tr>
+  <td class="line-numbers"><pre><a href="#n1" name="n1">1</a>
+<a href="#n2" name="n2">2</a>
+<a href="#n3" name="n3">3</a>
+<a href="#n4" name="n4">4</a>
+<a href="#n5" name="n5">5</a>
+<a href="#n6" name="n6">6</a>
+<a href="#n7" name="n7">7</a>
+<a href="#n8" name="n8">8</a>
+<a href="#n9" name="n9">9</a>
+<strong><a href="#n10" name="n10">10</a></strong>
+<a href="#n11" name="n11">11</a>
+<a href="#n12" name="n12">12</a>
+<a href="#n13" name="n13">13</a>
+<a href="#n14" name="n14">14</a>
+<a href="#n15" name="n15">15</a>
+</pre></td>
+  <td class="code"><pre> 
+<span class="directive">public</span> <span class="predefined-type">PropertyDescriptor</span>(<span class="predefined-type">String</span> name, 
+    <span class="predefined-type">Class</span>&lt;?&gt; beanClass) <span class="directive">throws</span> <span class="exception">IntrospectionException</span>  
+<span class="directive">public</span> <span class="predefined-type">PropertyDescriptor</span>(<span class="predefined-type">String</span> name, <span class="predefined-type">Class</span>&lt;?&gt; beanClass, 
+<span class="predefined-type">String</span> getMethodName, <span class="predefined-type">String</span> setMethodName) <span class="directive">throws</span> <span class="exception">IntrospectionException</span>&lt;br /&gt;
+<span class="directive">public</span> <span class="predefined-type">PropertyDescriptor</span>(<span class="predefined-type">String</span> name, 
+<span class="predefined-type">Method</span> readMethod, <span class="predefined-type">Method</span> writeMethod) <span class="directive">throws</span> <span class="exception">IntrospectionException</span>  &lt;/p&gt;
 
-<p>public Class&lt;?&gt; getPropertyType()<br />
-public Method getReadMethod()<br />
-public Method getWriteMethod()  </p>
+&lt;p&gt;<span class="directive">public</span> <span class="predefined-type">Class</span>&amp;lt;?&amp;gt; getPropertyType()&lt;br /&gt;
+<span class="directive">public</span> <span class="predefined-type">Method</span> getReadMethod()&lt;br /&gt;
+<span class="directive">public</span> <span class="predefined-type">Method</span> getWriteMethod()  &lt;/p&gt;
 
-<p>public void setReadMethod(Method readMethod) throws IntrospectionException<br />
-public void setWriteMethod(Method writeMethod)<br />
-public boolean equals(Object o) <br />
-{% endcoderay %}  </p>
+&lt;p&gt;<span class="directive">public</span> <span class="type">void</span> setReadMethod(<span class="predefined-type">Method</span> readMethod) <span class="directive">throws</span> <span class="exception">IntrospectionException</span>&lt;br /&gt;
+<span class="directive">public</span> <span class="type">void</span> setWriteMethod(<span class="predefined-type">Method</span> writeMethod)&lt;br /&gt;
+<span class="directive">public</span> <span class="type">boolean</span> equals(<span class="predefined-type">Object</span> o) &lt;br /&gt;
+</pre></td>
+</tr></table>
+ </figure>  </p>
 
 <p>相关的PropertyDescriptor内部属性如下：  </p>
 
-<p>{% coderay lang:java linenos:false %} 
-    Class&lt;?&gt; propertyType;     //该属性的类型<br />
-    Method getMethod;     //getter<br />
-    Method setMethod;     //setter<br />
-{% endcoderay %}<br />
+<p><figure class='code'> <div class="CodeRay">
+  <div class="code"><pre> 
+    <span class="predefined-type">Class</span>&amp;lt;?&amp;gt; propertyType;     <span class="comment">//该属性的类型&lt;br /&gt;</span>
+    <span class="predefined-type">Method</span> getMethod;     <span class="comment">//getter&lt;br /&gt;</span>
+    <span class="predefined-type">Method</span> setMethod;     <span class="comment">//setter&lt;br /&gt;</span>
+</pre></div>
+</div>
+ </figure><br />
 还有继承自其父类FeatureDescriptor的功能，用于指定该属性的编程名称<br />
 <strong>3. 简单应用</strong><br />
 现有Person类如下：  </p>
 
-<p>{% coderay lang:java linenos:true %} <br />
-package com.cwind.property;  </p>
+<p><figure class='code'> <table class="CodeRay"><tr>
+  <td class="line-numbers"><pre><a href="#n1" name="n1">1</a>
+<a href="#n2" name="n2">2</a>
+<a href="#n3" name="n3">3</a>
+<a href="#n4" name="n4">4</a>
+<a href="#n5" name="n5">5</a>
+<a href="#n6" name="n6">6</a>
+<a href="#n7" name="n7">7</a>
+<a href="#n8" name="n8">8</a>
+<a href="#n9" name="n9">9</a>
+<strong><a href="#n10" name="n10">10</a></strong>
+<a href="#n11" name="n11">11</a>
+<a href="#n12" name="n12">12</a>
+<a href="#n13" name="n13">13</a>
+<a href="#n14" name="n14">14</a>
+<a href="#n15" name="n15">15</a>
+<a href="#n16" name="n16">16</a>
+<a href="#n17" name="n17">17</a>
+<a href="#n18" name="n18">18</a>
+<a href="#n19" name="n19">19</a>
+<strong><a href="#n20" name="n20">20</a></strong>
+<a href="#n21" name="n21">21</a>
+<a href="#n22" name="n22">22</a>
+<a href="#n23" name="n23">23</a>
+</pre></td>
+  <td class="code"><pre> &lt;br /&gt;
+<span class="keyword">package</span> <span class="namespace">com.cwind.property</span>;  &lt;/p&gt;
 
-<p>public class Person {<br />
-        private String name ;<br />
-        private int age ;  </p>
+&lt;p&gt;<span class="directive">public</span> <span class="type">class</span> <span class="class">Person</span> {&lt;br /&gt;
+        <span class="directive">private</span> <span class="predefined-type">String</span> name ;&lt;br /&gt;
+        <span class="directive">private</span> <span class="type">int</span> age ;  &lt;/p&gt;
 
-<pre><code>    public Person(){ this.name = ""; this.age = 0; }  
-    public Person(String name, int age) { super(); this.name = name; 
-this. age = age; }  
+&lt;pre&gt;&lt;code&gt;    <span class="directive">public</span> Person(){ <span class="local-variable">this</span>.name = <span class="string"><span class="delimiter">&quot;</span><span class="delimiter">&quot;</span></span>; <span class="local-variable">this</span>.age = <span class="integer">0</span>; }  
+    <span class="directive">public</span> Person(<span class="predefined-type">String</span> name, <span class="type">int</span> age) { <span class="local-variable">super</span>(); <span class="local-variable">this</span>.name = name; 
+<span class="local-variable">this</span>. age = age; }  
   
-    public String getName() { return name; }  
-    public void setName(String name) { this. name = name; }  
+    <span class="directive">public</span> <span class="predefined-type">String</span> getName() { <span class="keyword">return</span> name; }  
+    <span class="directive">public</span> <span class="type">void</span> setName(<span class="predefined-type">String</span> name) { <span class="local-variable">this</span>. name = name; }  
   
-    public int getAge() { return age; }  
-    public void setAge(int age) { this. age = age; }  
+    <span class="directive">public</span> <span class="type">int</span> getAge() { <span class="keyword">return</span> age; }  
+    <span class="directive">public</span> <span class="type">void</span> setAge(<span class="type">int</span> age) { <span class="local-variable">this</span>. age = age; }  
      
-    public String getNameInUpperCase(){  
-           return this .name .toUpperCase();  
+    <span class="directive">public</span> <span class="predefined-type">String</span> getNameInUpperCase(){  
+           <span class="keyword">return</span> <span class="local-variable">this</span> .name .toUpperCase();  
    }  
-    public void setNameToLowerCase(String name){  
-           this.name = name.toLowerCase();  
-   }   }   {% endcoderay %}  
+    <span class="directive">public</span> <span class="type">void</span> setNameToLowerCase(<span class="predefined-type">String</span> name){  
+           <span class="local-variable">this</span>.name = name.toLowerCase();  
+   }   }   </pre></td>
+</tr></table>
+ </figure>  
 </code></pre>
 
 <p>该类中除了name和age两个属性的标准getter和setter之外，还有增加了一个获取大写name的get方法和一个将name设置为小写的set方法。<br />
 在测试类中，首先获得这两个方法对象。  </p>
 
-<p>{% coderay lang:java linenos:true %} 
-Class personClass = Class.forName(“com.cwind.property.Person”);<br />
-Method read = personClass.getMethod(“getNameInUpperCase”, null);<br />
-Method write = personClass.getMethod(“setNameToLowerCase”, String.class );  </p>
+<p><figure class='code'> <table class="CodeRay"><tr>
+  <td class="line-numbers"><pre><a href="#n1" name="n1">1</a>
+<a href="#n2" name="n2">2</a>
+<a href="#n3" name="n3">3</a>
+<a href="#n4" name="n4">4</a>
+<a href="#n5" name="n5">5</a>
+<a href="#n6" name="n6">6</a>
+<a href="#n7" name="n7">7</a>
+<a href="#n8" name="n8">8</a>
+<a href="#n9" name="n9">9</a>
+<strong><a href="#n10" name="n10">10</a></strong>
+<a href="#n11" name="n11">11</a>
+<a href="#n12" name="n12">12</a>
+<a href="#n13" name="n13">13</a>
+<a href="#n14" name="n14">14</a>
+<a href="#n15" name="n15">15</a>
+<a href="#n16" name="n16">16</a>
+<a href="#n17" name="n17">17</a>
+<a href="#n18" name="n18">18</a>
+<a href="#n19" name="n19">19</a>
+<strong><a href="#n20" name="n20">20</a></strong>
+<a href="#n21" name="n21">21</a>
+<a href="#n22" name="n22">22</a>
+</pre></td>
+  <td class="code"><pre> 
+<span class="predefined-type">Class</span> personClass = <span class="predefined-type">Class</span>.forName(<span class="error">“</span>com.cwind.property.Person<span class="error">”</span>);&lt;br /&gt;
+<span class="predefined-type">Method</span> read = personClass.getMethod(<span class="error">“</span>getNameInUpperCase<span class="error">”</span>, <span class="predefined-constant">null</span>);&lt;br /&gt;
+<span class="predefined-type">Method</span> write = personClass.getMethod(<span class="error">“</span>setNameToLowerCase<span class="error">”</span>, <span class="predefined-type">String</span>.class );  &lt;/p&gt;
 
-<p>//然后可以通过两种方式构造PropertyDescriptor<br />
-PropertyDescriptor prop1 = new PropertyDescriptor( “name”, Person.class );
-     //使用其标准getter和setter<br />
-PropertyDescriptor prop2 = new PropertyDescriptor( “name”, read, write);
-     //使用read和write两个方法对象所自定义的getter和setter  </p>
+&lt;p&gt;<span class="comment">//然后可以通过两种方式构造PropertyDescriptor&lt;br /&gt;</span>
+<span class="predefined-type">PropertyDescriptor</span> prop1 = <span class="keyword">new</span> <span class="predefined-type">PropertyDescriptor</span>( <span class="error">“</span>name<span class="error">”</span>, Person.class );
+     <span class="comment">//使用其标准getter和setter&lt;br /&gt;</span>
+<span class="predefined-type">PropertyDescriptor</span> prop2 = <span class="keyword">new</span> <span class="predefined-type">PropertyDescriptor</span>( <span class="error">“</span>name<span class="error">”</span>, read, write);
+     <span class="comment">//使用read和write两个方法对象所自定义的getter和setter  &lt;/p&gt;</span>
 
-<p>//下面构建一个Person对象<br />
-Person person = new Person(“Kobe” , 36);<br />
-System. out.println(prop1.getReadMethod().invoke(person, null));
-     // –实际调用Person.getName(), result: Kobe<br />
-System. out.println(prop2.getReadMethod().invoke(person, null));
-     // –实际调用Person.getNameInUpperCase(), result: KOBE  </p>
+&lt;p&gt;<span class="comment">//下面构建一个Person对象&lt;br /&gt;</span>
+Person person = <span class="keyword">new</span> Person(<span class="error">“</span>Kobe<span class="error">”</span> , <span class="integer">36</span>);&lt;br /&gt;
+<span class="predefined-type">System</span>. out.println(prop1.getReadMethod().invoke(person, <span class="predefined-constant">null</span>));
+     <span class="comment">// –实际调用Person.getName(), result: Kobe&lt;br /&gt;</span>
+<span class="predefined-type">System</span>. out.println(prop2.getReadMethod().invoke(person, <span class="predefined-constant">null</span>));
+     <span class="comment">// –实际调用Person.getNameInUpperCase(), result: KOBE  &lt;/p&gt;</span>
 
-<p>prop1.getWriteMethod().invoke(person, “James”);
-     // –实际调用Person.setName(), person.name被设置为James<br />
-prop2.getWriteMethod().invoke(person, “James”);
-     // –实际调用Person.setNameToLowerCase(), person.name被设置为james 
-{% endcoderay %}<br />
+&lt;p&gt;prop1.getWriteMethod().invoke(person, <span class="error">“</span>James<span class="error">”</span>);
+     <span class="comment">// –实际调用Person.setName(), person.name被设置为James&lt;br /&gt;</span>
+prop2.getWriteMethod().invoke(person, <span class="error">“</span>James<span class="error">”</span>);
+     <span class="comment">// –实际调用Person.setNameToLowerCase(), person.name被设置为james </span>
+</pre></td>
+</tr></table>
+ </figure><br />
 <strong>4. 源码分析</strong><br />
 构造函数1：  </p>
 
-<p>{% coderay lang:java linenos:true %} 
-public PropertyDescriptor(String name, Class<?> beanClass)  
-        throws IntrospectionException {  
-        setName(name);     //设置属性编程名，本例中即&#8217;name&#8217;  
-        if (name.length() == 0){  
-            throw new IntrospectionException(&#8220;empty property name&#8221;);       
-// 编程名为空则抛出异常  
+<p><figure class='code'> <table class="CodeRay"><tr>
+  <td class="line-numbers"><pre><a href="#n1" name="n1">1</a>
+<a href="#n2" name="n2">2</a>
+<a href="#n3" name="n3">3</a>
+<a href="#n4" name="n4">4</a>
+<a href="#n5" name="n5">5</a>
+<a href="#n6" name="n6">6</a>
+<a href="#n7" name="n7">7</a>
+<a href="#n8" name="n8">8</a>
+<a href="#n9" name="n9">9</a>
+<strong><a href="#n10" name="n10">10</a></strong>
+<a href="#n11" name="n11">11</a>
+<a href="#n12" name="n12">12</a>
+<a href="#n13" name="n13">13</a>
+<a href="#n14" name="n14">14</a>
+<a href="#n15" name="n15">15</a>
+<a href="#n16" name="n16">16</a>
+<a href="#n17" name="n17">17</a>
+<a href="#n18" name="n18">18</a>
+<a href="#n19" name="n19">19</a>
+<strong><a href="#n20" name="n20">20</a></strong>
+<a href="#n21" name="n21">21</a>
+<a href="#n22" name="n22">22</a>
+<a href="#n23" name="n23">23</a>
+<a href="#n24" name="n24">24</a>
+<a href="#n25" name="n25">25</a>
+<a href="#n26" name="n26">26</a>
+</pre></td>
+  <td class="code"><pre> 
+<span class="directive">public</span> <span class="predefined-type">PropertyDescriptor</span>(<span class="predefined-type">String</span> name, <span class="predefined-type">Class</span>&lt;?&gt; beanClass)  
+        <span class="directive">throws</span> <span class="exception">IntrospectionException</span> {  
+        setName(name);     <span class="comment">//设置属性编程名，本例中即'name'  </span>
+        <span class="keyword">if</span> (name.length() == <span class="integer">0</span>){  
+            <span class="keyword">throw</span> <span class="keyword">new</span> <span class="exception">IntrospectionException</span>(<span class="string"><span class="delimiter">&quot;</span><span class="content">empty property name</span><span class="delimiter">&quot;</span></span>);       
+<span class="comment">// 编程名为空则抛出异常  </span>
         }  
-        String caps = Character.toUpperCase(name.charAt(0))
-	 + name.substring(1);       
-// 标准getter应为getName()或isName(), 先将首字母大写  
-        findMethods(beanClass, &#8220;is&#8221; + caps, &#8220;get&#8221; + caps, &#8220;set&#8221; + caps);       
-// 参数依次为：类类型，可能的getter函数名1，可能的getter函数名2，setter函数名  
-        if (getMethod == null){
-   // findMethods()设置PropertyDescriptor的getMethod和setMethod属性  
-            throw new IntrospectionException(  
-                &#8220;Cannot find a is&#8221; + caps + &#8221; or get&#8221; + caps + &#8221; method&#8221;);  
+        <span class="predefined-type">String</span> caps = <span class="predefined-type">Character</span>.toUpperCase(name.charAt(<span class="integer">0</span>))
+     + name.substring(<span class="integer">1</span>);       
+<span class="comment">// 标准getter应为getName()或isName(), 先将首字母大写  </span>
+        findMethods(beanClass, <span class="string"><span class="delimiter">&quot;</span><span class="content">is</span><span class="delimiter">&quot;</span></span> + caps, <span class="string"><span class="delimiter">&quot;</span><span class="content">get</span><span class="delimiter">&quot;</span></span> + caps, <span class="string"><span class="delimiter">&quot;</span><span class="content">set</span><span class="delimiter">&quot;</span></span> + caps);       
+<span class="comment">// 参数依次为：类类型，可能的getter函数名1，可能的getter函数名2，setter函数名  </span>
+        <span class="keyword">if</span> (getMethod == <span class="predefined-constant">null</span>){
+   <span class="comment">// findMethods()设置PropertyDescriptor的getMethod和setMethod属性  </span>
+            <span class="keyword">throw</span> <span class="keyword">new</span> <span class="exception">IntrospectionException</span>(  
+                <span class="string"><span class="delimiter">&quot;</span><span class="content">Cannot find a is</span><span class="delimiter">&quot;</span></span> + caps + <span class="string"><span class="delimiter">&quot;</span><span class="content"> or get</span><span class="delimiter">&quot;</span></span> + caps + <span class="string"><span class="delimiter">&quot;</span><span class="content"> method</span><span class="delimiter">&quot;</span></span>);  
         }  
-        if (setMethod == null){  
-            throw new IntrospectionException(  
-                &#8220;Cannot find a &#8221; + caps + &#8221; method&#8221; );  
+        <span class="keyword">if</span> (setMethod == <span class="predefined-constant">null</span>){  
+            <span class="keyword">throw</span> <span class="keyword">new</span> <span class="exception">IntrospectionException</span>(  
+                <span class="string"><span class="delimiter">&quot;</span><span class="content">Cannot find a </span><span class="delimiter">&quot;</span></span> + caps + <span class="string"><span class="delimiter">&quot;</span><span class="content"> method</span><span class="delimiter">&quot;</span></span> );  
         }  
         propertyType = checkMethods(getMethod, setMethod);       
-// checkMethods()函数用来检测getMethod得到的类型与setMethod的参数类型是否匹配，
-若匹配则置propertyType为该类型  
+<span class="comment">// checkMethods()函数用来检测getMethod得到的类型与setMethod的参数类型是否匹配，</span>
+<span class="error">若</span><span class="error">匹</span><span class="error">配</span><span class="error">则</span><span class="error">置</span>propertyType<span class="error">为</span><span class="error">该</span><span class="error">类</span><span class="error">型</span>  
     }  
-{% endcoderay %} 
+</pre></td>
+</tr></table>
+ </figure> 
 构造函数2：  
 `public PropertyDescriptor(String name, Class<?> beanClass, String getMethodName, String setMethodName) throws IntrospectionException<code>  
 其实现与构造函数1类似，只是调用findMethods时直接查找指定的getter和setter函数名：  
@@ -700,120 +991,233 @@ public PropertyDescriptor(String name, Class<?> beanClass)
 两个比较重要的私有辅助函数分别为</code>findMethods()<code>和</code>checkMethods()`，分别看一下其实现<br />
 findMethods用来按指定的getter和setter函数名在指定Class中查找getMethod和setMethod，并设置PropertyDescriptor的相关属性   </p>
 
-<p>{% coderay lang:java linenos:true %} 
-private void findMethods(Class beanClass,
- String getMethodName1, String getMethodName2, String setMethodName)
- throws IntrospectionException {<br />
-        try {<br />
-            // 首先查找getMethodName1指定的getter (isXXX)<br />
-            if (getMethodName1 != null) {<br />
-                try {<br />
+<p><figure class='code'> <table class="CodeRay"><tr>
+  <td class="line-numbers"><pre><a href="#n1" name="n1">1</a>
+<a href="#n2" name="n2">2</a>
+<a href="#n3" name="n3">3</a>
+<a href="#n4" name="n4">4</a>
+<a href="#n5" name="n5">5</a>
+<a href="#n6" name="n6">6</a>
+<a href="#n7" name="n7">7</a>
+<a href="#n8" name="n8">8</a>
+<a href="#n9" name="n9">9</a>
+<strong><a href="#n10" name="n10">10</a></strong>
+<a href="#n11" name="n11">11</a>
+<a href="#n12" name="n12">12</a>
+<a href="#n13" name="n13">13</a>
+<a href="#n14" name="n14">14</a>
+<a href="#n15" name="n15">15</a>
+<a href="#n16" name="n16">16</a>
+<a href="#n17" name="n17">17</a>
+<a href="#n18" name="n18">18</a>
+<a href="#n19" name="n19">19</a>
+<strong><a href="#n20" name="n20">20</a></strong>
+<a href="#n21" name="n21">21</a>
+<a href="#n22" name="n22">22</a>
+<a href="#n23" name="n23">23</a>
+<a href="#n24" name="n24">24</a>
+<a href="#n25" name="n25">25</a>
+<a href="#n26" name="n26">26</a>
+<a href="#n27" name="n27">27</a>
+<a href="#n28" name="n28">28</a>
+<a href="#n29" name="n29">29</a>
+<strong><a href="#n30" name="n30">30</a></strong>
+<a href="#n31" name="n31">31</a>
+<a href="#n32" name="n32">32</a>
+<a href="#n33" name="n33">33</a>
+<a href="#n34" name="n34">34</a>
+<a href="#n35" name="n35">35</a>
+<a href="#n36" name="n36">36</a>
+<a href="#n37" name="n37">37</a>
+<a href="#n38" name="n38">38</a>
+<a href="#n39" name="n39">39</a>
+<strong><a href="#n40" name="n40">40</a></strong>
+<a href="#n41" name="n41">41</a>
+<a href="#n42" name="n42">42</a>
+<a href="#n43" name="n43">43</a>
+<a href="#n44" name="n44">44</a>
+<a href="#n45" name="n45">45</a>
+<a href="#n46" name="n46">46</a>
+<a href="#n47" name="n47">47</a>
+<a href="#n48" name="n48">48</a>
+<a href="#n49" name="n49">49</a>
+<strong><a href="#n50" name="n50">50</a></strong>
+<a href="#n51" name="n51">51</a>
+<a href="#n52" name="n52">52</a>
+<a href="#n53" name="n53">53</a>
+<a href="#n54" name="n54">54</a>
+<a href="#n55" name="n55">55</a>
+<a href="#n56" name="n56">56</a>
+<a href="#n57" name="n57">57</a>
+<a href="#n58" name="n58">58</a>
+<a href="#n59" name="n59">59</a>
+<strong><a href="#n60" name="n60">60</a></strong>
+<a href="#n61" name="n61">61</a>
+<a href="#n62" name="n62">62</a>
+</pre></td>
+  <td class="code"><pre> 
+<span class="directive">private</span> <span class="type">void</span> findMethods(<span class="predefined-type">Class</span> beanClass,
+ <span class="predefined-type">String</span> getMethodName1, <span class="predefined-type">String</span> getMethodName2, <span class="predefined-type">String</span> setMethodName)
+ <span class="directive">throws</span> <span class="exception">IntrospectionException</span> {&lt;br /&gt;
+        <span class="keyword">try</span> {&lt;br /&gt;
+            <span class="comment">// 首先查找getMethodName1指定的getter (isXXX)&lt;br /&gt;</span>
+            <span class="keyword">if</span> (getMethodName1 != <span class="predefined-constant">null</span>) {&lt;br /&gt;
+                <span class="keyword">try</span> {&lt;br /&gt;
                     getMethod = beanClass.getMethod(getMethodName1,
-	 new Class[0]);<br />
-                }<br />
-                catch (NoSuchMethodException e)<br />
-                {}<br />
-            }<br />
-            // 若失败，则查找getMethodName2指定的getter (getXXX)<br />
-            if (getMethod == null &amp;&amp; getMethodName2 != null) {<br />
-                try {<br />
+     <span class="keyword">new</span> <span class="predefined-type">Class</span>[<span class="integer">0</span>]);&lt;br /&gt;
+                }&lt;br /&gt;
+                <span class="keyword">catch</span> (<span class="exception">NoSuchMethodException</span> e)&lt;br /&gt;
+                {}&lt;br /&gt;
+            }&lt;br /&gt;
+            <span class="comment">// 若失败，则查找getMethodName2指定的getter (getXXX)&lt;br /&gt;</span>
+            <span class="keyword">if</span> (getMethod == <span class="predefined-constant">null</span> &amp;amp;&amp;amp; getMethodName2 != <span class="predefined-constant">null</span>) {&lt;br /&gt;
+                <span class="keyword">try</span> {&lt;br /&gt;
                     getMethod = beanClass.getMethod(getMethodName2,
-	 new Class[0]);<br />
-                }<br />
-                catch (NoSuchMethodException e)<br />
-                {}<br />
-            }<br />
-            if (setMethodName != null) {<br />
-                if (getMethod != null) {<br />
-                    // 如果得到了getMethod，则通过其返回值类型决定setMethod的参数类型<br />
-                    Class propertyType = getMethod.getReturnType();<br />
-                    if (propertyType == Void.TYPE) { <br />
-// 若getter的返回值为Void类型则抛出异常<br />
-                        String msg
-			 = “The property’s read method has return type ‘void’”;<br />
-                        throw new IntrospectionException(msg);<br />
-                    }  </p>
+     <span class="keyword">new</span> <span class="predefined-type">Class</span>[<span class="integer">0</span>]);&lt;br /&gt;
+                }&lt;br /&gt;
+                <span class="keyword">catch</span> (<span class="exception">NoSuchMethodException</span> e)&lt;br /&gt;
+                {}&lt;br /&gt;
+            }&lt;br /&gt;
+            <span class="keyword">if</span> (setMethodName != <span class="predefined-constant">null</span>) {&lt;br /&gt;
+                <span class="keyword">if</span> (getMethod != <span class="predefined-constant">null</span>) {&lt;br /&gt;
+                    <span class="comment">// 如果得到了getMethod，则通过其返回值类型决定setMethod的参数类型&lt;br /&gt;</span>
+                    <span class="predefined-type">Class</span> propertyType = getMethod.getReturnType();&lt;br /&gt;
+                    <span class="keyword">if</span> (propertyType == <span class="predefined-type">Void</span>.TYPE) { &lt;br /&gt;
+<span class="comment">// 若getter的返回值为Void类型则抛出异常&lt;br /&gt;</span>
+                        <span class="predefined-type">String</span> msg
+             = <span class="error">“</span>The property<span class="error">’</span>s read method has <span class="keyword">return</span> type <span class="error">‘</span><span class="type">void</span><span class="error">’</span><span class="error">”</span>;&lt;br /&gt;
+                        <span class="keyword">throw</span> <span class="keyword">new</span> <span class="exception">IntrospectionException</span>(msg);&lt;br /&gt;
+                    }  &lt;/p&gt;
 
-<pre><code>                Class[] setArgs = new Class[] { propertyType };   
-                try {  
+&lt;pre&gt;&lt;code&gt;                <span class="predefined-type">Class</span><span class="type">[]</span> setArgs = <span class="keyword">new</span> <span class="predefined-type">Class</span><span class="type">[]</span> { propertyType };   
+                <span class="keyword">try</span> {  
                     setMethod = beanClass.getMethod(setMethodName,
- setArgs);    // 通过函数名和参数类型获得setMethod  
+ setArgs);    <span class="comment">// 通过函数名和参数类型获得setMethod  </span>
                 }  
-                catch (NoSuchMethodException e)  
+                <span class="keyword">catch</span> (<span class="exception">NoSuchMethodException</span> e)  
                 {}  
             }  
-            else if (getMethodName1 == null &amp;&amp; getMethodName2 == null) {   // getMethodName1和2均为空，则此属性为只写属性，此时遍历bean中的函数， // 返回第一个名称与setMethodName一致且返回类型为Void的单参数函数  
-                Method[] methods = beanClass.getMethods();  
-                for (int i = 0; i &lt; methods.length; i++) {  
-                    if (methods[i].getName().equals(setMethodName)  
-                        &amp;&amp; methods[i].getParameterTypes().length == 1  
-                        &amp;&amp; methods[i].getReturnType() == Void.TYPE) {  
+            <span class="keyword">else</span> <span class="keyword">if</span> (getMethodName1 == <span class="predefined-constant">null</span> &amp;amp;&amp;amp; getMethodName2 == <span class="predefined-constant">null</span>) {   <span class="comment">// getMethodName1和2均为空，则此属性为只写属性，此时遍历bean中的函数， // 返回第一个名称与setMethodName一致且返回类型为Void的单参数函数  </span>
+                <span class="predefined-type">Method</span><span class="type">[]</span> methods = beanClass.getMethods();  
+                <span class="keyword">for</span> (<span class="type">int</span> i = <span class="integer">0</span>; i &amp;lt; methods.length; i++) {  
+                    <span class="keyword">if</span> (methods[i].getName().equals(setMethodName)  
+                        &amp;amp;&amp;amp; methods[i].getParameterTypes().length == <span class="integer">1</span>  
+                        &amp;amp;&amp;amp; methods[i].getReturnType() == <span class="predefined-type">Void</span>.TYPE) {  
                         setMethod = methods[i];  
-                        break;  
+                        <span class="keyword">break</span>;  
                     }  
                 }  
             }  
         }  
     }  
-    catch (SecurityException e) {  
-        String msg
-	 = "SecurityException thrown on attempt to access methods.";
- // 作者在纠结要不要修改异常类型  
-        throw new IntrospectionException(msg);  
+    <span class="keyword">catch</span> (<span class="exception">SecurityException</span> e) {  
+        <span class="predefined-type">String</span> msg
+     = <span class="string"><span class="delimiter">&quot;</span><span class="content">SecurityException thrown on attempt to access methods.</span><span class="delimiter">&quot;</span></span>;
+ <span class="comment">// 作者在纠结要不要修改异常类型  </span>
+        <span class="keyword">throw</span> <span class="keyword">new</span> <span class="exception">IntrospectionException</span>(msg);  
     }  
-}   {% endcoderay %} checkMethods方法  
+}   </pre></td>
+</tr></table>
+ </figure> checkMethods方法  
 </code></pre>
 
-<p>{% coderay lang:java linenos:true %} 
-private Class<?> checkMethods(Method readMethod, Method writeMethod)
- throws IntrospectionException {  
-        Class<?> newPropertyType = propertyType;<br />
-         // 合法的read方法应该无参同时带有一个非空的返回值类型<br />
-        if (readMethod != null) {<br />
-            if (readMethod.getParameterTypes().length &gt; 0) {<br />
-                throw new IntrospectionException(“read method
-	 has unexpected parameters”);<br />
-            }<br />
-            newPropertyType = readMethod.getReturnType();<br />
-             if (newPropertyType == Void.TYPE) {<br />
-                throw new IntrospectionException(“read method
-	 return type is void”);<br />
-            }<br />
-        }<br />
-         // 合法的write方法应该包含一个类型相同的参数<br />
-        if (writeMethod != null) {<br />
-            if (writeMethod.getParameterTypes().length != 1) {
-	 // 参数不能超过一个<br />
-                String msg = “write method
-	 does not have exactly one parameter” ;<br />
-                throw new IntrospectionException(msg);<br />
-            }<br />
-            if (readMethod == null) {<br />
-                // 若无read方法，属性类型就应为writeMethod的参数类型<br />
-                newPropertyType = writeMethod.getParameterTypes()[0];<br />
-            }<br />
-            else {<br />
-                // 检查read方法的返回值类型是否与write方法的参数类型相匹配<br />
-                if (newPropertyType != null<br />
-                    &amp;&amp; !newPropertyType.isAssignableFrom(<br />
-                        writeMethod.getParameterTypes()[0])) {<br />
-                     throw new IntrospectionException(“read and write method<br />
-	 are not compatible”);<br />
-                }<br />
-            }<br />
-        }<br />
-         return newPropertyType;<br />
-    }<br />
-{% endcoderay %}<br />
+<p><figure class='code'> <table class="CodeRay"><tr>
+  <td class="line-numbers"><pre><a href="#n1" name="n1">1</a>
+<a href="#n2" name="n2">2</a>
+<a href="#n3" name="n3">3</a>
+<a href="#n4" name="n4">4</a>
+<a href="#n5" name="n5">5</a>
+<a href="#n6" name="n6">6</a>
+<a href="#n7" name="n7">7</a>
+<a href="#n8" name="n8">8</a>
+<a href="#n9" name="n9">9</a>
+<strong><a href="#n10" name="n10">10</a></strong>
+<a href="#n11" name="n11">11</a>
+<a href="#n12" name="n12">12</a>
+<a href="#n13" name="n13">13</a>
+<a href="#n14" name="n14">14</a>
+<a href="#n15" name="n15">15</a>
+<a href="#n16" name="n16">16</a>
+<a href="#n17" name="n17">17</a>
+<a href="#n18" name="n18">18</a>
+<a href="#n19" name="n19">19</a>
+<strong><a href="#n20" name="n20">20</a></strong>
+<a href="#n21" name="n21">21</a>
+<a href="#n22" name="n22">22</a>
+<a href="#n23" name="n23">23</a>
+<a href="#n24" name="n24">24</a>
+<a href="#n25" name="n25">25</a>
+<a href="#n26" name="n26">26</a>
+<a href="#n27" name="n27">27</a>
+<a href="#n28" name="n28">28</a>
+<a href="#n29" name="n29">29</a>
+<strong><a href="#n30" name="n30">30</a></strong>
+<a href="#n31" name="n31">31</a>
+<a href="#n32" name="n32">32</a>
+<a href="#n33" name="n33">33</a>
+<a href="#n34" name="n34">34</a>
+<a href="#n35" name="n35">35</a>
+<a href="#n36" name="n36">36</a>
+<a href="#n37" name="n37">37</a>
+<a href="#n38" name="n38">38</a>
+<a href="#n39" name="n39">39</a>
+<strong><a href="#n40" name="n40">40</a></strong>
+</pre></td>
+  <td class="code"><pre> 
+<span class="directive">private</span> <span class="predefined-type">Class</span>&lt;?&gt; checkMethods(<span class="predefined-type">Method</span> readMethod, <span class="predefined-type">Method</span> writeMethod)
+ <span class="directive">throws</span> <span class="exception">IntrospectionException</span> {  
+        <span class="predefined-type">Class</span>&lt;?&gt; newPropertyType = propertyType;&lt;br /&gt;
+         <span class="comment">// 合法的read方法应该无参同时带有一个非空的返回值类型&lt;br /&gt;</span>
+        <span class="keyword">if</span> (readMethod != <span class="predefined-constant">null</span>) {&lt;br /&gt;
+            <span class="keyword">if</span> (readMethod.getParameterTypes().length &amp;gt; <span class="integer">0</span>) {&lt;br /&gt;
+                <span class="keyword">throw</span> <span class="keyword">new</span> <span class="exception">IntrospectionException</span>(<span class="error">“</span>read method
+     has unexpected parameters<span class="error">”</span>);&lt;br /&gt;
+            }&lt;br /&gt;
+            newPropertyType = readMethod.getReturnType();&lt;br /&gt;
+             <span class="keyword">if</span> (newPropertyType == <span class="predefined-type">Void</span>.TYPE) {&lt;br /&gt;
+                <span class="keyword">throw</span> <span class="keyword">new</span> <span class="exception">IntrospectionException</span>(<span class="error">“</span>read method
+     <span class="keyword">return</span> type is <span class="type">void</span><span class="error">”</span>);&lt;br /&gt;
+            }&lt;br /&gt;
+        }&lt;br /&gt;
+         <span class="comment">// 合法的write方法应该包含一个类型相同的参数&lt;br /&gt;</span>
+        <span class="keyword">if</span> (writeMethod != <span class="predefined-constant">null</span>) {&lt;br /&gt;
+            <span class="keyword">if</span> (writeMethod.getParameterTypes().length != <span class="integer">1</span>) {
+     <span class="comment">// 参数不能超过一个&lt;br /&gt;</span>
+                <span class="predefined-type">String</span> msg = <span class="error">“</span>write method
+     does not have exactly one parameter<span class="error">”</span> ;&lt;br /&gt;
+                <span class="keyword">throw</span> <span class="keyword">new</span> <span class="exception">IntrospectionException</span>(msg);&lt;br /&gt;
+            }&lt;br /&gt;
+            <span class="keyword">if</span> (readMethod == <span class="predefined-constant">null</span>) {&lt;br /&gt;
+                <span class="comment">// 若无read方法，属性类型就应为writeMethod的参数类型&lt;br /&gt;</span>
+                newPropertyType = writeMethod.getParameterTypes()[<span class="integer">0</span>];&lt;br /&gt;
+            }&lt;br /&gt;
+            <span class="keyword">else</span> {&lt;br /&gt;
+                <span class="comment">// 检查read方法的返回值类型是否与write方法的参数类型相匹配&lt;br /&gt;</span>
+                <span class="keyword">if</span> (newPropertyType != <span class="predefined-constant">null</span>&lt;br /&gt;
+                    &amp;amp;&amp;amp; !newPropertyType.isAssignableFrom(&lt;br /&gt;
+                        writeMethod.getParameterTypes()[<span class="integer">0</span>])) {&lt;br /&gt;
+                     <span class="keyword">throw</span> <span class="keyword">new</span> <span class="exception">IntrospectionException</span>(<span class="error">“</span>read and write method&lt;br /&gt;
+     are not compatible<span class="error">”</span>);&lt;br /&gt;
+                }&lt;br /&gt;
+            }&lt;br /&gt;
+        }&lt;br /&gt;
+         <span class="keyword">return</span> newPropertyType;&lt;br /&gt;
+    }&lt;br /&gt;
+</pre></td>
+</tr></table>
+ </figure><br />
 最后提一句<code>PropertyDescriptor.equals()</code>,只有当属性类型、标志、读写方法和  <code>PropertyEditorClass</code> 均相同时才认为两个<code>PropertyDescriptor</code>相等  </p>
 
-<p>{% coderay lang:java linenos:false %}
-return samePropertyType<br />
-                &amp;&amp; sameFlags<br />
-                &amp;&amp; sameReadMethod<br />
-                &amp;&amp; sameWriteMethod<br />
-                &amp;&amp; samePropertyEditorClass; 
-{% endcoderay %}   </p>
+<p><figure class='code'> <div class="CodeRay">
+  <div class="code"><pre>
+<span class="keyword">return</span> samePropertyType&lt;br /&gt;
+                &amp;amp;&amp;amp; sameFlags&lt;br /&gt;
+                &amp;amp;&amp;amp; sameReadMethod&lt;br /&gt;
+                &amp;amp;&amp;amp; sameWriteMethod&lt;br /&gt;
+                &amp;amp;&amp;amp; samePropertyEditorClass; 
+</pre></div>
+</div>
+ </figure>   </p>
 ]]></content>
   </entry>
   
